@@ -1,0 +1,20 @@
+pkgname=udevil-mount
+pkgver=1.0
+pkgrel=1
+pkgdesc="udevil automount"
+url=""
+license=('GPL')
+arch=('any')
+depends=('udevil')
+
+source=('95-udevil-mount.rules'
+	'udevil-mount@.service')
+
+md5sums=('b63276d51f2a63639ca767721f1fbe40'
+         'cfdad5a5fbd7e53dd89d5321132e1386')
+
+package() {
+  cd ${srcdir}
+  install -Dm 644 95-udevil-mount.rules "${pkgdir}/etc/udev/rules.d/95-udevil-mount.rules"
+  install -Dm 644 udevil-mount@.service "${pkgdir}/usr/lib/systemd/system/udevil-mount@.service"
+}

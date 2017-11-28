@@ -1,0 +1,11 @@
+diff -Naur a/configure.ac b/configure.ac
+--- a/configure.ac	2016-03-15 21:27:42.000000000 +0200
++++ b/configure.ac	2017-08-31 23:33:58.485568083 +0300
+@@ -125,7 +125,6 @@
+ fi
+ AX_C_CHECK_FLAG([-flto],[],[],[CFLAGS="$CFLAGS -flto"],[])
+ AX_C_CHECK_FLAG([-fvisibility=hidden],[],[],[CFLAGS="$CFLAGS -fvisibility=hidden"],[])
+-AX_C_CHECK_FLAG([-Werror],[],[],[CFLAGS="$CFLAGS -Werror"],[])
+ AX_C_CHECK_FLAG([-Wall],[],[],[CFLAGS="$CFLAGS -Wall"],[])
+ AX_C_CHECK_FLAG([-Wextra],[],[],[CFLAGS="$CFLAGS -Wextra"],[])
+ AX_C_CHECK_FLAG([-Wcast-qual],[],[],[CFLAGS="$CFLAGS -Wcast-qual"],[])

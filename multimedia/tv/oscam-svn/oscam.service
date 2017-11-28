@@ -1,0 +1,12 @@
+[Unit]
+Description=The Open Source Conditional Access Module daemon
+After=tmp.mount network.target
+
+[Service]
+Type=forking
+EnvironmentFile=/etc/conf.d/oscam
+PIDFile=/run/oscam.pid
+ExecStart=/usr/bin/oscam -b -B /run/oscam.pid -c /etc/oscam $OSCAM_OPTS
+
+[Install]
+WantedBy=multi-user.target

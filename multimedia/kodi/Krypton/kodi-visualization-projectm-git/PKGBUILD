@@ -1,0 +1,47 @@
+# Maintainer: dhead666 <myfoolishgames@gmail.com>
+# https://github.com/dhead666/archlinux-pkgbuilds
+#
+# package version generated with # git log -1 --date=short --format="%cd.%h" | tr -d '-'
+
+pkgname=kodi-visualization-projectm-git
+_gitname='kodi-visualization-projectm'
+_verpkg='1.2.1'
+pkgver=1.2.1_g5450aa2
+pkgrel=1
+_branch=master
+pkgdesc='ProjectM visualization addon for Kodi'
+arch=('i686' 'x86_64')
+url='https://github.com/notspiff/visualization.projectm'
+license=('GPL')
+groups=('kodi')
+makedepends=('cmake')
+depends=('kodi-git' 'projectm' 'glew')
+
+source=("${_gitname}::git+https://github.com/notspiff/visualization.projectm.git#tag=v$_verpkg")
+
+md5sums=('SKIP')
+
+pkgver() {
+    cd "${srcdir}/${_gitname}"
+    _git=`git rev-parse --short HEAD`
+    printf "%s_%s" "$_verpkg" "g$_git"
+}
+
+build() {
+    cd "${srcdir}/${_gitname}"
+
+    rm -rf build
+    mkdir build
+    cd build
+
+    cmake \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release \
+    ..
+    make
+}
+
+package() {
+    cd "${srcdir}/${_gitname}/build"
+    make DESTDIR="$pkgdir" install
+}

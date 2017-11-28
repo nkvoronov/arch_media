@@ -1,0 +1,3 @@
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="15c2", ATTR{idProduct}=="ffdc", GROUP="vdr"
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="15c2", ATTR{idProduct}=="0036", GROUP="vdr"
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="15c2", ATTR{idProduct}=="0038", GROUP="vdr"

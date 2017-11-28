@@ -1,0 +1,20 @@
+# Maintainer: Guillermo Garcia <ahioros@NO-SPAM.gmail.com>
+# Contributor: Manuel Hüsers <manuel.huesers@uni-ol.de>
+# Contributor: Guillermo Garcia <ahioros@NO-SPAM.gmail.com>
+
+pkgname="plymouth-theme-kodi-animated-logo"
+pkgver=0.1
+pkgrel=1
+url="https://github.com/xbmc/XBMCbuntu/blob/master/buildDEBs/kodibuntu-artwork/lib/plymouth/themes/kodibuntu-animated-logo/kodibuntu-animated-logo.plymouth"
+pkgdesc="Kodi-logo is a remake of kodibuntu-logo plymouth"
+arch=('any')
+license=('GPL')
+depends=('plymouth')
+source=("kodi-animated-logo.tar.gz")
+sha256sums=('71403fa23a2fc43d4b4bed0eebe5fcd00ca51dfc55010f1dbc9d2e80bbc3541d')
+
+package() {
+    cd $srcdir/kodi-animated-logo
+    mkdir -p $pkgdir/usr/share/plymouth/themes/kodi-animated-logo
+    install -Dm644 * $pkgdir/usr/share/plymouth/themes/kodi-animated-logo
+}

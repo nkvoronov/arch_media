@@ -1,0 +1,60 @@
+# This PKGBUILD is part of the VDR4Arch project [https://github.com/vdr4arch]
+
+# Maintainer: Christopher Reimer <mail+vdr4arch[at]c-reimer[dot]de>
+pkgname=vdr-menuorg-git
+_gitname='vdr-menuorg'
+_verpkg='0.5.1'
+pkgver=0.5.1_gb856b0d
+_vdrapi=2.2.0
+pkgrel=1
+pkgdesc="VDR plug-in to reorganize the OSD main menu"
+url="http://projects.vdr-developer.org/projects/plg-menuorg"
+arch=('x86_64' 'i686' 'arm' 'armv6h' 'armv7h')
+license=('GPL2')
+depends=('gcc-libs' 'libxml++2.6' 'glibmm' "vdr-api=${_vdrapi}")
+makedepends=('git')
+install="vdr-menuorg.install"
+_plugname='menuorg'
+
+source=("${_gitname}::git+https://projects.vdr-developer.org/git/vdr-plugin-menuorg.git#branch=master"
+    'vdr-menuorg-makefile.patch'
+    'vdr-2.1.6-compat.patch'
+    'vdr-menuorg-RU-locale.patch'
+    'menuorg.xml.minimum')
+
+backup=("etc/vdr/conf.avail/50-$_plugname.conf")
+
+md5sums=('SKIP'
+         '5ae12684a5e950a81ad56c738fb4c4d4'
+         'd0c97aea8dc92339b5448668f9b36e71'
+         '99aa595a6593837639698eca92badf93'
+         '94bdde78c39758c051f0ab9d618c12a3')
+
+pkgver() {
+    cd "${srcdir}/${_gitname}"
+    _git=`git rev-parse --short HEAD`
+    printf "%s_%s" "$_verpkg" "g$_git"
+}
+
+prepare() {
+    cd "${srcdir}/${_gitname}"
+    for f in "$srcdir"/*.patch; do patch -p1 < "$f"; done
+}
+
+build() {
+    cd "${srcdir}/${_gitname}"
+    make
+}
+
+package() {
+    cd "${srcdir}/${_gitname}"
+    make DESTDIR="$pkgdir" install
+    
+    install -Dm644 "menuorg.xml" "$pkgdir/usr/share/vdr/plugins/menuorg/menuorg.xml"
+    install -Dm644 "menuorg.dtd" "$pkgdir/usr/share/vdr/plugins/menuorg/menuorg.dtd"
+  
+    install -Dm644 "$srcdir/menuorg.xml.minimum" "$pkgdir/usr/share/vdr/plugins/menuorg/menuorg.xml.minimum"
+    
+    mkdir -p "$pkgdir/etc/vdr/conf.avail"
+    echo "[$_plugname]" > "$pkgdir/etc/vdr/conf.avail/50-$_plugname.conf"
+}

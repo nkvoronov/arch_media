@@ -1,0 +1,76 @@
+# $Id$
+# Maintainer: BlackEagle <ike DOT devolder AT gmail DOT com>
+# Contributor: Bernhard Walle <bernhard.walle@gmx.de>
+
+pkgname=lcdproc
+pkgver=0.5.9
+pkgrel=5
+pkgdesc="Utility to drive one or more LCD (and LCD-like) devices"
+arch=('i686' 'x86_64')
+url="http://lcdproc.omnipotent.net/"
+license=('GPL')
+depends=('libftdi-compat')
+makedepends=('g15daemon')
+optdepends=(
+    'perl: needed for some lcdproc tools'
+    'g15daemon: needed if you want g15 support'
+)
+backup=(
+    'etc/LCDd.conf'
+    'etc/lcdexec.conf'
+    'etc/lcdproc.conf'
+    'etc/lcdvc.conf'
+)
+source=(
+    "https://github.com/lcdproc/lcdproc/archive/$pkgname-$pkgver.tar.gz"
+    'cp1251.fnt'
+    'iso8859_15.fnt'
+    'lcd_numbers.py'
+    'lcd_output.py'
+    'lcd_text.py'
+    'lcdd.service'
+    'lcdproc-0.5.6-imon_cp1251_fonts.patch'
+)
+
+md5sums=('868da7e44d92fac01612066eb19a0928'
+         'c2e77b239ef4d1b7c7fcdb69e4afce36'
+         'd2d65b2e6f97eb3be10d902e28d2bf39'
+         '7daec0195c7c9143331fc5381a286fbc'
+         'ab7f5366557d4395b8d22c17e741a57a'
+         '5290b8bf8c7afd5d0c9c655680086f5f'
+         'd86a015bc7abd0699aabc51c6273429c'
+         '7869e97c407431c25bb3b3a489d59428')
+
+prepare() {
+  cd "$pkgname-$pkgname-$pkgver"
+  for f in "$srcdir"/*.patch; do patch -p1 < "$f"; done
+}
+
+build() {
+    cd "$pkgname-$pkgname-$pkgver"
+    sh ./autogen.sh
+    ./configure \
+	--prefix=/usr \
+	--sbindir=/usr/bin \
+	--sysconfdir=/etc \
+	--enable-libusb \
+	--enable-lcdproc-menus \
+	--enable-extra-charmaps \
+	--enable-stat-smbfs \
+	--enable-drivers=all
+    make
+}
+
+package() {
+    cd "$pkgname-$pkgname-$pkgver"
+    make DESTDIR="$pkgdir" install
+    sed -e "s/server\/drivers\//\/usr\/lib\/lcdproc\//g" -i "$pkgdir/etc/LCDd.conf"
+    install -Dm644 "$srcdir/lcdd.service" "$pkgdir/usr/lib/systemd/system/lcdd.service"
+    install -Dm644 "$srcdir/cp1251.fnt" "$pkgdir/usr/share/lcdproc/fonts/cp1251.fnt"
+    install -Dm644 "$srcdir/iso8859_15.fnt" "$pkgdir/usr/share/lcdproc/fonts/iso8859_15.fnt"
+    install -Dm755 "$srcdir/lcd_numbers.py" "$pkgdir/usr/share/lcdproc/examples/lcd_numbers.py"
+    install -Dm755 "$srcdir/lcd_output.py" "$pkgdir/usr/share/lcdproc/examples/lcd_output.py"
+    install -Dm755 "$srcdir/lcd_text.py" "$pkgdir/usr/share/lcdproc/examples/lcd_text.py"
+
+}
+

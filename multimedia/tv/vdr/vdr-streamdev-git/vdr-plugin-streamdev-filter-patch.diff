@@ -1,0 +1,540 @@
+This patch tries to resolve problems in streamdev-client that
+can occur when enabling "StreamFilters". Enabling this option
+is necessary to receive certain programs with dynamic PIDs such as
+some german "regional" broadcast (eg: NDR).
+
+Problem:
+
+Without this fix, the following behavior was observed on a Raspberry
+PI running streamdev-0.6.1-git with VDR-2.6.1: 
+
+- Buffer overflows of filter data
+- Stop/go video on channels
+- Total stopping of video
+
+More logs in: 
+
+http://www.vdr-portal.de/board16-video-disk-recorder/board55-vdr-plugins/125237-streamdev-client-filter-daten-streamen-ndr-raspberry-haengt/
+
+Analysis:
+
+VDR expect section data from filters separately from the
+main program stream. Historically, it received each filter data
+via a separate file descriptor from the DVB card. In the streamdev-client
+module, a socketpair is used to feed filter data to the main VDR code.
+During certain operations in VDR, such as startup or channel change
+(depending also on the speed of initialization of the video output driver),
+VDR does not consume the filter data as fast as it is provided by 
+streamdev-client, resulting in overflow of the default socket buffers
+used by streamdev-client.
+
+To add to the problem of overflowing the socketpair buffers, the
+streamdev-client code sends several times a second short packets into
+the socketpair to determine if the receiving side (VDR) has closed
+the socketpair (IsClosed(), CarbageCollect()). This further clogs
+up the socketpair() buffer.
+
+The raspberry PI socketpair buffering behavior seems to be the same
+as that of other 3.x linux systems, the socket buffer size is by
+default 163840, and it can be increased via sysctl net.core.wmem_max.
+During startup, it can take up to 10 seconds before VDR will consume
+filter data, so the socketpair buffer can fill up with 10 seconds worth
+of data.
+
+Solution
+
+1. IsClosed()/CarbageCollect() where removed from client/filter.c
+and replaced by explicitly tracking when VDR closes a filter socket.
+This alone seems to already resolve the problem of hanging or stop&go
+video and seems to be sufficient to receive dynamic-PID channels reliably.
+
+2. filter.c was enhanced to request a larger socket buffer size
+if config option FilterSockBufSize is set. 
+
+3. If supported (if streamdev-client runs on linux), the socketpair
+queue is "flushed" to reduce the amount of "random" packet drop messages
+and to rather drop sequential messages.
+
+Apply (to streamdev 0.6.1-git or similar):
+
+cd vdr-plugin-streamdev
+patch -p1 --dry-run < vdr-plugin-streamdev-filter-patch.diff
+
+patch -p1 < vdr-plugin-streamdev-filter-patch.diff
+
+diff -cr /data/installfiles/vdrplugins/vdr-plugin-streamdev/client/device.c ./client/device.c
+*** /data/installfiles/vdrplugins/vdr-plugin-streamdev/client/device.c	2014-12-07 17:56:39.983787000 +0100
+--- ./client/device.c	2014-12-29 22:56:56.470457588 +0100
+***************
+*** 282,287 ****
+--- 282,295 ----
+  	return -1;
+  }
+  
++ void cStreamdevDevice::CloseFilter(int Handle) {
++ 
++         if(m_Filters)
++                 m_Filters->CloseFilter(Handle);
++         else
++                 esyslog("cStreamdevDevice::CloseFilter called while m_Filters is null");
++ }
++ 
+  bool cStreamdevDevice::ReInit(bool Disable) {
+  	LOCK_THREAD;
+  	m_Disabled = Disable;
+diff -cr /data/installfiles/vdrplugins/vdr-plugin-streamdev/client/device.h ./client/device.h
+*** /data/installfiles/vdrplugins/vdr-plugin-streamdev/client/device.h	2014-12-07 17:56:39.993787000 +0100
+--- ./client/device.h	2014-12-29 17:07:38.906891120 +0100
+***************
+*** 45,50 ****
+--- 45,51 ----
+  	virtual bool GetTSPacket(uchar *&Data);
+  
+  	virtual int OpenFilter(u_short Pid, u_char Tid, u_char Mask);
++ 	virtual void CloseFilter(int Handle);
+  
+  public:
+  	cStreamdevDevice(void);
+diff -cr /data/installfiles/vdrplugins/vdr-plugin-streamdev/client/filter.c ./client/filter.c
+*** /data/installfiles/vdrplugins/vdr-plugin-streamdev/client/filter.c	2014-12-07 17:56:39.993787000 +0100
+--- ./client/filter.c	2014-12-30 23:14:13.476802383 +0100
+***************
+*** 6,17 ****
+--- 6,21 ----
+  #include "client/socket.h"
+  #include "tools/select.h"
+  #include "common.h"
++ #include <sys/ioctl.h>
++ #include <string.h>
+  
+  #include <vdr/device.h>
+  
+  #define PID_MASK_HI 0x1F
+  // --- cStreamdevFilter ------------------------------------------------------
+  
++ static int FilterSockBufSize_warn = 0;
++ 
+  class cStreamdevFilter: public cListObject {
+  private:
+  	uchar              m_Buffer[4096];
+***************
+*** 20,25 ****
+--- 24,33 ----
+  	u_short            m_Pid;
+  	u_char             m_Tid;
+  	u_char             m_Mask;
++ #ifdef TIOCOUTQ
++         unsigned long      m_maxq;
++         unsigned long      m_flushed;
++ #endif
+  
+  public:
+  	cStreamdevFilter(u_short Pid, u_char Tid, u_char Mask);
+***************
+*** 29,35 ****
+  	bool PutSection(const uchar *Data, int Length, bool Pusi);
+  	int  ReadPipe(void) const { return m_Pipe[0]; }
+  
+- 	bool IsClosed(void);
+  	void Reset(void);
+  
+  	u_short Pid(void) const { return m_Pid; }
+--- 37,42 ----
+***************
+*** 47,52 ****
+--- 54,63 ----
+  	m_Tid  = Tid;
+  	m_Mask = Mask;
+  	m_Pipe[0] = m_Pipe[1] = -1;
++ #ifdef TIOCOUTQ
++         m_flushed = 0;
++         m_maxq = 0;
++ #endif
+  
+  #ifdef SOCK_SEQPACKET  
+  	// SOCK_SEQPACKET (since kernel 2.6.4)
+***************
+*** 58,64 ****
+  		esyslog("streamdev-client: couldn't open section filter socket: %m");
+  	} 
+  
+! 	else if(fcntl(m_Pipe[0], F_SETFL, O_NONBLOCK) != 0 ||
+  		fcntl(m_Pipe[1], F_SETFL, O_NONBLOCK) != 0) {
+  		esyslog("streamdev-client: couldn't set section filter socket to non-blocking mode: %m");
+  	}
+--- 69,114 ----
+  		esyslog("streamdev-client: couldn't open section filter socket: %m");
+  	} 
+  
+!         // Set buffer for socketpair. During certain situations, such as startup, channel/transponder
+!         // change, VDR may lag in reading data. Instead of discarding it, we can buffer it.
+!         // Buffer size required may be up to 4MByte.
+!     
+!         if(StreamdevClientSetup.FilterSockBufSize) {
+!                 int sbs = StreamdevClientSetup.FilterSockBufSize;
+!                 int sbs2;
+!                 unsigned int sbss = sizeof(sbs);
+!                 int r;
+! 
+! 		r = setsockopt(m_Pipe[1], SOL_SOCKET, SO_SNDBUF, (char *)&sbs, sbss);
+! 
+! 		if(r < 0) {
+!                        isyslog("streamdev-client: setsockopt(SO_SNDBUF, %d) = %s", sbs, strerror(errno));
+!                 }
+!                 sbs2 = 0;
+! 		r = getsockopt(m_Pipe[1], SOL_SOCKET, SO_SNDBUF, (char *)&sbs2, &sbss);
+!                 if(r < 0 || !sbss || !sbs2) {
+!                        isyslog("streamdev-client: getsockopt(SO_SNDBUF, &%d, &%d) = %s", sbs2, sbss, strerror(errno));
+!                 } else {
+!                        // Linux actually returns double the requested size
+!                        // if everything works fine. And it actually buffers up to that double amount
+!                        // as can be seen from observing TIOCOUTQ (kernel 3.7/2014).
+!                  
+!                        if(sbs2 > sbs)
+!                                sbs2 /= 2;
+!                        if(sbs2 < sbs) {
+!                                if(FilterSockBufSize_warn != sbs2) {
+!                                        isyslog("streamdev-client: ******************************************************");
+!                                        isyslog("streamdev-client: getsockopt(SO_SNDBUF) = %d < %d (configured).", sbs2, sbs);
+!                                        isyslog("streamdev-client: Consider increasing system buffer size:");
+!                                        isyslog("streamdev-client: 'sysctl net.core.wmem_max=%d'", sbs);
+!                                        isyslog("streamdev-client: ******************************************************");
+!                                        FilterSockBufSize_warn = sbs2;
+!                                }
+!                        }
+!                 }
+!         } 
+! 
+! 	if(fcntl(m_Pipe[0], F_SETFL, O_NONBLOCK) != 0 ||
+  		fcntl(m_Pipe[1], F_SETFL, O_NONBLOCK) != 0) {
+  		esyslog("streamdev-client: couldn't set section filter socket to non-blocking mode: %m");
+  	}
+***************
+*** 67,77 ****
+  cStreamdevFilter::~cStreamdevFilter() {
+  	Dprintf("~cStreamdevFilter %p\n", this);
+  
+! 	// ownership of handle m_Pipe[0] has been transferred to VDR section handler
+! 	//if (m_Pipe[0] >= 0)
+! 	//	close(m_Pipe[0]);
+! 	if (m_Pipe[1] >= 0)
+  		close(m_Pipe[1]);
+  }
+  
+  bool cStreamdevFilter::PutSection(const uchar *Data, int Length, bool Pusi) {
+--- 117,128 ----
+  cStreamdevFilter::~cStreamdevFilter() {
+  	Dprintf("~cStreamdevFilter %p\n", this);
+  
+! 	if (m_Pipe[0] >= 0) {
+! 		close(m_Pipe[0]);
+!         }
+! 	if (m_Pipe[1] >= 0) {
+  		close(m_Pipe[1]);
++         }
+  }
+  
+  bool cStreamdevFilter::PutSection(const uchar *Data, int Length, bool Pusi) {
+***************
+*** 94,106 ****
+  		int length = (((m_Buffer[1] & 0x0F) << 8) | m_Buffer[2]) + 3;
+  		if (m_Used == length) {
+  			m_Used = 0;
+! 			if (write(m_Pipe[1], m_Buffer, length) < 0) {
+! 				if(errno == EAGAIN || errno == EWOULDBLOCK) 
+! 					dsyslog("cStreamdevFilter::PutSection socket overflow, "
+! 						"Pid %4d Tid %3d", m_Pid, m_Tid);
+! 
+! 				else
+! 					return false;
+  			}
+  		}
+  
+--- 145,186 ----
+  		int length = (((m_Buffer[1] & 0x0F) << 8) | m_Buffer[2]) + 3;
+  		if (m_Used == length) {
+  			m_Used = 0;
+! #ifdef TIOCOUTQ
+!                         // If we can determine the queue size of the socket,
+!                         // we flush rather then let the socket drop random packets.
+!                         // This ensures that we have more contiguous set of packets
+!                         // on the receiver side.
+!                         if(m_flushed) {
+!                                 unsigned long queue = 0;
+!                                 ioctl(m_Pipe[1], TIOCOUTQ, &queue);
+! 				if(queue > m_maxq)
+! 				        m_maxq = queue;
+! 				if(queue * 2 < m_maxq) {
+! 			                dsyslog("cStreamdevFilter::PutSection(Pid:%d Tid: %d): "
+! 					        "Flushed %ld bytes, max queue: %ld",
+! 					        m_Pid, m_Tid, m_flushed, m_maxq);
+! 					m_flushed = m_maxq = 0;
+! 				       
+! 				} else {
+! 				        m_flushed += length;
+! 				}
+! 			}
+! 			if(!m_flushed)
+! #endif
+! 			if(write(m_Pipe[1], m_Buffer, length) < 0) {
+! 			        if(errno != EAGAIN && errno != EWOULDBLOCK) {
+! 			                dsyslog("cStreamdevFilter::PutSection(Pid:%d Tid: %d): error: %s",
+! 					         m_Pid, m_Tid, strerror(errno));
+! 				        return false;
+!                                 } else {
+! #ifdef TIOCOUTQ
+!                                         m_flushed += length;
+! #else
+! 			                dsyslog("cStreamdevFilter::PutSection(Pid:%d Tid: %d): "
+! 					        "Dropping packet %ld bytes (queue overflow)",
+! 					        m_Pid, m_Tid, length);
+! #endif
+!                                 }
+  			}
+  		}
+  
+***************
+*** 123,147 ****
+  	m_Used = 0;
+  }
+  
+- bool cStreamdevFilter::IsClosed(void) {
+- 	char m_Buffer[3] = {0,0,0}; /* tid 0, 0 bytes */
+- 
+- 	// Test if pipe/socket has been closed by writing empty section
+- 	if (write(m_Pipe[1], m_Buffer, 3) < 0 &&
+- 			errno != EAGAIN &&  
+- 			errno != EWOULDBLOCK) {
+- 
+- 		if (errno != ECONNREFUSED &&
+- 				errno != ECONNRESET &&
+- 				errno != EPIPE)
+- 			esyslog("cStreamdevFilter::IsClosed failed: %m");
+- 
+- 		return true;
+- 	}
+- 
+- 	return false;
+- }
+- 
+  // --- cStreamdevFilters -----------------------------------------------------
+  
+  cStreamdevFilters::cStreamdevFilters(cClientSocket *ClientSocket):
+--- 203,208 ----
+***************
+*** 155,162 ****
+  }
+  
+  int cStreamdevFilters::OpenFilter(u_short Pid, u_char Tid, u_char Mask) {
+- 	CarbageCollect();
+- 
+  	cStreamdevFilter *f = new cStreamdevFilter(Pid, Tid, Mask);
+  	int fh = f->ReadPipe();
+  
+--- 216,221 ----
+***************
+*** 167,197 ****
+  	return fh;
+  }
+  
+! void cStreamdevFilters::CarbageCollect(void) {
+  	LOCK_THREAD;
+! 	for (cStreamdevFilter *fi = First(); fi;) {
+! 		if (fi->IsClosed()) {
+! 			if (errno == ECONNREFUSED ||
+! 					errno == ECONNRESET ||
+! 					errno == EPIPE) {
+! 				m_ClientSocket->SetFilter(fi->Pid(), fi->Tid(), fi->Mask(), false);
+! 				Dprintf("cStreamdevFilters::CarbageCollector: filter closed: Pid %4d, Tid %3d, Mask %2x (%d filters left)",
+! 						(int)fi->Pid(), (int)fi->Tid(), fi->Mask(), Count()-1);
+! 
+! 				cStreamdevFilter *next = Prev(fi);
+! 				Del(fi);
+! 				fi = next ? Next(next) : First();
+! 			} else {
+! 				esyslog("cStreamdevFilters::CarbageCollector() error: "
+! 						"Pid %4d, Tid %3d, Mask %2x (%d filters left) failed",
+! 						(int)fi->Pid(), (int)fi->Tid(), fi->Mask(), Count()-1);
+! 				LOG_ERROR;
+! 				fi = Next(fi);
+! 			}
+! 		} else {
+! 			fi = Next(fi);
+! 		}
+! 	}
+  }
+  
+  bool cStreamdevFilters::ReActivateFilters(void)
+--- 226,243 ----
+  	return fh;
+  }
+  
+! void cStreamdevFilters::CloseFilter(int Handle) {
+  	LOCK_THREAD;
+! 
+! 	for (cStreamdevFilter *fi = First(); fi; fi = Next(fi)) {
+!                 if(fi->ReadPipe() == Handle) {
+! 			// isyslog("cStreamdevFilters::CloseFilter(%d): Pid %4d, Tid %3d, Mask %2x (%d filters left)\n",
+! 		        //		Handle, (int)fi->Pid(), (int)fi->Tid(), fi->Mask(), Count()-1);
+!                         Del(fi);
+!                         return;
+!                 }
+!         }
+! 	esyslog("cStreamdevFilters::CloseFilter(%d): failed (%d filters left)\n", Handle, Count()-1);
+  }
+  
+  bool cStreamdevFilters::ReActivateFilters(void)
+***************
+*** 199,205 ****
+  	LOCK_THREAD;
+  
+  	bool res = true;
+- 	CarbageCollect();
+  	for (cStreamdevFilter *fi = First(); fi; fi = Next(fi)) {
+  		res = m_ClientSocket->SetFilter(fi->Pid(), fi->Tid(), fi->Mask(), true) && res;
+  		Dprintf("ReActivateFilters(%d, %d, %d) -> %s", fi->Pid(), fi->Tid(), fi->Mask(), res ? "Ok" :"FAIL");
+--- 245,250 ----
+diff -cr /data/installfiles/vdrplugins/vdr-plugin-streamdev/client/filter.h ./client/filter.h
+*** /data/installfiles/vdrplugins/vdr-plugin-streamdev/client/filter.h	2014-12-07 17:56:39.993787000 +0100
+--- ./client/filter.h	2014-12-30 00:00:32.861417976 +0100
+***************
+*** 20,27 ****
+  	
+  protected:
+  	virtual void Action(void);
+- 	void CarbageCollect(void);
+- 
+  	bool ReActivateFilters(void);
+  
+  public:
+--- 20,25 ----
+***************
+*** 30,35 ****
+--- 28,34 ----
+  
+  	void SetConnection(int Handle);
+  	int OpenFilter(u_short Pid, u_char Tid, u_char Mask);
++ 	void CloseFilter(int Handle);
+  };
+  
+  #endif // VDR_STREAMDEV_FILTER_H
+diff -cr /data/installfiles/vdrplugins/vdr-plugin-streamdev/client/po/de_DE.po ./client/po/de_DE.po
+*** /data/installfiles/vdrplugins/vdr-plugin-streamdev/client/po/de_DE.po	2014-12-07 17:56:39.993787000 +0100
+--- ./client/po/de_DE.po	2014-12-30 15:48:06.552425542 +0100
+***************
+*** 46,51 ****
+--- 34,42 ----
+  msgid "Filter Streaming"
+  msgstr "Filter-Daten streamen"
+  
++ msgid "Filter SockBufSize"
++ msgstr "Filter Socket Puffergröße"
++ 
+  msgid "Live TV Priority"
+  msgstr "Live TV Priorität"
+  
+diff -cr /data/installfiles/vdrplugins/vdr-plugin-streamdev/client/setup.c ./client/setup.c
+*** /data/installfiles/vdrplugins/vdr-plugin-streamdev/client/setup.c	2014-12-07 17:56:39.993787000 +0100
+--- ./client/setup.c	2014-12-30 13:18:42.183774916 +0100
+***************
+*** 26,31 ****
+--- 26,32 ----
+  	NumProvidedSystems = 1;
+  #endif
+  	strcpy(RemoteIp, "");
++ 	FilterSockBufSize = 0;
+  }
+  
+  bool cStreamdevClientSetup::SetupParse(const char *Name, const char *Value) {
+***************
+*** 43,48 ****
+--- 44,50 ----
+  	else if (strcmp(Name, "LivePriority") == 0)  LivePriority = atoi(Value);
+  	else if (strcmp(Name, "MinPriority") == 0)   MinPriority = atoi(Value);
+  	else if (strcmp(Name, "MaxPriority") == 0)   MaxPriority = atoi(Value);
++ 	else if (strcmp(Name, "FilterSockBufSize") == 0) FilterSockBufSize = atoi(Value);
+  #if APIVERSNUM >= 10700
+  	else if (strcmp(Name, "NumProvidedSystems") == 0) NumProvidedSystems = atoi(Value);
+  #endif
+***************
+*** 60,65 ****
+--- 62,69 ----
+  	Add(new cMenuEditIntItem (tr("Remote Port"),         &m_NewSetup.RemotePort, 0, 65535));
+  	Add(new cMenuEditIntItem (tr("Timeout (s)"),         &m_NewSetup.Timeout, 1, 15));
+  	Add(new cMenuEditBoolItem(tr("Filter Streaming"),    &m_NewSetup.StreamFilters));
++         if(m_NewSetup.StreamFilters)
++ 	    Add(new cMenuEditIntItem (tr("Filter SockBufSize"), &m_NewSetup.FilterSockBufSize, 0, 8192000));
+  	Add(new cMenuEditIntItem (tr("Live TV Priority"),    &m_NewSetup.LivePriority, MINPRIORITY, MAXPRIORITY));
+  	Add(new cMenuEditIntItem (tr("Minimum Priority"),    &m_NewSetup.MinPriority, MINPRIORITY, MAXPRIORITY));
+  	Add(new cMenuEditIntItem (tr("Maximum Priority"),    &m_NewSetup.MaxPriority, MINPRIORITY, MAXPRIORITY));
+***************
+*** 90,95 ****
+--- 94,100 ----
+  #if APIVERSNUM >= 10700
+  	SetupStore("NumProvidedSystems", m_NewSetup.NumProvidedSystems);
+  #endif
++ 	SetupStore("FilterSockBufSize", m_NewSetup.FilterSockBufSize);
+  
+  	StreamdevClientSetup = m_NewSetup;
+  
+diff -cr /data/installfiles/vdrplugins/vdr-plugin-streamdev/client/setup.h ./client/setup.h
+*** /data/installfiles/vdrplugins/vdr-plugin-streamdev/client/setup.h	2014-12-07 17:56:40.003787000 +0100
+--- ./client/setup.h	2014-12-30 13:19:14.573381385 +0100
+***************
+*** 17,22 ****
+--- 17,23 ----
+  	int  RemotePort;
+  	int  Timeout;
+  	int  StreamFilters;
++ 	int  FilterSockBufSize;
+  	int  HideMenuEntry;
+  	int  LivePriority;
+  	int  MinPriority;
+diff -cr /data/installfiles/vdrplugins/vdr-plugin-streamdev/README ./README
+*** /data/installfiles/vdrplugins/vdr-plugin-streamdev/README	2014-12-07 17:56:39.983787000 +0100
+--- ./README	2014-12-30 23:22:25.179760004 +0100
+***************
+*** 203,209 ****
+  live TV on the server. Zero and positive values give precedence to the client.
+  
+  The priority for VDR clients watching live TV is configured in the plugin setup
+! of streamdev-client. For other client tasks (e.g. recording a client side timer)the same priority as on the client is used. With the parameter "Legacy client
+  Priority" in streamdev-server's setup menu you can configure the priority for
+  clients which cannot be configured to use negative priorities. It is used
+  when an old client is detected an it requests priority "0".
+--- 203,210 ----
+  live TV on the server. Zero and positive values give precedence to the client.
+  
+  The priority for VDR clients watching live TV is configured in the plugin setup
+! of streamdev-client. For other client tasks (e.g. recording a client side timer)
+! the same priority as on the client is used. With the parameter "Legacy client
+  Priority" in streamdev-server's setup menu you can configure the priority for
+  clients which cannot be configured to use negative priorities. It is used
+  when an old client is detected an it requests priority "0".
+***************
+*** 416,421 ****
+--- 417,440 ----
+  EPG data and service information, just as if the client had its own DVB card.
+  Link channels and even a client-side EPG scan have been reported to work.
+  
++ If you have TV programs with dynamically changing PIDs (such as some german
++ regional programs like NDR), then you need to enable "Filter Streaming" to
++ correctly receive them. You also need to set in VDRs DVB setup the option
++ "Update channels" to at least "PIDs only" (or "names and PIDs") for this
++ to work.
++ 
++ "Filter streaming" uses internally a socketpair(2) to copy meta data to
++ VDR. This socketpair may require larger than default buffering. If
++ you  see a mesage like the following in syslog,
++ 
++   cStreamdevFilter::PutSection(Pid:18 Tid: 64): Dropped 2995 bytes, max queue: 328640
++ 
++ then you should increase the streamdev client "FilterSockBufSize" value. A 
++ good value is 3072000. You will need to first configure your linux to
++ permit such a large buffer size:
++ 
++   sysctl net.core.wmem_max=3072000
++ 
+  The precedence among multiple client VDRs receiving live TV from the same
+  server is controlled with "Live TV Priority".
+  

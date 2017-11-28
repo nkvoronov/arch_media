@@ -1,0 +1,46 @@
+# Maintainer: Michael Lass <bevan@bi-co.net>
+
+# This PKGBUILD is maintained on github:
+# https://github.com/michaellass/AUR
+
+pkgname=kodi-platform-git
+_gitname='kodi-platform'
+pkgver=r55.36fb493
+pkgrel=1
+_branch=master
+pkgdesc='Kodi platform support library'
+arch=('armv7h' 'i686' 'x86_64')
+url="https://github.com/xbmc/kodi-platform"
+license=('GPL')
+makedepends=('cmake' 'git')
+depends=('kodi-dev-git' 'libplatform-git')
+provides=('kodi-platform')
+conflicts=('kodi-platform')
+source=("${_gitname}::git+https://github.com/xbmc/kodi-platform.git#branch=${_branch}")
+md5sums=('SKIP')
+
+pkgver() {
+    cd "${srcdir}/${_gitname}"
+    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+    cd "${srcdir}/${_gitname}"
+
+    rm -rf build
+    mkdir build
+    cd build
+
+    cmake \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=/usr/lib \
+    -DCMAKE_INSTALL_LIBDIR_NOARCH=/usr/lib \
+    -DCMAKE_BUILD_TYPE=Release \
+    ..
+    make
+}
+
+package() {
+    cd "${srcdir}/${_gitname}/build"
+    make DESTDIR="$pkgdir" install
+}

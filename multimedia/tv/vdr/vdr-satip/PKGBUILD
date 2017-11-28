@@ -1,0 +1,45 @@
+# This PKGBUILD is part of the VDR4Arch project [https://github.com/vdr4arch]
+
+# Maintainer: Christopher Reimer <mail+vdr4arch[at]c-reimer[dot]de>
+pkgname=vdr-satip
+pkgver=2.2.4
+_vdrapi=2.2.0
+pkgrel=1
+pkgdesc="Integrates SAT>IP network devices seamlessly into VDR"
+url="http://www.saunalahti.fi/rahrenbe/vdr/satip/"
+arch=('x86_64' 'i686' 'arm' 'armv6h' 'armv7h')
+license=('GPL2')
+depends=('curl' 'pugixml' "vdr-api=${_vdrapi}")
+_plugname=${pkgname//vdr-/}
+
+source=("http://www.saunalahti.fi/~rahrenbe/vdr/satip/files/$pkgname-$pkgver.tgz"
+        "50-$_plugname.conf"
+        'vdr-satip-makefile-gcc6.patch'
+        'vdr-satip-RU-locale.patch')
+
+md5sums=('b5d343df0f0a5e7708f0460633ea866c'
+         '34190df0b6b8269490ff977f01ff4192'
+         'e4cf5db0f0b5d1a75969ca2b7bd6c526'
+         '24bb1505616a26130d78ba2dc018a0b3')
+
+backup=("etc/vdr/conf.avail/50-$_plugname.conf")
+
+options=('!emptydirs')
+
+prepare() {
+    cd "${srcdir}/${_plugname}-${pkgver}"
+    for f in "$srcdir"/*.patch; do patch -p1 < "$f"; done
+}
+
+build() {
+    cd "${srcdir}/${_plugname}-${pkgver}"
+    make GITTAG=''
+}
+
+
+package() {
+    cd "${srcdir}/${_plugname}-${pkgver}"
+    make DESTDIR="$pkgdir" install
+
+    install -Dm644 "$srcdir/50-$_plugname.conf" "$pkgdir/etc/vdr/conf.avail/50-$_plugname.conf"
+}

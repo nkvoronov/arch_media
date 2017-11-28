@@ -1,0 +1,135 @@
+# This PKGBUILD is part of the VDR4Arch project [https://github.com/vdr4arch]
+
+# Maintainer: Christopher Reimer <mail+vdr4arch[at]c-reimer[dot]de>
+pkgname=vdr
+pkgver=2.2.0
+pkgrel=2
+pkgdesc="'open' digital satellite receiver and timer controlled video disk recorder"
+url="http://tvdr.de/"
+arch=('x86_64' 'i686' 'arm' 'armv6h' 'armv7h')
+license=('GPL2')
+depends=('libcap' 'libjpeg-turbo' 'libsystemd' 'perl' 'ttf-font')
+makedepends=('systemd') #libsystemd should be enough but the pkg-config file is missing in the libsystemd package
+optdepends=('lirc-utils: remote control support')
+replaces=('runvdr-extreme')
+conflicts=('runvdr-extreme')
+provides=("vdr-api=2.2.0")
+install='vdr.install'
+
+source=("ftp://ftp.tvdr.de/vdr/${pkgname}-${pkgver}.tar.bz2"
+	'vdr-2.2.0-menuorg.patch'
+	'vdr-2.2.0-missing-plugin.patch'
+	'allowed_hosts.conf'
+	'channels.conf'
+	'diseqc.conf'
+	'setup.conf'
+	'sttng-blue.theme'
+	'sttng-cool.theme'
+        '00-vdr.conf' 
+        '50-dvbsddevice.conf'
+        '60-create-dvb-device-units.rules'
+        'gen-sddropin'
+        'shutdown.sh'
+        'shutdown-wrapper.c'
+        'vdr.service'
+        'vdr.sysuser')
+
+backup=('etc/vdr/channels.conf'
+        'etc/vdr/diseqc.conf'
+        'etc/vdr/keymacros.conf'
+        'etc/vdr/scr.conf'
+        'etc/vdr/sources.conf'
+        'etc/vdr/svdrphosts.conf')
+
+md5sums=('8853f64c0fc3d41ffd3b4bfc6f0a14b7'
+         '35fcf552ee33618af5fcc547ebadb727'
+         '4dcd9323530dcd19f45eea608fb34955'
+         '1a98f51c420419e4090ad16e4c44deb3'
+         'e7040943099c7f23d6df903eed55e502'
+         '991e510983c9468b63aa5c0f4f45529a'
+         '883d5831309ef5730ca444c32f0cc8f3'
+         '889a665836642facf66ed917c1c9e72b'
+         '7d0489f6999377669598fbe2ab00865e'
+         'd6994144ec58732b869222be68880b95'
+         '9cb821ebb6a25e603f9c32bafabde362'
+         '23d6e1ca0a36cfdbd35d3b1a61f0a105'
+         '3565ca5ad9be5c75f66478f0796b120d'
+         'dd20f932b846b5f50ac455b65e9432ad'
+         '7cad811b4ac5ee6c0b5496d006f1e0ee'
+         '1b81ba1063c3da92efd94b6251cdf65a'
+         '59ce04d1d01bf92bf6cfc0b74223191c')
+
+prepare() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    echo 'CFLAGS      += -O3' > Make.config
+    echo 'CXXFLAGS    += -O3' >> Make.config
+    echo 'PREFIX       = /usr' >> Make.config
+    echo 'RESDIR       =/usr/share/vdr' >> Make.config
+    echo 'CONFDIR      =/etc/vdr' >> Make.config
+    echo 'CACHEDIR     =/var/cache/vdr' >> Make.config
+    echo 'VIDEODIR     =/var/lib/video.00' >> Make.config
+    echo 'LIBDIR       = /usr/lib/vdr/plugins' >> Make.config
+    echo 'VDR_USER     = vdr' >> Make.config
+    echo 'SDNOTIFY     = 1' >> Make.config
+    echo 'LIRC_DEVICE  = /run/lirc/lircd' >> Make.config
+
+    sed -i 's/libsystemd-daemon/libsystemd/g' Makefile
+
+    for f in "$srcdir"/*.patch; do patch -p1 < "$f"; done
+
+    rm_plugins="$(ls PLUGINS/src/ | grep -vE '(dvbhddevice|dvbsddevice)')"
+    for i in $rm_plugins; do rm -rf "PLUGINS/src/$i"; done
+}
+
+build() {
+    gcc -o shutdown-wrapper shutdown-wrapper.c
+
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    make
+}
+
+package() {
+    mkdir -p "$pkgdir/etc/vdr"
+
+    install -Dm644 "$srcdir/allowed_hosts.conf" "$pkgdir/etc/vdr"
+    install -Dm644 "$srcdir/channels.conf" "$pkgdir/etc/vdr"
+    install -Dm644 "$srcdir/diseqc.conf" "$pkgdir/etc/vdr"
+    install -Dm644 "$srcdir/setup.conf" "$pkgdir/etc/vdr"
+
+    mkdir -p "$pkgdir/etc/vdr/themes"
+
+    install -Dm644 "$srcdir/sttng-blue.theme" "$pkgdir/etc/vdr/themes"
+    install -Dm644 "$srcdir/sttng-cool.theme" "$pkgdir/etc/vdr/themes"
+
+    mkdir -p "$pkgdir/etc/vdr/plugins"
+
+    install -Dm644 "$srcdir/00-vdr.conf" "$pkgdir/etc/vdr/conf.d/00-vdr.conf"
+    install -Dm644 "$srcdir/60-create-dvb-device-units.rules" "$pkgdir/usr/lib/udev/rules.d/60-create-dvb-device-units.rules"
+    install -Dm644 "$srcdir/vdr.service" "$pkgdir/usr/lib/systemd/system/vdr.service"
+
+    install -Dm754 shutdown-wrapper "$pkgdir/usr/lib/vdr/bin/shutdown-wrapper"
+    chgrp 666 "$pkgdir/usr/lib/vdr/bin/shutdown-wrapper"
+    chmod u+s "$pkgdir/usr/lib/vdr/bin/shutdown-wrapper"
+
+    install -Dm755 "$srcdir/gen-sddropin" "$pkgdir/usr/bin/vdr-gensddropin"
+    install -Dm755 "$srcdir/shutdown.sh" "$pkgdir/usr/lib/vdr/bin/shutdown.sh"
+
+    #Install sysuser config
+    install -Dm644 ${srcdir}/$pkgname.sysuser "$pkgdir/usr/lib/sysusers.d/$pkgname.conf"
+
+    install -Dm644 "$srcdir/50-dvbsddevice.conf" "$pkgdir/etc/vdr/conf.avail/50-dvbsddevice.conf"
+
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    mkdir -p "$pkgdir/usr/share/vdr"
+    make DESTDIR="${pkgdir}" install
+
+    mkdir -p "$pkgdir/usr/share/vdr/shutdown-hooks"
+    mkdir -p "$pkgdir/var/lib/vdr"
+    mkdir -p "$pkgdir/var/lib/video.00"
+
+    chown -R 666:666 "$pkgdir/etc/vdr"
+    chown -R 666:666 "$pkgdir/var/cache/vdr"
+    chown -R 666:666 "$pkgdir/var/lib/vdr"
+    chown -R 666:666 "$pkgdir/var/lib/video.00"
+}

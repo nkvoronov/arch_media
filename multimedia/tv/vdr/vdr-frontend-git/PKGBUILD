@@ -1,0 +1,42 @@
+# This PKGBUILD is part of the VDR4Arch project [https://github.com/vdr4arch]
+
+# Maintainer: Christopher Reimer <mail+vdr4arch[at]c-reimer[dot]de>
+pkgname=vdr-frontend-git
+_gitname='vdr-frontend'
+_verpkg='1.2.2'
+pkgver=1.2.2_g38fb5e9
+_vdrapi=2.2.0
+pkgrel=1
+pkgdesc="Video Disk Recorder (VDR) mega package"
+url="https://github.com/nkvoronov/vdr-frontend.git"
+arch=('x86_64' 'i686')
+license=('GPL2')
+depends=('gcc-libs' 'vdr' 'vdr-femon' 'vdr-filebrowser' 'vdr-iptv' 'vdr-live-git' 'vdr-dummydevice-git' 'vdr-dvbapi-git' 'vdr-eepg-git' 'vdr-epgfixer-git'
+'vdr-epgsearch-git' 'vdr-lcdproc-git' 'vdr-restfulapi-git' 'vdr-skindesigner-git' 'vdr-skinflat-git' 'vdr-skinflatplus-git' 'vdr-skinnopacity-git' 'vdr-sleeptimer-git' 'vdr-menuorg-git'
+'vdr-softhddevice-git' 'vdr-streamdev-client-git' 'vdr-streamdev-server-git' 'vdr-text2skin-git' 'vdr-tvguide-git' 'vdr-tvscraper-git' 'vdr-vnsiserver-git' 'vdr-weatherforecast-git'
+'vdr-xineliboutput-git' 'vdr-xmltv2vdr-git' 'vdr-xvdr-git' 'vdr-satip' 'vdr-systeminfo' 'vdr-wirbelscan' 'vdr-favorites')
+
+makedepends=('git')
+
+source=("${_gitname}::git+https://github.com/nkvoronov/vdr-frontend.git#branch=arch")
+
+backup=("etc/vdr/conf.d/vdr-front.conf"
+        "etc/vdr/conf.d/vdr-backend.conf")
+
+sha256sums=('SKIP')
+
+pkgver() {
+    cd "${srcdir}/${_gitname}"
+    _git=`git rev-parse --short HEAD`
+    printf "%s_%s" "$_verpkg" "g$_git"
+}
+
+build() {
+    cd "${srcdir}/${_gitname}"
+    make
+}
+
+package() {
+    cd "${srcdir}/${_gitname}"
+    make DESTDIR="$pkgdir" install
+}

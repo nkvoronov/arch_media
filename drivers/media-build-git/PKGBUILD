@@ -1,0 +1,67 @@
+# Maintainer: Nikolay Voronov
+
+pkgname=media-build-git
+_gitname='media_build'
+_branch=master
+pkgver=48b0842_4.13.12_1_ARCH
+pkgrel=1
+pkgdesc="Experimental build system for media drivers CrazyCat"
+url="https://bitbucket.org/CrazyCat/media_build"
+arch=('i686' 'x86_64')
+license=('GPL')
+makedepends=('linux-headers' 'wget' 'moreutils' 'coreutils' 'perl-proc-processtable')
+optdepends=('linuxtv-dvb-apps: handy DVB tools' 'v4l-utils: hardware support for some cards')
+conflicts=('ffdecsawrapper' 'tbs-linux-drivers' 'tbs-dvb-drivers' 'tbs-linux-drivers-cc-git')
+provides=('media-build-git')
+install='media-build-git.install'
+
+source=("${_gitname}::git+https://bitbucket.org/CrazyCat/media_build.git#branch=${_branch}"
+        'add-to-backports.patch'
+        'media-build-git.install')
+
+md5sums=('SKIP'
+         '8eb1a8fc037179fe711eebb83eeae971'
+         '59f8329e80cbcb94235eda483983efc8')
+
+pkgver() {
+  cd "${srcdir}/${_gitname}"
+  _git=`git rev-parse --short HEAD`
+  _kernel=`uname -r | sed -r 's/-/_/g'`
+  printf "%s_%s" "$_git" "$_kernel"
+}
+
+prepare() {
+  cd "${srcdir}/${_gitname}"
+  cp -PR ../../backports/* backports/
+  for f in "$srcdir"/*.patch; do patch -p1 < "$f"; done
+}
+
+build() {
+  cd "${srcdir}/${_gitname}"
+  make distclean
+
+  #if [ `uname -m` == "x86_64" ]; then
+  #./v4l/tbs-x86_64.sh
+  #else
+  #./v4l/tbs-x86_r3.sh
+  #fi
+
+  if [ -z "$_kernel" ]
+  then
+    _kernel=`uname -r`
+  fi
+
+  ./build
+}
+
+package() {
+  mkdir -p $pkgdir/usr/lib/modules/`uname -r`/updates
+  mkdir -p $pkgdir/usr/lib/firmware
+  install -m0644 ${srcdir}/${_gitname}/v4l/firmware/*.fw  $pkgdir/usr/lib/firmware
+  find ${srcdir}/${_gitname} -name '*.ko' -exec cp {} $pkgdir/usr/lib/modules/`uname -r`/updates \;
+  echo ""
+  msg "Compressing modules, this will take awhile..."
+  echo ""
+  find "$pkgdir" -name '*.ko' -print0 | xargs -0 -P`nproc` -n10 gzip -9
+  chmod -R go-w $pkgdir/usr/lib/modules/`uname -r`/updates
+}

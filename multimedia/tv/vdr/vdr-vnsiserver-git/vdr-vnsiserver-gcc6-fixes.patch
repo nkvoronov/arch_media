@@ -1,0 +1,33 @@
+Description: GCC 6 related fixes
+Author: Tobias Grimm <etobi@debian.org>
+Bug: https://github.com/FernetMenta/vdr-plugin-vnsiserver/pull/38
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/config.h
++++ b/config.h
+@@ -34,19 +34,19 @@
+ // log output configuration
+ 
+ #ifdef CONSOLEDEBUG
+-#define DEBUGLOG(x...) printf("VNSI: "x)
++#define DEBUGLOG(x...) printf("VNSI: " x)
+ #elif defined  DEBUG
+-#define DEBUGLOG(x...) dsyslog("VNSI: "x)
++#define DEBUGLOG(x...) dsyslog("VNSI: " x)
+ #else
+ #define DEBUGLOG(x...)
+ #endif
+ 
+ #ifdef CONSOLEDEBUG
+-#define INFOLOG(x...) printf("VNSI: "x)
+-#define ERRORLOG(x...) printf("VNSI-Error: "x)
++#define INFOLOG(x...) printf("VNSI: " x )
++#define ERRORLOG(x...) printf("VNSI-Error: " x)
+ #else
+-#define INFOLOG(x...) isyslog("VNSI: "x)
+-#define ERRORLOG(x...) esyslog("VNSI-Error: "x)
++#define INFOLOG(x...) isyslog("VNSI: " x)
++#define ERRORLOG(x...) esyslog("VNSI-Error: " x)
+ #endif
+ 
+ // default settings

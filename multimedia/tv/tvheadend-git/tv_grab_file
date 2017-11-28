@@ -1,0 +1,68 @@
+#!/bin/sh
+
+if [ -f /etc/conf.d/tvheadend ]; then
+    . /etc/conf.d/tvheadend
+fi
+
+dflag=
+vflag=
+cflag=
+
+if [ $# -lt 1 ]; then
+  if [ "$TVH_XMLTV_TYPE" = "file" ]; then
+    cat "$TVH_XMLTV_LOCATION"
+    exit 0
+  elif [ "$TVH_XMLTV_TYPE" = "script" ]; then
+    if [ -e "$TVH_XMLTV_LOCATION" ] ; then
+      exec "$TVH_XMLTV_LOCATION"
+    fi
+  elif [ "$TVH_XMLTV_TYPE" = "web" ]; then
+    wget -qO - "$TVH_XMLTV_LOCATION"
+    exit 0
+  fi
+fi
+
+for arg
+do
+    delim=""
+    case "$arg" in
+    #translate --gnu-long-options to -g (short options)
+       --description) args="${args}-d ";;
+       --version) args="${args}-v ";;
+       --capabilities) args="${args}-c ";;
+       #pass through anything else
+       *) [[ "${arg:0:1}" == "-" ]] || delim="\""
+           args="${args}${delim}${arg}${delim} ";;
+    esac
+done
+
+#Reset the positional parameters to the short options
+eval set -- $args
+
+while getopts "dvc" option 
+do
+    case $option in
+        d)  dflag=1;;
+        v)  vflag=1;;
+        c)  cflag=1;;
+        \?) printf "unknown option: -%s\n" $OPTARG
+            printf "Usage: %s: [--description] [--version] [--capabilities] \n" $(basename $0)
+            exit 2
+            ;;
+    esac >&2
+done
+
+if [ "$dflag" ]
+then
+   printf "Grabber that just read the local XMLTV formated file\n"
+fi
+if [ "$vflag" ]
+then
+   printf "0.1\n"
+fi
+if [ "$cflag" ]
+then
+   printf "baseline\n"
+fi
+
+exit 0

@@ -1,0 +1,83 @@
+# This PKGBUILD is part of the VDR4Arch project [https://github.com/vdr4arch]
+
+# Maintainer: Christopher Reimer <mail+vdr4arch[at]c-reimer[dot]de>
+pkgbase=vdr-xineliboutput
+_gitname='vdr-xineliboutput'
+pkgname=(vdr-xineliboutput-git xineliboutput-frontends-git xineliboutput-xineplug-git)
+_verpkg='2.0.0'
+pkgver=2.0.0_gfa97b86
+_vdrapi=2.2.0
+pkgrel=1
+url="http://www.sourceforge.net/projects/xineliboutput"
+arch=('x86_64' 'i686' 'arm' 'armv6h' 'armv7h')
+license=('GPL2')
+makedepends=('dbus-glib' 'git' 'glu' 'libextractor' 'libxrandr' 'mesa' "vdr-api=${_vdrapi}" 'xine-lib')
+_plugname='xineliboutput'
+
+source=("${_gitname}::git+git://projects.vdr-developer.org/xineliboutput.git#branch=master"
+        'vdr-xineliboutput-RU-locale.patch'
+        "50-$_plugname.conf")
+
+md5sums=('SKIP'
+         '4dec85536d8836b263bb7ab47153c1f0'
+         'af16bf78d16e22f979f90bf44575e7f5')
+
+pkgver() {
+    cd "${srcdir}/${_gitname}"
+    _git=`git rev-parse --short HEAD`
+    printf "%s_%s" "$_verpkg" "g$_git"
+}
+
+prepare() {
+    cd "${srcdir}/${_gitname}"
+    for f in "$srcdir"/*.patch; do patch -p1 < "$f"; done
+}
+
+build() {
+    cd "${srcdir}/${_gitname}"
+    ./configure --disable-libcec
+    make
+}
+
+package_vdr-xineliboutput-git() {
+    pkgdesc="X11 and Linux framebuffer front-end for VDR"
+    depends=('dbus-glib' 'libextractor' 'libxrandr' 'mesa' "vdr-api=${_vdrapi}" 'xine-lib' 'xineliboutput-xineplug-git')
+    optdepends=('nvidia: Required for VDPAU decoding'
+                'xorg-server: Required for software decoding')
+
+    backup=("etc/vdr/conf.avail/50-$_plugname.conf"
+            'etc/vdr/plugins/xineliboutput/allowed_hosts.conf')
+
+    cd "${srcdir}/${_gitname}"
+
+    mkdir -p "$pkgdir/usr/lib/vdr/plugins"
+    make DESTDIR="$pkgdir" install
+
+    rm -r "$pkgdir/usr/bin"
+    rm -r "$pkgdir/usr/lib/xine"
+
+    install -Dm644 examples/allowed_hosts.conf "$pkgdir/etc/vdr/plugins/xineliboutput/allowed_hosts.conf"
+    install -Dm644 "$srcdir/50-$_plugname.conf" "$pkgdir/etc/vdr/conf.avail/50-$_plugname.conf"
+}
+
+package_xineliboutput-frontends-git() {
+    pkgdesc="Xineliboutput frontends (vdr-fbfe and vdr-sxfe)"
+    depends=('dbus-glib' 'libcec-git' 'libxrandr' 'mesa' 'xine-lib' 'xineliboutput-xineplug-git')
+    optdepends=('nvidia: Required for VDPAU decoding'
+                'xorg-server: Required for software decoding')
+    cd "${srcdir}/${_gitname}"
+
+    mkdir -p "$pkgdir/usr/lib/vdr/plugins"
+    make DESTDIR="$pkgdir" install
+    rm -r "$pkgdir/usr/lib" "$pkgdir/usr/share"
+}
+
+package_xineliboutput-xineplug-git() {
+    pkgdesc="Neccessary xine plugins for xineliboutput-frontends and vdr-xineliboutput"
+    depends=('xine-lib')
+    cd "${srcdir}/${_gitname}"
+
+    mkdir -p "$pkgdir/usr/lib/vdr/plugins"
+    make DESTDIR="$pkgdir" install
+    rm -r "$pkgdir/usr/bin" "$pkgdir/usr/lib/vdr" "$pkgdir/usr/share"
+}

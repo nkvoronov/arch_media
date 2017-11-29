@@ -3,7 +3,7 @@
 
 pkgname=tvheadend-git
 _gitname='tvheadend'
-pkgver=4.3.r714.g7f89446ab
+pkgver=4.3.r721.g3ae2640dd
 pkgrel=1
 pkgdesc="TV streaming server for Linux"
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h')
@@ -25,7 +25,7 @@ source=("${_gitname}::git+https://github.com/tvheadend/tvheadend.git#branch=mast
 
 md5sums=('SKIP'
          '5c58449a9e8ab121d48e7139e55405ad'
-         '25da1c0dd8bcaa3babf1bcd9a68153bd'
+         '6b3ee77305fe47e39fed09d04a32e383'
          '7c5ba5607c3850a96005c7a99722186f'
          '3a5a6b8e424225cf6bb99e80da54f43c'
          'c5d485a95e6afd17732deaddbba10aec')

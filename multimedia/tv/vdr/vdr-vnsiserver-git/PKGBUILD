@@ -4,7 +4,7 @@
 pkgname=vdr-vnsiserver-git
 _gitname='vdr-vnsiserver'
 _verpkg='1.5.2'
-pkgver=1.5.2_g63d8151
+pkgver=1.5.2_g02f1631
 _vdrapi=2.2.0
 pkgrel=1
 url="https://github.com/FernetMenta/vdr-plugin-vnsiserver"

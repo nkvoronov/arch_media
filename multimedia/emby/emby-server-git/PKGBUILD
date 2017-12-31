@@ -3,7 +3,7 @@
 # Contributor: Daniel Seymour <dannyseeless@gmail.com>
 
 pkgname=emby-server-git
-pkgver=3.2.50.0
+pkgver=3.2.60.0
 pkgrel=1
 pkgdesc='Bring together your videos, music, photos, and live television'
 arch=('i686' 'x86_64')
@@ -19,7 +19,7 @@ source=("emby-server-${pkgver}.tar.gz::https://github.com/MediaBrowser/Emby/arch
         'emby-server.conf'
         'emby-server.service')
 
-md5sums=('bc76089e66ad99d636ec5bf2834dc8c2'
+md5sums=('216cb4570b732fa53db501b42cdcb315'
          'a4f8dd28453fab4a94275e3d7e20154b'
          '00802787748a25a18fcc35abb1a7f4ae'
          '27180ae6385299216b2e2519bfc4909a'

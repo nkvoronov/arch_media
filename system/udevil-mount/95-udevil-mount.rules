@@ -1,8 +1,8 @@
 # check for blockdevices, /dev/sd*, /dev/sr* and /dev/mmc*
-SUBSYSTEM!="block", KERNEL!="sd[d-z][0-9]|sr*|mmc*", GOTO="exit"
+SUBSYSTEM!="block", KERNEL!="sd[e-z][0-9]|sr*|mmc*", GOTO="exit"
 
 # /dev/sd* and /dev/mmc* ith partitions/disk and filesystems only and /dev/sr* disks only
-KERNEL=="sd[d-z][0-9]|mmc*", ENV{DEVTYPE}=="partition|disk", ENV{ID_FS_USAGE}=="filesystem", GOTO="harddisk"
+KERNEL=="sd[e-z][0-9]|mmc*", ENV{DEVTYPE}=="partition|disk", ENV{ID_FS_USAGE}=="filesystem", GOTO="harddisk"
 KERNEL=="sr0", ENV{DEVTYPE}=="disk", GOTO="optical"
 GOTO="exit"
 

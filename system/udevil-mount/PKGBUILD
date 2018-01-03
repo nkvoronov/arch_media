@@ -10,7 +10,7 @@ depends=('udevil')
 source=('95-udevil-mount.rules'
 	'udevil-mount@.service')
 
-md5sums=('b63276d51f2a63639ca767721f1fbe40'
+md5sums=('72dccec11a03851f70e1fdd8161afa21'
          'cfdad5a5fbd7e53dd89d5321132e1386')
 
 package() {

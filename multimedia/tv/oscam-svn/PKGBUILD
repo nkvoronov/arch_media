@@ -2,7 +2,7 @@
 # Contributor: Markus Opitz <mastero23 at gmail dot com>
 
 pkgname=oscam-svn
-pkgver=11397
+pkgver=11398
 pkgrel=1
 
 pkgdesc="The Open Source Conditional Access Module daemon"

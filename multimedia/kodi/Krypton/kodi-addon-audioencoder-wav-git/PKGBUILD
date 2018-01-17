@@ -1,0 +1,39 @@
+pkgname=kodi-addon-audioencoder-wav-git
+_gitname='kodi-addon-audioencoder-wav'
+_verpkg='1.1.0'
+pkgver=1.1.0_g10cc651
+pkgrel=1
+pkgdesc="Wav Audio Encoder add-on for Kodi"
+arch=('x86_64')
+url='https://github.com/xbmc/audioencoder.wav.git'
+license=('GPL')
+groups=('kodi-addons' 'kodi-addons-audioencoder')
+provides=('kodi-addon-audioencoder-wav-git')
+replaces=('kodi-addon-audioencoder-wav-git')
+conflicts=('kodi-addon-audioencoder-wav')
+depends=('kodi')
+makedepends=('cmake' 'kodi-dev-git')
+source=("${_gitname}::git+https://github.com/xbmc/audioencoder.wav.git#tag=v$_verpkg")
+
+md5sums=('SKIP')
+
+pkgver() {
+    cd "${srcdir}/${_gitname}"
+    _git=`git rev-parse --short HEAD`
+    printf "%s_%s" "$_verpkg" "g$_git"
+}
+
+build() {
+    cd "${srcdir}/${_gitname}"
+    cmake \
+	-DCMAKE_INSTALL_PREFIX=/usr \
+	-DCMAKE_BUILD_TYPE=Release \
+	-DBUILD_SHARED_LIBS=1 \
+	-DUSE_LTO=1
+    make
+}
+
+package() {
+    cd "${srcdir}/${_gitname}"
+    make DESTDIR="$pkgdir/" install
+}

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/opt/acestream/start-engine --client-console $1

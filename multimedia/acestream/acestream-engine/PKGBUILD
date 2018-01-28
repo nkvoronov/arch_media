@@ -1,24 +1,24 @@
 
 pkgname=acestream-engine
 _gitname='acestream'
-pkgver=3.0.5.1
-pkgrel=1
+pkgver=3.1.16
+pkgrel=2
 pkgdesc="ACE Stream engine"
 arch=('x86_64')
 url="http://acestream.org/"
 license=('unknown')
-depends=('python2-setuptools' 'python2-xlib' 'python2-m2crypto' 'python2-apsw' 'openssl-1.0')
+depends=('python2-setuptools' 'openssl-1.0')
 
-source=("${_gitname}::git+https://github.com/nkvoronov/tools-ace.git#branch=master")
+source=("${_gitname}::git+https://github.com/nkvoronov/tools-ace.git#branch=v3.1.16"
+        'acestreamengine-client-console')
 
-md5sums=('SKIP')
+md5sums=('SKIP'
+         '5dd078dc60f96aef230b87cf0c8aed56')
 
 package() {
-  cd "$srcdir/acestream"
-  mkdir -p "$pkgdir/usr"
   mkdir -p "$pkgdir/usr/bin"
-  mkdir -p "$pkgdir/usr/share"
-  install -Dm755 "acestreamengine-client-console" "$pkgdir/usr/bin"
-  cd "$srcdir/acestream/x86_64"
-  cp -a acestream "$pkgdir/usr/share/acestream/"
+  mkdir -p "$pkgdir/opt"
+  install -Dm755 acestreamengine-client-console "$pkgdir/usr/bin"
+  cd "$srcdir/acestream"
+  cp -a acestream "$pkgdir/opt"
 }

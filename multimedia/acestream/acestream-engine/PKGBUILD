@@ -1,24 +1,37 @@
-
 pkgname=acestream-engine
-_gitname='acestream'
 pkgver=3.1.16
-pkgrel=2
+pkgrel=6
+_ubuntuver=16.04
 pkgdesc="ACE Stream engine"
 arch=('x86_64')
 url="http://acestream.org/"
 license=('unknown')
-depends=('python2-setuptools' 'openssl-1.0')
+depends=('openssl-1.0' 'net-tools' 'python2-setuptools' 'python2-xlib' 'python2-apsw' 'python2-lxml' 'python2-typing')
+optdepends=('libappindicator-gtk2: GTK+ gui support')
+install='acestream-engine.install'
+source=(
+  "acestream-engine.service"
+  "http://dl.acestream.org/linux/acestream_${pkgver}_ubuntu_${_ubuntuver}_x86_64.tar.gz"
+  "https://archive.archlinux.org/packages/p/python2-m2crypto/python2-m2crypto-0.24.0-4-x86_64.pkg.tar.xz"
+  'acestreamengine-client-console'
+)
 
-source=("${_gitname}::git+https://github.com/nkvoronov/tools-ace.git#branch=v3.1.16"
-        'acestreamengine-client-console')
-
-md5sums=('SKIP'
-         '5dd078dc60f96aef230b87cf0c8aed56')
+sha256sums=('b9863a9dd3ee6d41d18475f5f539107fe81a573f45ca1cb98013441f955f1af0'
+            '452bccb8ae8b5ff4497bbb796081dcf3fec2b699ba9ce704107556a3d6ad2ad7'
+            '177c22681be64a7533b3303652da8724aa20edcbead87be90765bc5040f4cff5'
+            'f9ed639f05d597e68bbcfb37c182c16c526dd62d9271fbc224d77a0ae45eccac')
 
 package() {
   mkdir -p "$pkgdir/usr/bin"
-  mkdir -p "$pkgdir/opt"
-  install -Dm755 acestreamengine-client-console "$pkgdir/usr/bin"
-  cd "$srcdir/acestream"
-  cp -a acestream "$pkgdir/opt"
+  mkdir -p "$pkgdir/usr/share"
+  cd "$srcdir/acestream_${pkgver}_ubuntu_${_ubuntuver}_$CARCH"
+  install -Dm755 acestreamengine "$pkgdir/usr/share/acestream/acestreamengine"
+  sed -i "/ROOT=/c\ROOT=\/usr\/share\/acestream" "start-engine"
+  install -Dm755 "start-engine" "$pkgdir/usr/share/acestream/start-engine"
+  cp -a acestream.conf "$pkgdir/usr/share/acestream/acestream.conf"
+  cp -a data lib "$pkgdir/usr/share/acestream/"
+  cp -a $srcdir/usr/lib/python2.7/site-packages/M2Crypto* "$pkgdir/usr/share/acestream/lib"
+  install -Dm644 "$srcdir/acestream-engine.service" "$pkgdir/usr/lib/systemd/system/acestream-engine.service"
+  rm "$pkgdir/usr/share/acestream/lib/lxml-3.7.2-py2.7-linux-x86_64.egg"
+  install -Dm755 "$srcdir/acestreamengine-client-console" "$pkgdir/usr/bin"
 }

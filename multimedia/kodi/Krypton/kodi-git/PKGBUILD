@@ -19,7 +19,7 @@ pkgbase=kodi-git
 pkgname=('kodi-git' 'kodi-eventclients-git' 'kodi-tools-texturepacker-git' 'kodi-dev-git')
 _gitname=kodi
 _verpkg='17.6'
-pkgver=17.6_g816d15e57b
+pkgver=17.6_g7e52c1d94d0
 
 pkgrel=1
 _branch=Krypton

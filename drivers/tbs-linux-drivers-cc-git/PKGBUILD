@@ -3,8 +3,8 @@
 
 pkgname=tbs-linux-drivers-cc-git
 _gitname='tbs-linux-drivers-cc'
-_branch=v161031-patch
-pkgver=98955fa_4.12.13_1_ARCH
+_branch=v170330-patch
+pkgver=0d45df2_4.15.4_1_ARCH
 pkgrel=1
 pkgdesc="TBS proprietary DVB drivers + firmware CrazyCat"
 url="http://www.tbsdtv.com"

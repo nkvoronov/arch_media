@@ -6,6 +6,8 @@ After=syslog.target
 Type=forking
 ExecStart=/usr/bin/LCDd -c /etc/LCDd.conf
 ControlGroup=cpu:/
+Restart=on-failure
+RestartSec=54s
 
 [Install]
 WantedBy=multi-user.target

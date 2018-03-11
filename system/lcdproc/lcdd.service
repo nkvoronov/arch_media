@@ -3,11 +3,12 @@ Description=LCD display driver
 After=syslog.target
 
 [Service]
-Type=forking
-ExecStart=/usr/bin/LCDd -c /etc/LCDd.conf
-ControlGroup=cpu:/
+ExecStart=/usr/bin/LCDd -f -c /etc/LCDd.conf
+TimeoutStopSec=1s
 Restart=on-failure
-RestartSec=54s
+RestartSec=5
+StartLimitInterval=30
+StartLimitBurst=5
 
 [Install]
 WantedBy=multi-user.target

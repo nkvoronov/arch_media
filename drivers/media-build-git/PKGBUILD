@@ -3,7 +3,7 @@
 pkgname=media-build-git
 _gitname='media_build'
 _branch=master
-pkgver=8ef9a7f_4.15.7_1_ARCH
+pkgver=d59f3f8_4.15.7_1_ARCH
 pkgrel=1
 pkgdesc="Experimental build system for media drivers CrazyCat"
 url="https://bitbucket.org/CrazyCat/media_build"
@@ -20,7 +20,7 @@ source=("${_gitname}::git+https://bitbucket.org/CrazyCat/media_build.git#branch=
         'media-build-git.install')
 
 md5sums=('SKIP'
-         'b9ea216145e1661919433802a51ab1cd'
+         '619b244b1df3aa578067c74d61e30e72'
          '59f8329e80cbcb94235eda483983efc8')
 
 pkgver() {

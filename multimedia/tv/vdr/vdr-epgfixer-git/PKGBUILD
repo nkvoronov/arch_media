@@ -4,7 +4,7 @@
 pkgname=vdr-epgfixer-git
 _gitname='vdr-epgfixer'
 _verpkg='0.3.1'
-pkgver=0.3.1_g1ad4aaf
+pkgver=0.3.1_g354f28b
 _vdrapi=2.2.0
 pkgrel=1
 pkgdesc="VDR plugin for doing extra fixing of EPG data"

@@ -7,7 +7,7 @@ _gitname='vdr-streamdev'
 pkgname=(vdr-streamdev-{client,server}-git)
 _verpkg='0.6.1'
 pkgver=0.6.1_ge2a9b97
-_vdrapi=2.2.0
+_vdrapi=2.4.0
 pkgrel=1
 pkgdesc="implementation of the VTP (Video Transfer Protocol)"
 url="http://projects.vdr-developer.org/projects/show/plg-streamdev"
@@ -17,15 +17,13 @@ depends=('gcc-libs' "vdr-api=${_vdrapi}")
 makedepends=('git')
 _plugname='streamdev'
 
-source=("${_gitname}::git+git://projects.vdr-developer.org/vdr-plugin-streamdev.git#branch=master"
-        "http://projects.vdr-developer.org/attachments/download/1844/vdr-plugin-streamdev-filter-patch.diff"
-        "http://projects.vdr-developer.org/attachments/download/1853/vdr-plugin-streamdev-filter-patch2.diff"
-        'vdr-streamdev-RU-locale.patch'
-        "50-$_plugname-server.conf")
-        
+source=("${_gitname}::git+git://github.com/vdr-projects/vdr-plugin-streamdev.git#branch=master"
+        'vdr-streamdev-01_4k_hevc_support.patch'
+        'vdr-streamdev-02_RU-locale.patch'
+        "plugin.${_plugname}-server.conf")
+
 md5sums=('SKIP'
-         'a1e4b3807ede87b810abc973666a88eb'
-         'e0ddaa269ce0727dd2e434a417b42bf5'
+         '541b8cdbc0dfd317d75fec30432ec846'
          '99e9be776b59903156fe85d02da6eb70'
          'c22ba9bffb11c96ab792758c51b2777a')
 
@@ -40,7 +38,7 @@ prepare() {
 
     #for f in "$srcdir"/*.diff; do patch -p1 < "$f"; done
     for f in "$srcdir"/*.patch; do patch -p1 < "$f"; done
-  
+
     sed -i 's/m_Buffer\[4096\]/m_Buffer\[8192\]/' client/filter.c
 }
 
@@ -53,24 +51,24 @@ package_vdr-streamdev-client-git() {
     pkgdesc+=': client-side'
     replaces=('vdr-streamdev')
     conflicts=('vdr-streamdev')
-    
-    backup=("etc/vdr/conf.avail/50-$_plugname-client.conf")
-    
+
+    backup=("etc/vdr/conf.avail/plugin.${_plugname}-client.conf")
+
     cd "${srcdir}/${_gitname}"
     make DESTDIR="$pkgdir" install-client
 
     mkdir -p "$pkgdir/etc/vdr/conf.avail"
-    echo "[$_plugname-client]" > "$pkgdir/etc/vdr/conf.avail/50-$_plugname-client.conf"
+    echo "[$_plugname-client]" > "$pkgdir/etc/vdr/conf.avail/plugin.${_plugname}-client.conf"
 }
 
 package_vdr-streamdev-server-git() {
     pkgdesc+=': server-side'
     replaces=('vdr-streamdev')
     conflicts=('vdr-streamdev')
-    
-    backup=("etc/vdr/conf.avail/50-$_plugname-server.conf"
+
+    backup=("etc/vdr/conf.avail/plugin.${_plugname}-server.conf"
             'etc/vdr/plugins/streamdev-server/streamdevhosts.conf')
-          
+
     cd "${srcdir}/${_gitname}"
     make DESTDIR="$pkgdir" install-server
 
@@ -78,5 +76,5 @@ package_vdr-streamdev-server-git() {
     install -Dm755 streamdev-server/externremux.sh "$pkgdir/etc/vdr/plugins/streamdev-server/externremux.sh"
 
     mkdir -p "$pkgdir/etc/vdr/conf.avail"
-    install -Dm644 "$srcdir/50-$_plugname-server.conf" "$pkgdir/etc/vdr/conf.avail/50-$_plugname-server.conf"
+    install -Dm644 "$srcdir/plugin.${_plugname}-server.conf" "$pkgdir/etc/vdr/conf.avail/plugin.${_plugname}-server.conf"
 }

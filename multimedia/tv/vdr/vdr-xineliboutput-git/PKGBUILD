@@ -4,9 +4,9 @@
 pkgbase=vdr-xineliboutput
 _gitname='vdr-xineliboutput'
 pkgname=(vdr-xineliboutput-git xineliboutput-frontends-git xineliboutput-xineplug-git)
-_verpkg='2.0.0'
-pkgver=2.0.0_gfa97b86
-_vdrapi=2.2.0
+_verpkg='2.1.0'
+pkgver=2.1.0_g747f03e
+_vdrapi=2.4.0
 pkgrel=1
 url="http://www.sourceforge.net/projects/xineliboutput"
 arch=('x86_64' 'i686' 'arm' 'armv6h' 'armv7h')
@@ -14,12 +14,12 @@ license=('GPL2')
 makedepends=('dbus-glib' 'git' 'glu' 'libextractor' 'libxrandr' 'mesa' "vdr-api=${_vdrapi}" 'xine-lib')
 _plugname='xineliboutput'
 
-source=("${_gitname}::git+git://projects.vdr-developer.org/xineliboutput.git#branch=master"
-        'vdr-xineliboutput-RU-locale.patch'
-        "50-$_plugname.conf")
+source=("${_gitname}::git+git://github.com/vdr-projects/vdr-plugin-xineliboutput.git#branch=master"
+        'vdr-xineliboutput-02_dfatmo-switch.patch'
+        "plugin.${_plugname}.conf")
 
 md5sums=('SKIP'
-         '4dec85536d8836b263bb7ab47153c1f0'
+         'a1f9187085cf00c6e9bcd840ea89e6e5'
          'af16bf78d16e22f979f90bf44575e7f5')
 
 pkgver() {
@@ -45,7 +45,7 @@ package_vdr-xineliboutput-git() {
     optdepends=('nvidia: Required for VDPAU decoding'
                 'xorg-server: Required for software decoding')
 
-    backup=("etc/vdr/conf.avail/50-$_plugname.conf"
+    backup=("etc/vdr/conf.avail/plugin.${_plugname}.conf"
             'etc/vdr/plugins/xineliboutput/allowed_hosts.conf')
 
     cd "${srcdir}/${_gitname}"
@@ -57,7 +57,7 @@ package_vdr-xineliboutput-git() {
     rm -r "$pkgdir/usr/lib/xine"
 
     install -Dm644 examples/allowed_hosts.conf "$pkgdir/etc/vdr/plugins/xineliboutput/allowed_hosts.conf"
-    install -Dm644 "$srcdir/50-$_plugname.conf" "$pkgdir/etc/vdr/conf.avail/50-$_plugname.conf"
+    install -Dm644 "$srcdir/plugin.${_plugname}.conf" "$pkgdir/etc/vdr/conf.avail/plugin.${_plugname}.conf"
 }
 
 package_xineliboutput-frontends-git() {

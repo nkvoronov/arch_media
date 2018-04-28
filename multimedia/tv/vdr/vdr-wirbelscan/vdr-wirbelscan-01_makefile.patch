@@ -1,0 +1,55 @@
+--- a/Makefile
++++ b/Makefile
+@@ -1,29 +1,26 @@
+ #
+-# IMPORTANT NOTICE:
+-# !! This Makefile is no longer in use by me and i consider it obsolete.
+-# !! It *may* or *may not* build/install this plugin.
++# Makefile for a Video Disk Recorder plugin
+ #
+- 
+-
++# $Id$
++#
++PLUGIN = wirbelscan
+ 
++### The version number of this plugin (taken from the main source file):
++VERSION = $(shell grep 'static const char \*VERSION *=' $(PLUGIN).c | awk '{ print $$6 }' | sed -e 's/[";]//g')
+ 
+-          
+ PWD = $(shell pwd)
+-PLUGIN = $(shell basename $(PWD) | cut -d- -f1)
++
+ OBJS = $(shell ls *.c | sed -e 's/\.c/\.o/g')
+ 
+ 
+-### The version number of this plugin (taken from the main source file):
+-VERSION = $(shell grep 'static const char \*VERSION *=' $(PLUGIN).c | awk '{ print $$6 }' | sed -e 's/[";]//g')
+ 
+ 
+ ### The directory environment:
+ # Use package data if installed...otherwise assume we're under the VDR source directory:
+-PKGCFG = $(if $(VDRDIR),$(shell pkg-config --variable=$(1) $(VDRDIR)/vdr.pc),$(shell PKG_CONFIG_PATH="$$PKG_CONFIG_PATH:../../.." pkg-config --variable=$(1) vdr))
++PKGCFG = $(if $(VDRDIR),$(shell pkg-config --variable=$(1) $(VDRDIR)/vdr.pc),$(shell pkg-config --variable=$(1) vdr || pkg-config --variable=$(1) ../../../vdr.pc))
+ LIBDIR = $(call PKGCFG,libdir)
+ LOCDIR = $(call PKGCFG,locdir)
+ PLGCFG = $(call PKGCFG,plgcfg)
+-
+ #
+ TMPDIR ?= /tmp
+ 
+@@ -45,12 +42,12 @@
+ SOFILE = libvdr-$(PLUGIN).so
+ 
+ ### Includes and Defines (add further entries here):
+-INCLUDES +=
++INCLUDES += -I$(VDRDIR)/include
+ 
+ DEFINES += -DPLUGIN_NAME_I18N='"$(PLUGIN)"'
+ 
+ ### The object files (add further files here):
+-#OBJS = $(shell ls *.c | sed -e 's/\.c/\.o/g')
++OBJS = $(shell ls *.c | sed -e 's/\.c/\.o/g')
+ 
+ ### The main target:
+ all: $(SOFILE) i18n

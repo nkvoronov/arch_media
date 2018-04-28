@@ -5,7 +5,7 @@ pkgname=vdr-epgfixer-git
 _gitname='vdr-epgfixer'
 _verpkg='0.3.1'
 pkgver=0.3.1_g354f28b
-_vdrapi=2.2.0
+_vdrapi=2.4.0
 pkgrel=1
 pkgdesc="VDR plugin for doing extra fixing of EPG data"
 url="http://projects.vdr-developer.org/projects/plg-epgfixer"
@@ -15,15 +15,15 @@ depends=('gcc-libs' 'pcre' "vdr-api=${_vdrapi}")
 makedepends=('git')
 _plugname='epgfixer'
 
-source=("${_gitname}::git+git://projects.vdr-developer.org/vdr-plugin-epgfixer.git#branch=master"
-	'vdr-epgfixer-RU-locale.patch')
+source=("${_gitname}::git+git://github.com/vdr-projects/vdr-plugin-epgfixer.git#branch=master"
+        'vdr-epgfixer-RU-locale.patch')
 
-backup=("etc/vdr/conf.avail/50-$_plugname.conf"
-	'etc/vdr/plugins/epgfixer/blacklist.conf'
+backup=("etc/vdr/conf.avail/plugin.${_plugname}.conf"
+        'etc/vdr/plugins/epgfixer/blacklist.conf'
         'etc/vdr/plugins/epgfixer/charset.conf'
         'etc/vdr/plugins/epgfixer/epgclone.conf'
         'etc/vdr/plugins/epgfixer/regexp.conf')
-        
+
 md5sums=('SKIP'
          '747f8537ba24aac066ebc3b625bf3478')
 
@@ -46,7 +46,7 @@ build() {
 package() {
     cd "${srcdir}/${_gitname}"
     make DESTDIR="$pkgdir" install
-    
+
     mkdir -p "$pkgdir/etc/vdr/conf.avail"
-    echo "[$_plugname]" > "$pkgdir/etc/vdr/conf.avail/50-$_plugname.conf"
+    echo "[$_plugname]" > "$pkgdir/etc/vdr/conf.avail/plugin.${_plugname}.conf"
 }

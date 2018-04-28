@@ -6,7 +6,7 @@ _gitname='vdr-restfulapi'
 _verpkg='0.2.6.5'
 pkgver=0.2.6.5_g96a03b3
 pkgrel=1
-_vdrapi=2.2.0
+_vdrapi=2.4.0
 pkgdesc="Restful-API Control for VDR"
 url="https://github.com/yavdr/vdr-plugin-restfulapi"
 arch=('x86_64' 'i686' 'arm' 'armv6h' 'armv7h')
@@ -15,17 +15,17 @@ depends=('cxxtools' 'graphicsmagick' "vdr-api=${_vdrapi}")
 _plugname='restfulapi'
 
 source=("${_gitname}::git+https://github.com/yavdr/vdr-plugin-restfulapi.git#branch=master"
-	'vdr-restfulapi-RU-locale.patch'
-        "50-$_plugname.conf")
-
-backup=("etc/vdr/conf.avail/50-$_plugname.conf"
-        'etc/vdr/plugins/restfulapi/API.html'
-        'usr/share/vdr/plugins/restfulapi/osd.css'
-        'usr/share/vdr/plugins/restfulapi/osd.js')
+        'vdr-restfulapi-02_RU-locale.patch'
+        "plugin.${_plugname}.conf")
 
 md5sums=('SKIP'
          '33ee2c42e4f51be00e288cc3fd2751c3'
          'c65fdc8d51d9d9d9dfd6c84dd07eff6e')
+
+backup=("etc/vdr/conf.avail/plugin.${_plugname}.conf"
+        'etc/vdr/plugins/restfulapi/API.html'
+        'usr/share/vdr/plugins/restfulapi/osd.css'
+        'usr/share/vdr/plugins/restfulapi/osd.js')
 
 pkgver() {
     cd "${srcdir}/${_gitname}"
@@ -51,5 +51,5 @@ package() {
     install -m 644 web/osd.js     "$pkgdir/usr/share/vdr/plugins/restfulapi/"
     install -m 644 web/osd.css    "$pkgdir/usr/share/vdr/plugins/restfulapi/"
 
-    install -Dm644 "$srcdir/50-$_plugname.conf" "$pkgdir/etc/vdr/conf.avail/50-$_plugname.conf"
+    install -Dm644 "$srcdir/plugin.${_plugname}.conf" "$pkgdir/etc/vdr/conf.avail/plugin.${_plugname}.conf"
 }

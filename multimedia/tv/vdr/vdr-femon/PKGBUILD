@@ -2,8 +2,8 @@
 
 # Maintainer: Christopher Reimer <mail+vdr4arch[at]c-reimer[dot]de>
 pkgname=vdr-femon
-pkgver=2.2.1
-_vdrapi=2.2.0
+pkgver=2.4.0
+_vdrapi=2.4.0
 pkgrel=1
 pkgdesc="DVB Frontend Status Monitor plugin"
 url="http://www.saunalahti.fi/rahrenbe/vdr/femon/"
@@ -13,13 +13,14 @@ depends=('gcc-libs' "vdr-api=${_vdrapi}")
 _plugname=${pkgname//vdr-/}
 
 source=("http://www.saunalahti.fi/~rahrenbe/vdr/femon/files/$pkgname-$pkgver.tgz"
-	'vdr-femon-RU-locale.patch')
-	
-backup=("etc/vdr/conf.avail/50-$_plugname.conf")
-	
-md5sums=('9a9d2a553dc72b96a6c8a810ba3c7456'
-         '99b78ddd791dd6e1cc1d3165c2ca5141')
-	
+       'vdr-femon-02_RU-locale.patch')
+
+md5sums=('1771c79e5345772199f56c42a5ee73cd'
+         'd6ea0fbf9eb66353f18703aa7e83a284')
+
+backup=("etc/vdr/conf.avail/plugin.${_plugname}.conf")
+
+
 prepare() {
     cd "${srcdir}/${_plugname}-${pkgver}"
     for f in "$srcdir"/*.patch; do patch -p1 < "$f"; done
@@ -33,7 +34,7 @@ build() {
 package() {
   cd "${srcdir}/${_plugname}-${pkgver}"
   make DESTDIR="$pkgdir" install
-  
+
   mkdir -p "$pkgdir/etc/vdr/conf.avail"
-  echo "[$_plugname]" > "$pkgdir/etc/vdr/conf.avail/50-$_plugname.conf"
+  echo "[$_plugname]" > "$pkgdir/etc/vdr/conf.avail/plugin.${_plugname}.conf"
 }

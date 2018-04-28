@@ -3,9 +3,9 @@
 # Maintainer: Christopher Reimer <mail+vdr4arch[at]c-reimer[dot]de>
 pkgname=vdr-xmltv2vdr-git
 _gitname='vdr-xmltv2vdr'
-_verpkg='0.2.0'
-pkgver=0.2.0_gec7bd92
-_vdrapi=2.2.0
+_verpkg='0.2.1'
+pkgver=0.2.1_gec7bd92
+_vdrapi=2.4.0
 pkgrel=1
 pkgdesc="Add epg info from epg sources into vdr"
 url="http://projects.vdr-developer.org/projects/plg-xmltv2vdr"
@@ -15,20 +15,20 @@ depends=('pcre' 'curl' 'enca' 'libxslt' 'libzip' 'sqlite' "vdr-api=${_vdrapi}")
 makedepends=('git')
 _plugname='xmltv2vdr'
 
-source=("${_gitname}::git+git://projects.vdr-developer.org/vdr-plugin-xmltv2vdr.git#branch=master"
-        'xmltv2vdr_newmakefile_v2.diff'
-        'vdr-xmltv2vdr-RU-locale.patch'
-        'vdr-xmltv2vdr-makefile-gcc6.patch'
-        "50-$_plugname.conf")
-
-backup=("etc/vdr/conf.avail/50-$_plugname.conf"
-        "var/lib/epgsources/epgdata2xmltv")
+source=("${_gitname}::git+git://github.com/vdr-projects/vdr-plugin-xmltv2vdr.git#branch=master"
+        'vdr-xmltv2vdr_01_newmakefile-v2.diff'
+        'vdr-xmltv2vdr-02_makefile-gcc6.patch'
+        'vdr-xmltv2vdr-03_RU-locale.patch'
+        "plugin.${_plugname}.conf")
 
 md5sums=('SKIP'
          '0642898237a478d4c74bceb568c50050'
-         '43dd3734da19243d4f05ece97aa1da92'
          '9428afe0338f57439b9287b89a0667f4'
+         '43dd3734da19243d4f05ece97aa1da92'
          '87fbe9a95326167e31caa2799bc88efa')
+
+backup=("etc/vdr/conf.avail/plugin.${_plugname}.conf"
+        "var/lib/epgsources/epgdata2xmltv")
 
 pkgver() {
     cd "${srcdir}/${_gitname}"
@@ -53,7 +53,7 @@ package() {
     make DESTDIR="$pkgdir" install
     make DESTDIR="$pkgdir" install -C dist/epgdata2xmltv
 
-    install -Dm644 "$srcdir/50-$_plugname.conf" "$pkgdir/etc/vdr/conf.avail/50-$_plugname.conf"
+    install -Dm644 "$srcdir/plugin.${_plugname}.conf" "$pkgdir/etc/vdr/conf.avail/plugin.${_plugname}.conf"
 
     mkdir -p "$pkgdir/var/lib/epgsources/epgdata2xmltv-img"
     chown -R 666:666 "$pkgdir/var/lib/epgsources"

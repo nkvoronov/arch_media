@@ -3,9 +3,9 @@
 # Maintainer: Christopher Reimer <mail+vdr4arch[at]c-reimer[dot]de>
 pkgname='vdr-skindesigner-git'
 _gitname='vdr-skindesigner'
-_verpkg='1.2.3'
-pkgver=1.2.3_g9647640
-_vdrapi=2.2.0
+_verpkg='1.2.7'
+pkgver=1.2.7_g5b03953
+_vdrapi=2.4.0
 pkgrel=1
 pkgdesc="Highly customizable native true color skin for the Video Disc Recorder"
 url="http://projects.vdr-developer.org/projects/skin-nopacity"
@@ -18,19 +18,19 @@ conflicts=(skindesigner-{blackhole,holo,metrixhd,nopacity,shady,shady_kiss,skine
 replaces=(skindesigner-{blackhole,holo,metrixhd,nopacity,shady,shady_kiss,skinelchi,tryouts})
 _plugname='skindesigner'
 
-source=("${_gitname}::git+git://projects.vdr-developer.org/vdr-plugin-skindesigner.git#branch=master"
-        'vdr-skindesigner-RU-locale.patch'
+source=("${_gitname}::git+git://github.com/vdr-projects/vdr-plugin-skindesigner.git#branch=master"
+        'vdr-skindesigner-02_RU-locale.patch'
         '99-skindesigner.conf'
-        "50-$_plugname.conf")
-
-backup=("etc/vdr/conf.avail/50-$_plugname.conf")
-
-options=('!emptydirs')
+        "plugin.${_plugname}.conf")
 
 md5sums=('SKIP'
          'a7a11e176e93a1c4c4bfcb9a94966090'
          'bab4227c649d778e4b05483535afda0b'
          'c2090a1bdaddc7cd7c6f0cd7de553e65')
+
+backup=("etc/vdr/conf.avail/plugin.${_plugname}.conf")
+
+options=('!emptydirs')
 
 pkgver() {
     cd "${srcdir}/${_gitname}"
@@ -53,7 +53,7 @@ package() {
     make DESTDIR="$pkgdir" PREFIX='/usr' install
 
     install -Dm644 "$srcdir/99-skindesigner.conf" "$pkgdir/etc/fonts/conf.avail/99-skindesigner.conf"
-    install -Dm644 "$srcdir/50-$_plugname.conf" "$pkgdir/etc/vdr/conf.avail/50-$_plugname.conf"
+    install -Dm644 "$srcdir/plugin.${_plugname}.conf" "$pkgdir/etc/vdr/conf.avail/plugin.${_plugname}.conf"
 
     cd "$pkgdir/usr/lib/vdr/plugins/skindesigner/scripts"
     mv temperatures.default temperatures

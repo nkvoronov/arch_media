@@ -2,8 +2,8 @@
 
 # Maintainer: Christopher Reimer <mail+vdr4arch[at]c-reimer[dot]de>
 pkgname=vdr-iptv
-pkgver=2.2.1
-_vdrapi=2.2.0
+pkgver=2.4.0
+_vdrapi=2.4.0
 pkgrel=1
 pkgdesc="Integrates multicast IPTV transport streams seamlessly into VDR"
 url="http://www.saunalahti.fi/~rahrenbe/vdr/iptv/"
@@ -23,23 +23,11 @@ source=("http://www.saunalahti.fi/~rahrenbe/vdr/$_plugname/files/$pkgname-$pkgve
         'https://github.com/yavdr/yavdr-base/raw/stable-0.5/etc/vdr/plugins/iptv/vlcinput/zdf-iptv.conf'
         'https://github.com/yavdr/yavdr-base/raw/stable-0.5/etc/vdr/plugins/iptv/vlcinput/zdf_info-iptv.conf'
         'https://github.com/yavdr/yavdr-base/raw/stable-0.5/etc/vdr/plugins/iptv/vlcinput/zdf_kultur-iptv.conf'
-        "50-$_plugname.conf"
-        'vdr-iptv-skip-header-processing.patch'
-        'vdr-iptv-RU-locale.patch'
-        'vdr-iptv-makefile-gcc6.patch')
+        "plugin.${_plugname}.conf"
+        'vdr-iptv-02_skip-header-processing.patch'
+        'vdr-iptv-03_RU-locale.patch')
 
-backup=("etc/vdr/conf.avail/50-$_plugname.conf"
-        'etc/vdr/plugins/iptv/vlcinput/3Sat.conf'
-        'etc/vdr/plugins/iptv/vlcinput/Bundesligen-TV.conf'
-        'etc/vdr/plugins/iptv/vlcinput/Daytona-Beach.conf'
-        'etc/vdr/plugins/iptv/vlcinput/NASA.conf'
-        'etc/vdr/plugins/iptv/vlcinput/Sky-News.conf'
-        'etc/vdr/plugins/iptv/vlcinput/THE_VOICE.conf'
-        'etc/vdr/plugins/iptv/vlcinput/zdf-iptv.conf'
-        'etc/vdr/plugins/iptv/vlcinput/zdf_info-iptv.conf'
-        'etc/vdr/plugins/iptv/vlcinput/zdf_kultur-iptv.conf')
-
-md5sums=('318d58e097895789b18a07cac46dfd1c'
+md5sums=('4de2b227c24f362b452870dbee05b30f'
          '5e960f7a71ee493c0bb7a7c56ea109c4'
          '8b51a64c8278f62dd9721a83a0654933'
          '48c790160833a16bc29aff1e0410995b'
@@ -51,8 +39,18 @@ md5sums=('318d58e097895789b18a07cac46dfd1c'
          '793750d284f06285ea317128abcc398c'
          '7319c01fd98c8d0bc51b51743ffdf480'
          'c9de4801fea8c9c7b99945649d42113a'
-         '40786a33d6a9658f7206ff96ad7a0896'
-         'bbbdc6f41355b0eaf3f587c2ba594f66')
+         '7beb380dcec5b7b6550956009a400f16')
+
+backup=("etc/vdr/conf.avail/plugin.${_plugname}.conf"
+        'etc/vdr/plugins/iptv/vlcinput/3Sat.conf'
+        'etc/vdr/plugins/iptv/vlcinput/Bundesligen-TV.conf'
+        'etc/vdr/plugins/iptv/vlcinput/Daytona-Beach.conf'
+        'etc/vdr/plugins/iptv/vlcinput/NASA.conf'
+        'etc/vdr/plugins/iptv/vlcinput/Sky-News.conf'
+        'etc/vdr/plugins/iptv/vlcinput/THE_VOICE.conf'
+        'etc/vdr/plugins/iptv/vlcinput/zdf-iptv.conf'
+        'etc/vdr/plugins/iptv/vlcinput/zdf_info-iptv.conf'
+        'etc/vdr/plugins/iptv/vlcinput/zdf_kultur-iptv.conf')
 
 prepare() {
     cd "${srcdir}/${_plugname}-${pkgver}"
@@ -73,7 +71,6 @@ package() {
 
     mkdir -p "$pkgdir/etc/vdr/plugins/iptv/vlcinput"
     cp "$srcdir"/*.conf "$pkgdir/etc/vdr/plugins/iptv/vlcinput"
-    rm "$pkgdir/etc/vdr/plugins/iptv/vlcinput/50-$_plugname.conf"
 
-    install -Dm644 "$srcdir/50-$_plugname.conf" "$pkgdir/etc/vdr/conf.avail/50-$_plugname.conf"
+    install -Dm644 "$srcdir/plugin.${_plugname}.conf" "$pkgdir/etc/vdr/conf.avail/plugin.${_plugname}.conf"
 }

@@ -5,7 +5,7 @@ pkgname=vdr-tvguide-git
 _gitname='vdr-tvguide'
 _verpkg='1.2.2'
 pkgver=1.2.2_g8287bb5
-_vdrapi=2.2.0
+_vdrapi=2.4.0
 pkgrel=1
 pkgdesc="highly customizable 2D EPG viewer plugin."
 url="http://projects.vdr-developer.org/projects/plg-tvguide"
@@ -15,15 +15,15 @@ depends=('graphicsmagick' 'libpng' "vdr-api=$_vdrapi")
 makedepends=('git')
 _plugname='tvguide'
 
-source=("${_gitname}::git+git://projects.vdr-developer.org/vdr-plugin-tvguide.git#branch=master"
-        'vdr-tvguide-RU-locale.patch'
-        "50-$_plugname.conf")
-        
-backup=("etc/vdr/conf.avail/50-$_plugname.conf")
+source=("${_gitname}::git+git://github.com/vdr-projects/vdr-plugin-tvguide.git#branch=master"
+        'vdr-tvguide-02_RU-locale.patch'
+        "plugin.${_plugname}.conf")
 
 md5sums=('SKIP'
          '65ca10fbbe69d9634c5a2ab21248e6ab'
          '5a624d5f3ef05f748da826dd16de3b84')
+
+backup=("etc/vdr/conf.avail/plugin.${_plugname}.conf")
 
 pkgver() {
     cd "${srcdir}/${_gitname}"
@@ -45,6 +45,6 @@ package() {
     cd "${srcdir}/${_gitname}"
     make DESTDIR="$pkgdir" install
 
-    install -Dm644 "$srcdir/50-$_plugname.conf" "$pkgdir/etc/vdr/conf.avail/50-$_plugname.conf"
+    install -Dm644 "$srcdir/plugin.${_plugname}.conf" "$pkgdir/etc/vdr/conf.avail/plugin.${_plugname}.conf"
 
 }

@@ -4,8 +4,8 @@
 pkgname=vdr-epgsearch-git
 _gitname='vdr-epgsearch'
 _verpkg='1.0.1'
-pkgver=1.0.1_gf0edffb
-_vdrapi=2.2.0
+pkgver=1.0.1_g84b59b8
+_vdrapi=2.4.0
 pkgrel=1
 pkgdesc="Searchtimer and replacement of the VDR program menu"
 url="http://winni.vdr-developer.org/epgsearch"
@@ -17,28 +17,14 @@ optdepends=('msmtp: To send notification mails (Simpler replacement for sendmail
 makedepends=('git')
 _plugname='epgsearch'
 
-source=("${_gitname}::git+git://projects.vdr-developer.org/vdr-plugin-epgsearch.git#branch=vdr-2.2.x"
+source=("${_gitname}::git+git://github.com/vdr-projects/vdr-plugin-epgsearch.git#branch=master"
         'epg2taste.sh'
         'epgsearchcats.conf'
         'epgsearchcmds.conf'
         'epgsearchmenu.conf'
         'rememberevent.sh'
         'vdr-epgsearch-RU-locale.patch'
-        "50-$_plugname.conf")
-        
-backup=("etc/vdr/conf.avail/50-conflictcheckonly.conf"
-        "etc/vdr/conf.avail/50-$_plugname.conf"
-        "etc/vdr/conf.avail/50-${_plugname}only.conf"
-        "etc/vdr/conf.avail/50-quick$_plugname.conf"
-        'etc/vdr/plugins/epgsearch/epgsearchcats.conf-epgdata'
-        'etc/vdr/plugins/epgsearch/epgsearchcats.conf-tvm2vdr-hoerzu'
-        'etc/vdr/plugins/epgsearch/epgsearchcats.conf-tvm2vdr-tvmovie'
-        'etc/vdr/plugins/epgsearch/epgsearchconflmail.templ'
-        'etc/vdr/plugins/epgsearch/epgsearchmenu.conf'
-        'etc/vdr/plugins/epgsearch/epgsearchupdmail-html.templ'
-        'etc/vdr/plugins/epgsearch/epgsearchupdmail.templ')
-        
-options=('!emptydirs')
+        "plugin.${_plugname}.conf")
 
 md5sums=('SKIP'
          '3407c215858bcc105a5f16c60f751629'
@@ -48,6 +34,21 @@ md5sums=('SKIP'
          'fd9bc294515e6fffa083a7b6f7318093'
          'b02a3719e1b13039de339d98a236c840'
          'ad13a1fc07c67bb1b4fc5bcb8ec4d404')
+
+backup=("etc/vdr/conf.avail/plugin.conflictcheckonly.conf"
+        "etc/vdr/conf.avail/plugin.${_plugname}.conf"
+        "etc/vdr/conf.avail/plugin.${_plugname}only.conf"
+        "etc/vdr/conf.avail/plugin.quick${_plugname}.conf"
+        'etc/vdr/plugins/epgsearch/epgsearchcats.conf-epgdata'
+        'etc/vdr/plugins/epgsearch/epgsearchcats.conf-tvm2vdr-hoerzu'
+        'etc/vdr/plugins/epgsearch/epgsearchcats.conf-tvm2vdr-tvmovie'
+        'etc/vdr/plugins/epgsearch/epgsearchconflmail.templ'
+        'etc/vdr/plugins/epgsearch/epgsearchmenu.conf'
+        'etc/vdr/plugins/epgsearch/epgsearchupdmail-html.templ'
+        'etc/vdr/plugins/epgsearch/epgsearchupdmail.templ')
+
+options=('!emptydirs')
+
 
 pkgver() {
     cd "${srcdir}/${_gitname}"
@@ -70,17 +71,17 @@ build() {
 package() {
     cd "${srcdir}/${_gitname}"
     make DESTDIR="$pkgdir" install
-    
-    install -Dm644 "$srcdir/50-$_plugname.conf" "$pkgdir/etc/vdr/conf.avail/50-$_plugname.conf"
-    echo "[${_plugname}only]" > "$pkgdir/etc/vdr/conf.avail/50-${_plugname}only.conf"
-    echo "[conflictcheckonly]" > "$pkgdir/etc/vdr/conf.avail/50-conflictcheckonly.conf"
-    echo "[quick${_plugname}]" > "$pkgdir/etc/vdr/conf.avail/50-quick${_plugname}.conf"
-    
+
+    install -Dm644 "$srcdir/plugin.${_plugname}.conf" "$pkgdir/etc/vdr/conf.avail/plugin.${_plugname}.conf"
+    echo "[${_plugname}only]" > "$pkgdir/etc/vdr/conf.avail/plugin.${_plugname}only.conf"
+    echo "[conflictcheckonly]" > "$pkgdir/etc/vdr/conf.avail/plugin.conflictcheckonly.conf"
+    echo "[quick${_plugname}]" > "$pkgdir/etc/vdr/conf.avail/plugin.quick${_plugname}.conf"
+
     mkdir -p "$pkgdir/etc/vdr/plugins/epgsearch"
     install -Dm644 "$srcdir/epgsearchcats.conf" "$pkgdir/etc/vdr/plugins/epgsearch/epgsearchcats.conf"
     install -Dm644 "$srcdir/epgsearchcmds.conf" "$pkgdir/etc/vdr/plugins/epgsearch/epgsearchcmds.conf"
     install -Dm644 "$srcdir/epgsearchmenu.conf" "$pkgdir/etc/vdr/plugins/epgsearch/epgsearchmenu.conf"
-    
+
     mkdir -p "$pkgdir/usr/share/vdr/plugins/epgsearch"
     install -Dm755 "$srcdir/epg2taste.sh" "$pkgdir/usr/share/vdr/plugins/epgsearch/epg2taste.sh"
     install -Dm755 "$srcdir/rememberevent.sh" "$pkgdir/usr/share/vdr/plugins/epgsearch/rememberevent.sh"

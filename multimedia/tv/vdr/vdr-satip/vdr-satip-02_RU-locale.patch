@@ -9,7 +9,7 @@ diff -Naur a/po/ru_RU.po b/po/ru_RU.po
 +#
 +msgid ""
 +msgstr ""
-+"Project-Id-Version: vdr-satip 2.2.0\n"
++"Project-Id-Version: vdr-satip 2.4.0\n"
 +"Report-Msgid-Bugs-To: <see README>\n"
 +"POT-Creation-Date: 2015-02-19 02:19+0200\n"
 +"PO-Revision-Date: 2015-02-19 02:19+0200\n"
@@ -195,8 +195,8 @@ diff -Naur a/satip.c b/satip.c
  #define GITVERSION ""
  #endif
  
--       const char VERSION[]     = "2.2.4" GITVERSION;
-+       const char VERSION[]     = "2.2.4";
+-       const char VERSION[]     = "2.4.0" GITVERSION;
++       const char VERSION[]     = "2.4.0";
  static const char DESCRIPTION[] = trNOOP("SAT>IP Devices");
  
  class cPluginSatip : public cPlugin {

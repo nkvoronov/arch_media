@@ -5,7 +5,7 @@ pkgname=vdr-weatherforecast-git
 _gitname='vdr-weatherforecast'
 _verpkg='0.2.0'
 pkgver=0.2.0_g842b086
-_vdrapi=2.2.0
+_vdrapi=2.4.0
 pkgrel=1
 pkgdesc="provides a weather forecast based on forecast.io data"
 url="http://projects.vdr-developer.org/projects/plg-weatherforecast"
@@ -14,13 +14,13 @@ license=('GPL2')
 depends=('curl' 'jansson' "vdr-api=$_vdrapi" 'vdr-skindesigner-git')
 _plugname='weatherforecast'
 
-source=("${_gitname}::git+git://projects.vdr-developer.org/vdr-plugin-weatherforecast.git#branch=master"
-	'vdr-weatherforecast-RU-locale.patch')
-
-backup=("etc/vdr/conf.avail/50-$_plugname.conf")
+source=("${_gitname}::git+git://github.com/vdr-projects/vdr-plugin-weatherforecast.git#branch=master"
+       'vdr-weatherforecast-02_RU-locale.patch')
 
 md5sums=('SKIP'
          '978b4cea7eb8b03c5875a50874abec3b')
+
+backup=("etc/vdr/conf.avail/plugin.${_plugname}.conf")
 
 pkgver() {
     cd "${srcdir}/${_gitname}"
@@ -28,10 +28,10 @@ pkgver() {
     printf "%s_%s" "$_verpkg" "g$_git"
 }
 
-#prepare() {
-#    cd "${srcdir}/${_gitname}"
-#    for f in "$srcdir"/*.patch; do patch -p1 < "$f"; done
-#}
+prepare() {
+    cd "${srcdir}/${_gitname}"
+    for f in "$srcdir"/*.patch; do patch -p1 < "$f"; done
+}
 
 build() {
     cd "${srcdir}/${_gitname}"
@@ -41,7 +41,7 @@ build() {
 package() {
     cd "${srcdir}/${_gitname}"
     make DESTDIR="$pkgdir" install
-    
+
     mkdir -p "$pkgdir/etc/vdr/conf.avail"
-    echo "[$_plugname]" > "$pkgdir/etc/vdr/conf.avail/50-$_plugname.conf"
+    echo "[$_plugname]" > "$pkgdir/etc/vdr/conf.avail/plugin.${_plugname}.conf"
 }

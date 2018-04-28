@@ -5,7 +5,7 @@ pkgname=vdr-eepg-git
 _gitname='vdr-eepg'
 _verpkg='0.0.6'
 pkgver=0.0.6_g9cd9a75
-_vdrapi=2.2.0
+_vdrapi=2.4.0
 pkgrel=1
 pkgdesc="Extended EPG (EEPG) plugin for VDR"
 url="http://projects.vdr-developer.org/projects/plg-eepg"
@@ -15,10 +15,10 @@ depends=('gcc-libs' "vdr-api=${_vdrapi}")
 makedepends=('git')
 _plugname='eepg'
 
-source=("${_gitname}::git+git://projects.vdr-developer.org/vdr-plugin-eepg.git#branch=master"
-	'vdr-eepg-RU-locale.patch')
-	
-backup=("etc/vdr/conf.avail/50-$_plugname.conf")
+source=("${_gitname}::git+git://github.com/vdr-projects/vdr-plugin-eepg.git#branch=master"
+         'vdr-eepg-RU-locale.patch')
+
+backup=("etc/vdr/conf.avail/plugin.${_plugname}.conf")
 
 md5sums=('SKIP'
          '863c5105e04436a74adfcf2af15dbf1b')
@@ -42,11 +42,11 @@ build() {
 package() {
     cd "${srcdir}/${_gitname}"
     make DESTDIR="${pkgdir}" install
-    
+
     mkdir -p "$pkgdir/usr/share/vdr/plugins/eepg"
     install -m 755 scripts/extract_vdr_chan_ids.pl "$pkgdir/usr/share/vdr/plugins/eepg/"
     install -m 755 scripts/makeequiv.sh "$pkgdir/usr/share/vdr/plugins/eepg/"
-    
+
     mkdir -p "$pkgdir/etc/vdr/conf.avail"
-    echo "[$_plugname]" > "$pkgdir/etc/vdr/conf.avail/50-$_plugname.conf"
+    echo "[$_plugname]" > "$pkgdir/etc/vdr/conf.avail/plugin.${_plugname}.conf"
 }

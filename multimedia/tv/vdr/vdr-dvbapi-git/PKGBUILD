@@ -4,8 +4,8 @@
 pkgname=vdr-dvbapi-git
 _gitname='vdr-dvbapi'
 _verpkg='2.2.4'
-pkgver=2.2.4_gd7c7587
-_vdrapi=2.2.0
+pkgver=2.2.4_g7d51cc4
+_vdrapi=2.4.0
 pkgrel=1
 pkgdesc="A bridge between VDR and OScam."
 url="https://github.com/manio/vdr-plugin-dvbapi"
@@ -15,11 +15,11 @@ depends=('gcc-libs' 'libdvbcsa' "vdr-api=${_vdrapi}")
 makedepends=('git')
 _plugname='dvbapi'
 
-source=("${_gitname}::git+git://github.com/manio/vdr-plugin-dvbapi.git#commit=d7c7587"
+source=("${_gitname}::git+git://github.com/manio/vdr-plugin-dvbapi.git#branch=master"
     'vdr-dvbapi-RU-locale.patch'
-    "50-$_plugname.conf")
+    "plugin.${_plugname}.conf")
 
-backup=("etc/vdr/conf.avail/50-$_plugname.conf")
+backup=("etc/vdr/conf.avail/plugin.${_plugname}.conf")
 
 md5sums=('SKIP'
          'ea6908f51cc42d42f0a4a249fe374f89'
@@ -45,6 +45,6 @@ build() {
 package() {
     cd "${srcdir}/${_gitname}"
     make LIBDVBCSA=1 DESTDIR="$pkgdir" install
-  
-    install -Dm644 "$srcdir/50-$_plugname.conf" "$pkgdir/etc/vdr/conf.avail/50-$_plugname.conf"
+
+    install -Dm644 "$srcdir/plugin.${_plugname}.conf" "$pkgdir/etc/vdr/conf.avail/plugin.${_plugname}.conf"
 }

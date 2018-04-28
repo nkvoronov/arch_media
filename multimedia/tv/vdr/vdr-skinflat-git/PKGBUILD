@@ -5,7 +5,7 @@ pkgname=vdr-skinflat-git
 _gitname='vdr-skinflat'
 _verpkg='0.1.1'
 pkgver=0.1.1_g1040bb7
-_vdrapi=2.2.0
+_vdrapi=2.4.0
 pkgrel=1
 pkgdesc="Simple and slim skin for VDR"
 url="http://projects.vdr-developer.org/projects/plg-skinflat"
@@ -14,18 +14,19 @@ license=('GPL2')
 depends=('graphicsmagick' "vdr-api=${_vdrapi}")
 _plugname='skinflat'
 
-source=("${_gitname}::git+git://projects.vdr-developer.org/skin-flat.git#branch=master"
-        'vdr-skinflat-fixsource.patch'
-        'vdr-skinflat-RU-locale.patch'
-        "50-$_plugname.conf")
-        
-backup=("etc/vdr/conf.avail/50-$_plugname.conf")
+source=("${_gitname}::git+git://github.com/vdr-projects/vdr-plugin-skinflat.git#branch=master"
+        'vdr-skinflat-02_fixsource.patch'
+        'vdr-skinflat-03_RU-locale.patch'
+        "plugin.${_plugname}.conf")
 
 md5sums=('SKIP'
          '3f4e2685b0c4a76e16b6d4a1b51270b8'
          '79c0ab68af5d23e80bc7664f874b61a7'
          '6dc69d30a36385dc4f15ce0b83d6c0c7')
-         
+
+backup=("etc/vdr/conf.avail/plugin.${_plugname}.conf")
+
+
 pkgver() {
     cd "${srcdir}/${_gitname}"
     _git=`git rev-parse --short HEAD`
@@ -34,6 +35,7 @@ pkgver() {
 
 prepare() {
     cd "${srcdir}/${_gitname}"
+    sed -i 's/Magick++/GraphicsMagick++/g' Makefile
     for f in "$srcdir"/*.patch; do patch -p1 < "$f"; done
 }
 
@@ -46,5 +48,5 @@ package() {
     cd "${srcdir}/${_gitname}"
     make DESTDIR="$pkgdir" install
 
-    install -Dm644 "$srcdir/50-$_plugname.conf" "$pkgdir/etc/vdr/conf.avail/50-$_plugname.conf"
+    install -Dm644 "$srcdir/plugin.${_plugname}.conf" "$pkgdir/etc/vdr/conf.avail/plugin.${_plugname}.conf"
 }

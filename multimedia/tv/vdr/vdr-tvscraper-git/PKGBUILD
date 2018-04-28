@@ -5,7 +5,7 @@ pkgname=vdr-tvscraper-git
 _gitname='vdr-tvscraper'
 _verpkg='0.2.0'
 pkgver=0.2.0_g7183c4b
-_vdrapi=2.2.0
+_vdrapi=2.4.0
 pkgrel=1
 pkgdesc="Runs in the background and collects metadata for all available EPG events"
 url="http://www.vdr-portal.de/board1-news/board2-vdr-news/119880-announce-tvscrapper-0-0-1/"
@@ -15,17 +15,17 @@ depends=('curl' 'jansson' 'libxml2' 'sqlite' "vdr-api=${_vdrapi}")
 replaces=('vdr-tvscrapper')
 _plugname='tvscraper'
 
-source=("${_gitname}::git+git://projects.vdr-developer.org/vdr-plugin-tvscraper.git#branch=master"
-        'vdr-tvscraper-RU-locale.patch'
-        "50-$_plugname.conf")
-        
-backup=("etc/vdr/conf.avail/50-$_plugname.conf"
-        'etc/vdr/plugins/tvscraper/override.conf')
-        
+source=("${_gitname}::git+git://github.com/vdr-projects/vdr-plugin-tvscraper.git#branch=master"
+        'vdr-tvscraper-02_RU-locale.patch'
+        "plugin.${_plugname}.conf")
+
 md5sums=('SKIP'
          'dab56eb222391a3e340b52d901639428'
          '7812864a7b0cb1c3b70100b2dde8fc5c')
-        
+
+backup=("etc/vdr/conf.avail/plugin.${_plugname}.conf"
+        'etc/vdr/plugins/tvscraper/override.conf')
+
 pkgver() {
     cd "${srcdir}/${_gitname}"
     _git=`git rev-parse --short HEAD`
@@ -46,5 +46,5 @@ package() {
     cd "${srcdir}/${_gitname}"
     make DESTDIR="$pkgdir" install
 
-    install -Dm644 "$srcdir/50-$_plugname.conf" "$pkgdir/etc/vdr/conf.avail/50-$_plugname.conf"
+    install -Dm644 "$srcdir/plugin.${_plugname}.conf" "$pkgdir/etc/vdr/conf.avail/plugin.${_plugname}.conf"
 }

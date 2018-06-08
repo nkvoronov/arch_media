@@ -1,5 +1,5 @@
 pkgname=kodi-addon-audioencoder-vorbis-git
-_gitname='kodi-addon-audioencoder-vorbis'
+_gitname='source-git'
 _verpkg='1.1.0'
 pkgver=1.1.0_g8c928ed
 pkgrel=1
@@ -12,28 +12,27 @@ provides=('kodi-addon-audioencoder-vorbis-git')
 replaces=('kodi-addon-audioencoder-vorbis-git')
 conflicts=('kodi-addon-audioencoder-vorbis')
 depends=('kodi')
-makedepends=('cmake' 'kodi-dev-git')
-source=("${_gitname}::git+https://github.com/xbmc/audioencoder.vorbis.git#tag=v$_verpkg")
-
+makedepends=('cmake' 'kodi-dev')
+source=("${_gitname}::git+https://github.com/xbmc/audioencoder.vorbis.git#tag=v${_verpkg}")
 md5sums=('SKIP')
 
 pkgver() {
-    cd "${srcdir}/${_gitname}"
-    _git=`git rev-parse --short HEAD`
-    printf "%s_%s" "$_verpkg" "g$_git"
+  cd "${srcdir}/${_gitname}"
+  _git=`git rev-parse --short HEAD`
+  printf "%s_%s" "$_verpkg" "g$_git"
 }
 
 build() {
-    cd "${srcdir}/${_gitname}"
-    cmake \
-	-DCMAKE_INSTALL_PREFIX=/usr \
-	-DCMAKE_BUILD_TYPE=Release \
-	-DBUILD_SHARED_LIBS=1 \
-	-DUSE_LTO=1
-    make
+  cd "${srcdir}/${_gitname}"
+  cmake \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DBUILD_SHARED_LIBS=1 \
+  -DUSE_LTO=1
+  make
 }
 
 package() {
-    cd "${srcdir}/${_gitname}"
-    make DESTDIR="$pkgdir/" install
+  cd "${srcdir}/${_gitname}"
+  make DESTDIR="$pkgdir/" install
 }

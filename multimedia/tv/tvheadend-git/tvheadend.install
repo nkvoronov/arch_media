@@ -1,6 +1,6 @@
 HTS_USER=hts
-HTS_UID=1337
-HTS_GROUP=video
+HTS_UID=151
+HTS_GROUP=hts
 
 post_install() {
   if ! getent passwd $HTS_USER &> /dev/null; then

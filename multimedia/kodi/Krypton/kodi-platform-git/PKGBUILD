@@ -1,10 +1,5 @@
-# Maintainer: Michael Lass <bevan@bi-co.net>
-
-# This PKGBUILD is maintained on github:
-# https://github.com/michaellass/AUR
-
 pkgname=kodi-platform-git
-_gitname='kodi-platform'
+_gitname='source-git'
 pkgver=r55.36fb493
 pkgrel=1
 _branch=master
@@ -20,27 +15,27 @@ source=("${_gitname}::git+https://github.com/xbmc/kodi-platform.git#branch=${_br
 md5sums=('SKIP')
 
 pkgver() {
-    cd "${srcdir}/${_gitname}"
-    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+  cd "${srcdir}/${_gitname}"
+  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 build() {
-    cd "${srcdir}/${_gitname}"
+  cd "${srcdir}/${_gitname}"
 
-    rm -rf build
-    mkdir build
-    cd build
+  rm -rf build
+  mkdir build
+  cd build
 
-    cmake \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_INSTALL_LIBDIR=/usr/lib \
-    -DCMAKE_INSTALL_LIBDIR_NOARCH=/usr/lib \
-    -DCMAKE_BUILD_TYPE=Release \
-    ..
-    make
+  cmake \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_INSTALL_LIBDIR=/usr/lib \
+  -DCMAKE_INSTALL_LIBDIR_NOARCH=/usr/lib \
+  -DCMAKE_BUILD_TYPE=Release \
+  ..
+  make
 }
 
 package() {
-    cd "${srcdir}/${_gitname}/build"
-    make DESTDIR="$pkgdir" install
+  cd "${srcdir}/${_gitname}/build"
+  make DESTDIR="$pkgdir" install
 }

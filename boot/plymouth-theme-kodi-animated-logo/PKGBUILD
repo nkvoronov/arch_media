@@ -1,7 +1,3 @@
-# Maintainer: Guillermo Garcia <ahioros@NO-SPAM.gmail.com>
-# Contributor: Manuel Hüsers <manuel.huesers@uni-ol.de>
-# Contributor: Guillermo Garcia <ahioros@NO-SPAM.gmail.com>
-
 pkgname="plymouth-theme-kodi-animated-logo"
 pkgver=0.1
 pkgrel=1

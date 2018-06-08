@@ -1,48 +1,42 @@
-# Maintainer: Michael Lass <bevan@bi-co.net>
-
-# This PKGBUILD is maintained on github:
-# https://github.com/michaellass/AUR
-
 pkgname=kodi-addon-pvr-vdr-vnsi-git
-_gitname='kodi-addon-pvr-vdr-vnsi'
+_gitname='source-git'
 _verpkg='2.6.26'
-pkgver=2.6.26_ge5dc3dd
+pkgver=2.6.26_gdbbe1d0
 pkgrel=1
 _branch=Krypton
 pkgdesc='VDR VNSI PVR client addon for Kodi'
 arch=('armv7h' 'i686' 'x86_64')
 url="https://github.com/kodi-pvr/pvr.vdr.vnsi"
 license=('GPL')
-makedepends=('cmake' 'git' 'kodi-platform-git')
-depends=('kodi-git>=16.0')
+makedepends=('cmake' 'git' 'kodi-platform')
+depends=('kodi>=16.0')
 provides=('kodi-addon-pvr-vdr-vnsi')
 conflicts=('kodi-addon-pvr-vdr-vnsi' 'kodi-pvr-addons')
 source=("${_gitname}::git+https://github.com/kodi-pvr/pvr.vdr.vnsi.git#branch=${_branch}")
 md5sums=('SKIP')
 
 pkgver() {
-    cd "${srcdir}/${_gitname}"
-    _git=`git rev-parse --short HEAD`
-    printf "%s_%s" "$_verpkg" "g$_git"
+  cd "${srcdir}/${_gitname}"
+  _git=`git rev-parse --short HEAD`
+  printf "%s_%s" "$_verpkg" "g$_git"
 }
 
 build() {
-    cd "${srcdir}/${_gitname}"
+  cd "${srcdir}/${_gitname}"
 
-    rm -rf build
-    mkdir build
-    cd build
+  rm -rf build
+  mkdir build
+  cd build
 
-    cmake \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_INSTALL_LIBDIR=/usr/lib/kodi \
-    -DCMAKE_BUILD_TYPE=Release \
-    ..
-    make
+  cmake \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_INSTALL_LIBDIR=/usr/lib/kodi \
+  -DCMAKE_BUILD_TYPE=Release \
+  ..
+  make
 }
 
 package() {
-    cd "${srcdir}/${_gitname}/build"
-    
-    make DESTDIR="$pkgdir" install
+  cd "${srcdir}/${_gitname}/build"
+  make DESTDIR="$pkgdir" install
 }

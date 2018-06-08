@@ -1,0 +1,72 @@
+# pack-refs with: peeled fully-peeled sorted 
+133ef6f14af0cebef182750784284c4249d5166c refs/heads/bitmap-label-control
+cf766763f26ad0bb8e001a9ecf65b00f4c766e3c refs/heads/config-file
+34ad039ed0816bd7372aca95dc0d25327320154d refs/heads/cothreads
+efc7c11775323fd9b75f94c20896b6d7b1929ad1 refs/heads/fix-text-spew
+0b5b790d628f4c96e3ab9fbc0daba67a29b850da refs/heads/fix-vt-management-on-deactivate
+5d29689fd727d94830d31cd7a69935b6a8256e77 refs/heads/generic-drm-driver
+237d2ad6d625eec44c6c355a5e9348194775faab refs/heads/headless
+48bba4f1cdffcdb9aa8a2cde01f019f0b1b3eff0 refs/heads/improved-vt-handling
+424818f2917f2a5b50b7574aae8024548479d9a8 refs/heads/input-rework
+7fd51ca08b06ab5b26f2bef00fc29058ce07b44d refs/heads/list-optimizations
+1fa0bf62b7ae58db68104e4307590abab6f32ba5 refs/heads/man-page
+014c2158898067176738ec36c9c90cc266a7e35b refs/heads/master
+d52b4efba18c4295618302fea9674e54c36e1b7e refs/heads/no-fbcon
+b4c8a9ebf8b62fcb2f64edd2cf38776fedf1b174 refs/heads/no-vt-switch-on-hide-splash
+4f02890e059ade7bb1f4c8435f536714bd9ad25c refs/heads/optionalize-library-dependencies
+9a50c42636bc0179080376cffa378a3e05d2a7f0 refs/heads/scripted-plugin
+6ceccc7ce8a0ff0ae6efdd75b23670f77860af9b refs/heads/seat-rework
+3e373765765d5ab41ed8782202a82fbfec57ce39 refs/heads/tmp
+7432db8f2f2c87afbc789d7bcfc387341b8eb36d refs/heads/transition
+24cc17299df51bb59b356a77de3ce88a0806bfc8 refs/heads/wip/better-flush-notification
+fed69e9fff99dcaff1b2c88ad6b986a4a4d3df78 refs/heads/wip/deseatify
+447b1d4890b48b4fd1a272529d8225b332f0c8fa refs/heads/wip/drm-first-fb-last
+266d954b7a0ff5b046df6ed54c22e3322b2c80d0 refs/heads/wip/fix-non-udev-codepath
+8aa3b01b33a7c483591d200a74b3f3fb3df538bb refs/heads/wip/fix-text-splash
+f7f482174f1dcfa52c222f813e6b26dd106a12c1 refs/heads/wip/systemd-fixes
+90a23b832d1f113d679be1dfa60cba448a07a8ce refs/heads/wip/udev
+08466deaf8203ddff508d492056d2e9f705724e9 refs/heads/x11-renderer
+8022d4000e7eb9392fc3b2c093fa16cc776b8513 refs/notes/commits
+1c3a90801efcc6c919c76962f4246790450c1c62 refs/tags/0.1.0
+7e85eafab617fef5478c6d9f551f044d67462466 refs/tags/0.2.0
+69fc3676ced274a0114679810f771b28c1d81045 refs/tags/0.3.0
+b4353fbca987b84ca835b9285981673e3a949608 refs/tags/0.3.1
+0a7e2c92196e4091387560ae054b62a0d7c0e3e7 refs/tags/0.3.2
+a5eb75a75a00c5a8b459c57e5042c0a63b969eea refs/tags/0.4.0
+baea12f03d3c18cbe5af5e31d73cf282b3d5830a refs/tags/0.4.5
+86c642baca5feae5e456006d2e3c910a268aaed7 refs/tags/0.5.0
+29157abbb1687d16cc54df30f04ceec27237b96d refs/tags/0.6.0
+68b8f6340cb1c3d5b09ea85d7fcb2f116fd974e6 refs/tags/0.7.0
+^25f5ddeb0553ff0a1009065fb22763e1b45d653a
+51fd29fa651181c912017ed11ec714dcd056f816 refs/tags/0.7.1
+^d2a3fbe75fe90fa9c158de73248e056a90970bc5
+a9c5347b811e24a89b0e18e122f401a44f89aecb refs/tags/0.7.2
+^a8f0572cb279ae2252cec169522a3e3e5b22f105
+50750c0ebc2a4cd54fc193778822620ea4ca45c4 refs/tags/0.8.0
+^e168de883e2b7af0b459081e62bec76a7c4db583
+431705323c1ea6cc3760bfbd1d8dfae95f7ff8be refs/tags/0.8.1
+^05dc13ad0f458c4f4a08e02acdc5faed3a2e0a7c
+d5fbc91402223492e4c628f9c7894c2207829195 refs/tags/0.8.2
+^c4f46b6262e168a10c3da6d0ac1f5962b4412ba2
+dfce70a22f3628b075eda0f2dc15d2fd87a347ba refs/tags/0.8.3
+^2ea21378ef2187858440594698e13300381f3fda
+d50add3bea64877f7097f703ae9ab5817ea25c8d refs/tags/0.8.4
+^032a30c489ad658bd03b4145806da2f989db2c7e
+0156af0835e214cf3dfde0fdc6f2ca700ce2715f refs/tags/0.8.5
+^8e932e9895bacf9b490e60e4be63d8902201e5d5
+5ed9081b40c0c324fdfb1b1fd8365fed1051f6c9 refs/tags/0.8.5.1
+^251ddbfe7acbb8b975487e6e40c48edb6a60a8c5
+00f7847357a3c196d8eee49741ced1e1f25e8df8 refs/tags/0.8.6
+^76d0db51c26fff42c03ccf89a8f84193aa95c03f
+ee77a03bd66d3027e14ff7439172f352c8d52e9a refs/tags/0.8.6.1
+^570f722106a44d831282edea83933503d8dae57b
+0bad299f38cd356be05b79ed6729e153fcb6b0dd refs/tags/0.8.7
+^b56535a5924249fbe053f5d9366e0acd8be9d893
+8e78d9f1b338fca8e037a935afb0d8f91953c794 refs/tags/0.8.8
+^f3b9d25f29011431ea3286d06643fd67c57b3c48
+15ebd0f41e2b4163b23c097f6dddac15c0dc32c6 refs/tags/0.9.0
+^e3a0ce8e6c072cd4150274aa34f63e2c3f5f8fba
+2be6201ed54a13d2ea131c9fcd1ddef1438f1264 refs/tags/0.9.2
+^2c437c364b2771651bf329181cc14fc812de379c
+db6a6dd2e0f54eae2dec7f1fbcb9a95dffe87924 refs/tags/0.9.3
+^ca06f77036ec6c37f65446046f0dfb3693803338

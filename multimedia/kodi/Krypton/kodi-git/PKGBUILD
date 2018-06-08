@@ -1,26 +1,8 @@
-# vim:set ts=2 sw=2 et:
-# Maintainer: BlackIkeEagle < ike DOT devolder AT gmail DOT com >
-# Contributor: DonVla <donvla@users.sourceforge.net>
-# Contributor: Ulf Winkelvos <ulf [at] winkelvos [dot] de>
-# Contributor: Ralf Barth <archlinux dot org at haggy dot org>
-# Contributor: B & monty - Thanks for your hints :)
-# Contributor: marzoul
-# Contributor: Sergej Pupykin <pupykin.s+arch@gmail.com>
-# Contributor: Brad Fanella <bradfanella@archlinux.us>
-# Contributor: [vEX] <niechift.dot.vex.at.gmail.dot.com>
-# Contributor: Zeqadious <zeqadious.at.gmail.dot.com>
-# Contributor: Bartlomiej Piotrowski <bpiotrowski@archlinux.org>
-# Contributor: Maxime Gauduin <alucryd@gmail.com>
-#
-# Original credits go to Edgar Hucek <gimli at dark-green dot com>
-# for his xbmc-vdpau-vdr PKGBUILD at https://archvdr.svn.sourceforge.net/svnroot/archvdr/trunk/archvdr/xbmc-vdpau-vdr/PKGBUILD
-
 pkgbase=kodi-git
 pkgname=('kodi-git' 'kodi-eventclients-git' 'kodi-tools-texturepacker-git' 'kodi-dev-git')
-_gitname=kodi
+_gitname='source-git'
 _verpkg='17.6'
 pkgver=17.6_g7e52c1d94d0
-
 pkgrel=1
 _branch=Krypton
 arch=('i686' 'x86_64')
@@ -37,9 +19,7 @@ makedepends=(
   'mesa' 'libcrossguid'
 )
 source=("${_gitname}::git+https://github.com/xbmc/xbmc.git#branch=${_branch}")
-
 md5sums=('SKIP')
-
 _prefix='/usr'
 
 pkgver() {
@@ -54,7 +34,7 @@ prepare() {
   [[ -d kodi-build ]] && rm -rf kodi-build
   mkdir kodi-build
   cd "${srcdir}/${_gitname}"
-  cp -PR ../../theme/* addons/skin.estuary/
+  cp -PR ../../../theme/* addons/skin.estuary/
 }
 
 build() {

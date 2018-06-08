@@ -1,7 +1,3 @@
-# Maintainer: Bjorn Nostvold <bjorn.nostvold@gmail.com>
-# Contributor: Maxime Gauduin <alucryd@archlinux.org>
-# Contributor: Daniel Seymour <dannyseeless@gmail.com>
-
 pkgname=emby-server-git
 pkgver=3.4.1.0
 pkgrel=1
@@ -14,22 +10,19 @@ provides=('emby-server')
 conflicts=('emby-server' 'emby-server-beta-git' 'emby-server-dev-git')
 install='emby-server.install'
 source=("emby-server-${pkgver}.tar.gz::https://github.com/MediaBrowser/Emby/archive/${pkgver}.tar.gz"
-        'emby-server'
-        'emby-migrate-database'
-        'emby-server.conf'
-        'emby-server.service')
-
+  'emby-server'
+  'emby-migrate-database'
+  'emby-server.conf'
+  'emby-server.service')
 md5sums=('9ee355c0a3763d573ae0bfb13b1921f9'
-         'a4f8dd28453fab4a94275e3d7e20154b'
-         '00802787748a25a18fcc35abb1a7f4ae'
-         '27180ae6385299216b2e2519bfc4909a'
-         'ecc4e25b240623186382489732ea7bb3')
-
+  'a4f8dd28453fab4a94275e3d7e20154b'
+  '00802787748a25a18fcc35abb1a7f4ae'
+  '0df10bc7efad50d95ec1d2d1230dd083'
+  'ecc4e25b240623186382489732ea7bb3')
 backup=('etc/conf.d/emby-server')
 
 prepare() {
   cd Emby-$pkgver
-
   sed 's/libMagickWand-6.Q8.so/libMagickWand-6.Q16HDRI.so/' -i MediaBrowser.Server.Mono/ImageMagickSharp.dll.config
 }
 

@@ -1,9 +1,6 @@
-# Maintainer: Dan Ziemba <zman0900@gmail.com>
-# Contributor: Benjamin Hedrich <kiwisauce (a) pagenotfound (dot) de>
-
 pkgname=tvheadend-git
-_gitname='tvheadend'
-pkgver=4.3.r1252.g595fd174f
+_gitname='source-git'
+pkgver=4.3.r1271.g8e270b2a6
 pkgrel=1
 pkgdesc="TV streaming server for Linux"
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h')
@@ -15,58 +12,55 @@ optdepends=('xmltv: For an alternative source of programme listings')
 provides=('tvheadend')
 conflicts=('tvheadend' 'hts-tvheadend' 'hts-tvheadend-svn' 'tvheadend-git')
 install=tvheadend.install
-
 source=("${_gitname}::git+https://github.com/tvheadend/tvheadend.git#branch=master"
-        'ua-VoliaCable'
-        'tv_grab_file'
-        'tvheadend.bin'
-        'tvheadend.conf'
-        'tvheadend.service')
-
+  'ua-VoliaCable'
+  'tv_grab_file'
+  'tvheadend.bin'
+  'tvheadend.conf'
+  'tvheadend.service')
 md5sums=('SKIP'
-         '5c58449a9e8ab121d48e7139e55405ad'
-         '6b3ee77305fe47e39fed09d04a32e383'
-         '7c5ba5607c3850a96005c7a99722186f'
-         '3a5a6b8e424225cf6bb99e80da54f43c'
-         'c5d485a95e6afd17732deaddbba10aec')
-
+  '5c58449a9e8ab121d48e7139e55405ad'
+  '6b3ee77305fe47e39fed09d04a32e383'
+  '7c5ba5607c3850a96005c7a99722186f'
+  '3a5a6b8e424225cf6bb99e80da54f43c'
+  'c5d485a95e6afd17732deaddbba10aec')
 backup=('etc/conf.d/tvheadend')
 
 pkgver() {
-    cd "${srcdir}/${_gitname}"
-    git describe --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+  cd "${srcdir}/${_gitname}"
+  git describe --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
 }
 
 #prepare() {
-#    cd "${srcdir}/${_gitname}"
-#    for f in "$srcdir"/*.patch; do patch -p1 < "$f"; done
+#  cd "${srcdir}/${_gitname}"
+#  for f in "$srcdir"/*.patch; do patch -p1 < "$f"; done
 #}
 
 build() {
-    cd "${srcdir}/${_gitname}"
-    ./configure --prefix=/usr \
-    --mandir=/usr/share/man/man1 \
-    --python=python2 \
-    --nowerror \
-    --enable-tvhcsa \
-    --enable-dvbcsa \
-    --disable-dvben50221 \
-    --enable-hdhomerun_client \
-    --enable-hdhomerun_static \
-    --enable-ffmpeg_static \
-    --enable-libav \
-    --enable-bundle
+  cd "${srcdir}/${_gitname}"
+  ./configure --prefix=/usr \
+  --mandir=/usr/share/man/man1 \
+  --python=python2 \
+  --nowerror \
+  --enable-tvhcsa \
+  --enable-dvbcsa \
+  --disable-dvben50221 \
+  --enable-hdhomerun_client \
+  --enable-hdhomerun_static \
+  --enable-ffmpeg_static \
+  --enable-libav \
+  --enable-bundle
 
-    make
+  make
 }
 
 package() {
-    cd "${srcdir}/${_gitname}"
-    make DESTDIR="$pkgdir/" install
-    install -D -m 755 "$srcdir/tv_grab_file" "$pkgdir/usr/bin/tv_grab_file"
-    install -D -m 755 "$srcdir/tvheadend.bin" "$pkgdir/usr/bin/tvheadend.bin"
-    install -D -m 644 "$srcdir/tvheadend.conf" "$pkgdir/etc/conf.d/tvheadend"
-    install -D -m 644 "$srcdir/tvheadend.service" "$pkgdir/usr/lib/systemd/system/tvheadend.service"
-    install -D -m 644 "$srcdir/ua-VoliaCable" "$pkgdir/usr/share/tvheadend/data/dvb-scan/dvb-c/ua-VoliaCable"
+  cd "${srcdir}/${_gitname}"
+  make DESTDIR="$pkgdir/" install
+  install -D -m 755 "$srcdir/tv_grab_file" "$pkgdir/usr/bin/tv_grab_file"
+  install -D -m 755 "$srcdir/tvheadend.bin" "$pkgdir/usr/bin/tvheadend.bin"
+  install -D -m 644 "$srcdir/tvheadend.conf" "$pkgdir/etc/conf.d/tvheadend"
+  install -D -m 644 "$srcdir/tvheadend.service" "$pkgdir/usr/lib/systemd/system/tvheadend.service"
+  install -D -m 644 "$srcdir/ua-VoliaCable" "$pkgdir/usr/share/tvheadend/data/dvb-scan/dvb-c/ua-VoliaCable"
 }
 

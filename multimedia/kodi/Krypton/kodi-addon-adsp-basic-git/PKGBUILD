@@ -1,10 +1,5 @@
-# Maintainer: dhead666 <myfoolishgames@gmail.com>
-# https://github.com/dhead666/archlinux-pkgbuilds
-#
-# package version generated with # git log -1 --date=short --format="%cd.%h" | tr -d '-'
-
 pkgname=kodi-addon-adsp-basic-git
-_gitname='kodi-addon-adsp-basic'
+_gitname='source-git'
 _verpkg='0.3.0'
 pkgver=0.3.0_g2ae604e
 pkgrel=1
@@ -14,34 +9,32 @@ arch=('i686' 'x86_64')
 url="https://github.com/kodi-adsp/adsp.basic"
 license=('GPL')
 groups=('kodi')
-makedepends=('cmake' 'git' 'kodi-platform-git')
-depends=('kodi-git' 'libsamplerate')
-#conflicts=('')
-#replaces=('')
+makedepends=('cmake' 'git' 'kodi-platform')
+depends=('kodi' 'libsamplerate')
 source=("${_gitname}::git+https://github.com/kodi-adsp/adsp.basic.git#branch=${_branch}")
 md5sums=('SKIP')
 
 pkgver() {
-    cd "${srcdir}/${_gitname}"
-    _git=`git rev-parse --short HEAD`
-    printf "%s_%s" "$_verpkg" "g$_git"
+  cd "${srcdir}/${_gitname}"
+  _git=`git rev-parse --short HEAD`
+  printf "%s_%s" "$_verpkg" "g$_git"
 }
 
 build() {
-    cd "${srcdir}/${_gitname}"
+  cd "${srcdir}/${_gitname}"
 
-    rm -rf build
-    mkdir build
-    cd build
+  rm -rf build
+  mkdir build
+  cd build
 
-    cmake \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_BUILD_TYPE=Release \
-    ..
-    make
+  cmake \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_BUILD_TYPE=Release \
+  ..
+  make
 }
 
 package() {
-    cd "${srcdir}/${_gitname}/build"
-    make DESTDIR="$pkgdir" install
+  cd "${srcdir}/${_gitname}/build"
+  make DESTDIR="$pkgdir" install
 }

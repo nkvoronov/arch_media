@@ -1,0 +1,21 @@
+# pack-refs with: peeled fully-peeled sorted 
+2ae604e591346741324663260696cfa231931870 refs/heads/Krypton
+d744fcd1c5702dae94c9f40fb49fc94012e9ccdb refs/heads/kodi-agile
+a55b4319ab6e205ec7a1dd3f96f368ba466693b4 refs/heads/master
+cb56e0eb6530fd50a286d47ef0be529001e9d556 refs/heads/v0.2.0
+be6b02ef34c0d9a7ab7fd9c465b8956a83329ae0 refs/pull/1/head
+f5dd348b7b986f2a454780d340508745cee1c609 refs/pull/10/head
+468375e1e9d5530b78c9c357078d637e771c746b refs/pull/11/head
+852e6e690037b5855c246c9d1373375ccf2cff99 refs/pull/12/head
+1ae3bf84e62762cbdfbd32e4ef1685006667270d refs/pull/13/head
+3d90e579e58fdd3d0ff256c605261eed1ce85ba4 refs/pull/15/head
+d5e01559da15b648c424b1d04b068984496952bd refs/pull/16/head
+64edd70857e8f915f4271363bdc1374f261ed075 refs/pull/2/head
+3afbeec52b54953280a165335e677b69921ce23d refs/pull/3/head
+ed00b5fdd265f1e78ad94392dc0007573a4c413c refs/pull/4/head
+f02ef72576875742d8e835f65aae04a1fb709391 refs/pull/5/head
+35356e43b37e1d4006250307f72457c50f9f0872 refs/pull/6/head
+041b09bece8c0bfb62ecafe7bbdd90316932b045 refs/pull/7/head
+d258dc8c0c21a851a8a8fc74b48c5f5d300747b5 refs/pull/8/head
+67776494ad4e2e8562ad6f01f8737c6e5e85b6bc refs/pull/9/head
+b9aa1dc0e431c30b3be3d69c626de582fec48670 refs/pull/9/merge

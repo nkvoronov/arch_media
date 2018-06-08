@@ -8,3 +8,5 @@
 *.xz
 *.lzma
 *.deb
+/source-git/
+/source-svn/

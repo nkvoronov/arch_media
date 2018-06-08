@@ -1,10 +1,5 @@
-# Maintainer: dhead666 <myfoolishgames@gmail.com>
-# https://github.com/dhead666/archlinux-pkgbuilds
-#
-# package version generated with # git log -1 --date=short --format="%cd.%h" | tr -d '-'
-
 pkgname=kodi-addon-adsp-biquad-filters-git
-_gitname='kodi-addon-adsp-biquad-filters'
+_gitname='source-git'
 _verpkg='0.0.1'
 pkgver=0.0.1_g29bfe9d
 pkgrel=1
@@ -15,43 +10,39 @@ arch=('i686' 'x86_64')
 url="https://github.com/kodi-adsp/adsp.biquad.filters"
 license=('GPL')
 groups=('kodi')
-makedepends=('cmake' 'git' 'kodi-platform-git')
-depends=('kodi-git' 'tinyxml' 'asplib-git')
-#conflicts=('')
-#replaces=('')
-
+makedepends=('cmake' 'git' 'kodi-platform')
+depends=('kodi' 'tinyxml' 'asplib-git')
 source=("${_gitname}::git+https://github.com/kodi-adsp/adsp.biquad.filters.git#branch=${_branch}"
-	'adsp.biquad.filters-gcc-6.patch')
-
+  'adsp.biquad.filters-gcc-6.patch')
 md5sums=('SKIP'
-         '377931a7229e7454a699f5fdef57f0dd')
+  '377931a7229e7454a699f5fdef57f0dd')
 
 pkgver() {
-    cd "${srcdir}/${_gitname}"
-    _git=`git rev-parse --short HEAD`
-    printf "%s_%s" "$_verpkg" "g$_git"
+  cd "${srcdir}/${_gitname}"
+  _git=`git rev-parse --short HEAD`
+  printf "%s_%s" "$_verpkg" "g$_git"
 }
 
 prepare() {
-    cd "${srcdir}/${_gitname}"
-    for f in "$srcdir"/*.patch; do patch -p1 < "$f"; done
+  cd "${srcdir}/${_gitname}"
+  for f in "$srcdir"/*.patch; do patch -p1 < "$f"; done
 }
 
 build() {
-    cd "${srcdir}/${_gitname}"
+  cd "${srcdir}/${_gitname}"
 
-    rm -rf build
-    mkdir build
-    cd build
+  rm -rf build
+  mkdir build
+  cd build
 
-    cmake \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_BUILD_TYPE=Release \
-    ..
-    make
+  cmake \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_BUILD_TYPE=Release \
+  ..
+  make
 }
 
 package() {
-    cd "${srcdir}/${_gitname}/build"
-    make DESTDIR="$pkgdir" install
+  cd "${srcdir}/${_gitname}/build"
+  make DESTDIR="$pkgdir" install
 }

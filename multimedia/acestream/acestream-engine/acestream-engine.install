@@ -1,6 +1,6 @@
 post_install() {
   if ! getent passwd acestream &> /dev/null; then
-    useradd -u 4035 -g video -m -s /usr/bin/nologin acestream
+    useradd -u 156 -g video -m -s /usr/bin/nologin acestream
   fi
   ln -sf /usr/share/acestream/start-engine /usr/bin/acestreamengine
 }

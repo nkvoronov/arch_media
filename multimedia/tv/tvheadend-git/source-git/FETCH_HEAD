@@ -15,14 +15,14 @@ c51b16224f417fa44287204f23ec3b52970bd111	not-for-merge	branch 'htsp/19' of https
 3a36e86b164fae4171027003587ea44797e6bf99	not-for-merge	branch 'htsp/21' of https://github.com/tvheadend/tvheadend
 a454305b332faa6bbf74a0c6dd0a5f824c744d78	not-for-merge	branch 'htsp/8' of https://github.com/tvheadend/tvheadend
 404316f08f0b5c30b94dd4c5983c2359f3a51de2	not-for-merge	branch 'htsp/9' of https://github.com/tvheadend/tvheadend
-8e270b2a6bc763f0b7c9624a4f771f357992b116	not-for-merge	branch 'master' of https://github.com/tvheadend/tvheadend
+66d6161c563181e5a572337ab3509a835c5a57e2	not-for-merge	branch 'master' of https://github.com/tvheadend/tvheadend
 80b03b3ff3a25820fd08638dc3625e7e2ac4ee0e	not-for-merge	branch 'perexg/test' of https://github.com/tvheadend/tvheadend
 5084ca63fdd43603fcef0f869075563c4dccab3d	not-for-merge	branch 'release/3.0' of https://github.com/tvheadend/tvheadend
 faee94bcb30e3c3f39dc476e18c0c506cf294215	not-for-merge	branch 'release/3.2' of https://github.com/tvheadend/tvheadend
 fbda8029a2b7dcc9ae01bb48a501aab54e666657	not-for-merge	branch 'release/3.4' of https://github.com/tvheadend/tvheadend
 819627ecc7db69537134ff01e946992a9ff631ca	not-for-merge	branch 'release/3.6' of https://github.com/tvheadend/tvheadend
 b3713485887e685343e99342112852c85e1e5148	not-for-merge	branch 'release/4.0' of https://github.com/tvheadend/tvheadend
-13576f815d0bb373f354037ce31b3032ab965314	not-for-merge	branch 'release/4.2' of https://github.com/tvheadend/tvheadend
+12bff89b47c0b6536c838be11a2cbd10861a7dbf	not-for-merge	branch 'release/4.2' of https://github.com/tvheadend/tvheadend
 6eb145697d4659adefcffff0456bcff43d7a4a8f	not-for-merge	'refs/pull/1/head' of https://github.com/tvheadend/tvheadend
 cc414cc6bc19e12368e3103bae8e2fd5ec99e583	not-for-merge	'refs/pull/10/head' of https://github.com/tvheadend/tvheadend
 21a97a176d4c9a45ce55b57a5f78813968cbcff3	not-for-merge	'refs/pull/100/head' of https://github.com/tvheadend/tvheadend
@@ -64,7 +64,7 @@ d0602efe029a9443fb3c0d52ab941a0abfb4ce11	not-for-merge	'refs/pull/1016/merge' of
 d9f254fcd1d6159e8161df12c6ea63f29afe81ac	not-for-merge	'refs/pull/1017/head' of https://github.com/tvheadend/tvheadend
 5dafac47f5331957585019bdbe40ab2c11af0320	not-for-merge	'refs/pull/1017/merge' of https://github.com/tvheadend/tvheadend
 717793ce035604f2ee476e5e8536a91128d71278	not-for-merge	'refs/pull/1018/head' of https://github.com/tvheadend/tvheadend
-aaf1a74e0d39667dc016d3356e7f4423e6a13a49	not-for-merge	'refs/pull/1018/merge' of https://github.com/tvheadend/tvheadend
+9064f4a6822e81d3aebfcd06f470d115e39a7a38	not-for-merge	'refs/pull/1018/merge' of https://github.com/tvheadend/tvheadend
 2130edf6b6c347879fe8feee74e57a1032b189aa	not-for-merge	'refs/pull/1019/head' of https://github.com/tvheadend/tvheadend
 c7c0bd581f04d2cd2e76a3f5d411220e9a8933ac	not-for-merge	'refs/pull/1019/merge' of https://github.com/tvheadend/tvheadend
 5909e15f578d44324ea93e78c7ac11d51100ebe8	not-for-merge	'refs/pull/102/head' of https://github.com/tvheadend/tvheadend
@@ -153,7 +153,7 @@ e0349065f55b9fa676eb8fd0cfe6676a894dde28	not-for-merge	'refs/pull/1057/merge' of
 5096bd060646ccbe46da73a356635e1c3920f1a0	not-for-merge	'refs/pull/1058/head' of https://github.com/tvheadend/tvheadend
 e5678da42dba6d4489ff38ba4f91f5529614c710	not-for-merge	'refs/pull/1058/merge' of https://github.com/tvheadend/tvheadend
 f2a107984c7b19aafb04fd58ff35f46d99a2a45a	not-for-merge	'refs/pull/1059/head' of https://github.com/tvheadend/tvheadend
-c02d986575503deb737b7198ca785b9f1caf2bd4	not-for-merge	'refs/pull/1059/merge' of https://github.com/tvheadend/tvheadend
+84c7cafb7088e6cab77a4470405e28a6612f97b1	not-for-merge	'refs/pull/1059/merge' of https://github.com/tvheadend/tvheadend
 d64df81f3dd22b0a9ab362662fc33877dbf30cd7	not-for-merge	'refs/pull/106/head' of https://github.com/tvheadend/tvheadend
 8fed0cb0079d333fd37225740757c91509f73e38	not-for-merge	'refs/pull/106/merge' of https://github.com/tvheadend/tvheadend
 a544ac3a199b5f651bc179c588f16f4a210949a2	not-for-merge	'refs/pull/1060/head' of https://github.com/tvheadend/tvheadend
@@ -225,7 +225,7 @@ d031155e035a02f45dbae44f7a917339e9dd3b2c	not-for-merge	'refs/pull/1090/merge' of
 97fe2832af13e0d07b131187a5e090da794d1440	not-for-merge	'refs/pull/1091/head' of https://github.com/tvheadend/tvheadend
 5a3c5dcb10337f3e8457c7a364f85d7bec6dbf59	not-for-merge	'refs/pull/1091/merge' of https://github.com/tvheadend/tvheadend
 9172d429fd890c36e519fc172e5d9d4ced8de729	not-for-merge	'refs/pull/1092/head' of https://github.com/tvheadend/tvheadend
-c1f21ee395e217de973af868c0fbd21c859ccbcd	not-for-merge	'refs/pull/1092/merge' of https://github.com/tvheadend/tvheadend
+cd4fb92f3504aa03e31eecf96814480e77f9db60	not-for-merge	'refs/pull/1092/merge' of https://github.com/tvheadend/tvheadend
 36f3f8238e2778643acddf044267b24412cc5ebd	not-for-merge	'refs/pull/1093/head' of https://github.com/tvheadend/tvheadend
 dcfac8eacad71462f6ec57962c7658bdb687b986	not-for-merge	'refs/pull/1093/merge' of https://github.com/tvheadend/tvheadend
 872d8d192153f8a9b0c825f8007d7cf8622ff47c	not-for-merge	'refs/pull/1094/head' of https://github.com/tvheadend/tvheadend
@@ -270,7 +270,7 @@ d0c5dbf71a809ad465b887294318e344d23455cd	not-for-merge	'refs/pull/1111/head' of 
 a253c6c24b944a774b28e0dc137859810cb4da7f	not-for-merge	'refs/pull/1111/merge' of https://github.com/tvheadend/tvheadend
 dc7804e1410971dabbe087193ca2b47f02131524	not-for-merge	'refs/pull/1112/head' of https://github.com/tvheadend/tvheadend
 f86ca867647f6bd651274d9b06a153b2d07992ec	not-for-merge	'refs/pull/1112/merge' of https://github.com/tvheadend/tvheadend
-d6b4a0079495d6d53fbcb39512bd9e916b0a1bd5	not-for-merge	'refs/pull/1113/head' of https://github.com/tvheadend/tvheadend
+cd9f947fdc18f43cccb5db80052338af29c70f69	not-for-merge	'refs/pull/1113/head' of https://github.com/tvheadend/tvheadend
 ea06a8d9b0493cf83e1caba4df942c77a080c37f	not-for-merge	'refs/pull/1113/merge' of https://github.com/tvheadend/tvheadend
 4e5ccd328cab6fcf02a41fd8f5f0de8fd9371e71	not-for-merge	'refs/pull/1114/head' of https://github.com/tvheadend/tvheadend
 e10bd66bb70c4ce366e50efd0bd3d804127399f9	not-for-merge	'refs/pull/1115/head' of https://github.com/tvheadend/tvheadend
@@ -283,13 +283,23 @@ e10bd66bb70c4ce366e50efd0bd3d804127399f9	not-for-merge	'refs/pull/1115/head' of 
 10ad24b14c3a3164fc3de1bf86f01de495feebbc	not-for-merge	'refs/pull/112/merge' of https://github.com/tvheadend/tvheadend
 1af2a614f0e674d873d0e9d54c45656d687ea732	not-for-merge	'refs/pull/1120/head' of https://github.com/tvheadend/tvheadend
 b33ab6ef74bcb4ffea9ae4913b8a5df87968b8c1	not-for-merge	'refs/pull/1121/head' of https://github.com/tvheadend/tvheadend
-db1bbf0e5b868ea5d92b74a542eb04efa5107682	not-for-merge	'refs/pull/1121/merge' of https://github.com/tvheadend/tvheadend
+db750df64494cb45258787cdf28c7c848ee05c34	not-for-merge	'refs/pull/1121/merge' of https://github.com/tvheadend/tvheadend
 07ae10f201f35282a97bae1274a642b30e7519d9	not-for-merge	'refs/pull/1122/head' of https://github.com/tvheadend/tvheadend
 dbd29ce12942c5c04d09bd7ba4cb7b7bccd473fc	not-for-merge	'refs/pull/1123/head' of https://github.com/tvheadend/tvheadend
 2f34ccb6c7f54d8928bb67f2927169a5b41c64bf	not-for-merge	'refs/pull/1124/head' of https://github.com/tvheadend/tvheadend
 d19ee83aba20e5a64a6cef6dd528191a71f9aa31	not-for-merge	'refs/pull/1125/head' of https://github.com/tvheadend/tvheadend
+c20a90638badfff1a25634bb26baf7728c124390	not-for-merge	'refs/pull/1126/head' of https://github.com/tvheadend/tvheadend
+a3d10c86220863c0bf734f445c5299b1777629bb	not-for-merge	'refs/pull/1127/head' of https://github.com/tvheadend/tvheadend
+9ff454ffd32c52c76424d298c78ade0fef784d7b	not-for-merge	'refs/pull/1128/head' of https://github.com/tvheadend/tvheadend
+69e9d28ee3a40eed02fe92472e19df63878f3505	not-for-merge	'refs/pull/1128/merge' of https://github.com/tvheadend/tvheadend
+3c3acc14ca009e5864eaf7505efc40d2d2fbc4e9	not-for-merge	'refs/pull/1129/head' of https://github.com/tvheadend/tvheadend
 d530f9e8a1a0f7cdef8ce978bb5d127c8ed73505	not-for-merge	'refs/pull/113/head' of https://github.com/tvheadend/tvheadend
 7de88062d46340da7332f8580d84b1a261afacd8	not-for-merge	'refs/pull/113/merge' of https://github.com/tvheadend/tvheadend
+e5801f6fac31c1cb2daf363969615530b812faac	not-for-merge	'refs/pull/1130/head' of https://github.com/tvheadend/tvheadend
+ca9f84d62fa6181f2809331db03ca3c29ee1f3aa	not-for-merge	'refs/pull/1130/merge' of https://github.com/tvheadend/tvheadend
+e5217a356753cd2b694779774e8c90eee74c3773	not-for-merge	'refs/pull/1131/head' of https://github.com/tvheadend/tvheadend
+981b94e190a844c72aba322baca31f9d2368a759	not-for-merge	'refs/pull/1132/head' of https://github.com/tvheadend/tvheadend
+3b0afb2d262b342a70ab3393a65bc93b1b9fe6ec	not-for-merge	'refs/pull/1132/merge' of https://github.com/tvheadend/tvheadend
 8212e945d7392ad917e11d14e2d00a66ea1e55f0	not-for-merge	'refs/pull/114/head' of https://github.com/tvheadend/tvheadend
 6b6aa9cf2e5bfd2acae9d1e04ea05a666a5c9ffc	not-for-merge	'refs/pull/114/merge' of https://github.com/tvheadend/tvheadend
 2fba4e70da033c3c18fb400ab22bfaa4b992fee4	not-for-merge	'refs/pull/115/head' of https://github.com/tvheadend/tvheadend
@@ -1987,7 +1997,7 @@ d0937e5fec850a112acbdda55252b10476d90b9a	not-for-merge	'refs/pull/923/merge' of 
 ece3ede2b99a41070865a0303b1d3568fbcabfe7	not-for-merge	'refs/pull/927/head' of https://github.com/tvheadend/tvheadend
 bce5cd33f9cebca12dddc0a8a1e02dab477d19eb	not-for-merge	'refs/pull/927/merge' of https://github.com/tvheadend/tvheadend
 913ece3acccac60ed2bfb2a40bf413e176fe7a98	not-for-merge	'refs/pull/928/head' of https://github.com/tvheadend/tvheadend
-737a1f22c6a3e337e5702343e88d2c76d98405d7	not-for-merge	'refs/pull/928/merge' of https://github.com/tvheadend/tvheadend
+42c8bdd06aa3ff8c4bc9869064e32a959e320e00	not-for-merge	'refs/pull/928/merge' of https://github.com/tvheadend/tvheadend
 25b30b2b14b8e6cda461177bda93184e8912095d	not-for-merge	'refs/pull/929/head' of https://github.com/tvheadend/tvheadend
 3897e454bb6ea4215d2ab58b3231dec5cbd6639a	not-for-merge	'refs/pull/929/merge' of https://github.com/tvheadend/tvheadend
 b2f4aeb035a06b01c4b9404c19e993b206f606b3	not-for-merge	'refs/pull/93/head' of https://github.com/tvheadend/tvheadend

@@ -1,0 +1,34 @@
+<menusetup x="0" y="0" width="100%" height="100%" fadetime="0" scaletvx="39%" scaletvy="8%" scaletvwidth="60%" scaletvheight="60%">
+
+    <menuitems x="2%" y="9%" orientation="vertical" width="98%" height="82%" align="center" numlistelements="10">
+        <listelement fadetime="{listfadetime}" shifttime="{listshifttime}">
+            <area condition="{current}" indicator="true" x="0" y="0" width="31%" height="100%" layer="2">
+                <drawrectangle x="0" y="0" width="15%" height="100%" color="{menubackactivedark}" />
+                <drawrectangle x="15%" y="0" width="85%" height="100%" color="{menubackactive}" />
+            </area>
+            <area condition="not{current}" x="0" y="0" width="31%" height="100%" layer="2">
+                <drawrectangle x="0" y="0" width="100%" height="100%" color="{menuback}" />
+                <drawrectangle x="0" y="{areaheight}-1" width="100%" height="1" color="{menubackline}" />
+            </area>
+            <area x="0" y="0" width="5%" height="100%" layer="3">
+                <drawimage condition="not{current}" imagetype="menuicon" path="{icon}" align="center" valign="center" width="{areaheight}*{mainiconsize}/100" height="{areaheight}*{mainiconsize}/100"/>
+                <drawimage condition="{current}" imagetype="menuicon" path="{icon}_active" align="center" valign="center" width="{areaheight}*{mainiconsize}/100" height="{areaheight}*{mainiconsize}/100"/>
+            </area>
+            <areascroll condition="{showlistnumbers}" scrollelement="menutext" mode="forthandback" orientation="horizontal" delay="1000" scrollspeed="medium" x="5%" width="25%" layer="4">
+                <drawtext condition="not{current}" x="20" valign="center" font="{regular}" fontsize="{areaheight}*{setupfontsize}/100" color="{fontdefault}" text="{number} {label}" />
+                <drawtext condition="{current}" name="menutext" x="20" valign="center" font="{regular}" fontsize="{areaheight}*{setupfontsize}/100" color="{fontmenuactive}" text="{number} {label}" />
+            </areascroll>
+            <areascroll condition="not{showlistnumbers}" scrollelement="menutext" mode="forthandback" orientation="horizontal" delay="1000" scrollspeed="medium" x="5%" width="25%" layer="4">
+                <drawtext condition="not{current}" x="20" valign="center" font="{regular}" fontsize="{areaheight}*{setupfontsize}/100" color="{fontdefault}" text="{label}" />
+                <drawtext condition="{current}" name="menutext" x="20" valign="center" font="{regular}" fontsize="{areaheight}*{setupfontsize}/100" color="{fontmenuactive}" text="{label}" />
+            </areascroll>
+        </listelement>
+        <currentelement delay="100" fadetime="200">
+            <area x="47%" y="76%" width="49%" height="20%" layer="3">
+                <drawimage name="icon" imagetype="menuicon" path="{icon}" x="0" valign="center" width="{areaheight}" height="{areaheight}"/>
+                <drawtext x="{posx(icon)} + {width(icon)} + 40" valign="center" font="{regular}" fontsize="50%" color="{fontdefault}" text="{label}" />
+            </area>
+        </currentelement>
+    </menuitems>
+    
+</menusetup>

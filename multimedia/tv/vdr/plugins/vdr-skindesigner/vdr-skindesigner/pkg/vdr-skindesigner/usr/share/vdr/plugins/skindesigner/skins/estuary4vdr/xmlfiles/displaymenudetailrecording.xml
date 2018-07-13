@@ -1,0 +1,109 @@
+<menudetailedrecording x="0" y="0" width="100%" height="100%" fadetime="0">
+    <background>
+        <area x="0" y="0" width="100%" height="100%" layer="1">
+            <drawimage imagetype="skinpart" x="0" y="0" width="100%" height="100%" path="background_menu" />
+        </area>
+        <area x="2%" y="10%" width="96%" height="75%" layer="2">
+            <fill color="{menuback}" />
+            <drawrectangle x="0" y="16%" width="100%" height="1" color="{menubackline}" />
+            <drawrectangle x="0" y="{areaheight}-1" width="100%" height="1" color="{menubackline}" />
+        </area>
+    </background>
+
+    <scrollbar>
+        <area x="97%" y="23%" width="{areawidth}*0.01" height="61%" layer="3">
+            <drawrectangle x="0" y="{areaheight} * {offset} / 1000" width="100%" height="{areaheight} * {height} / 1000" color="{progressbar}" />
+        </area>
+    </scrollbar>
+
+    <detailheader>
+        <area x="3%" y="11%" width="95%" height="10%" layer="3">
+            <drawtext x="0" y="{areaheight}*{detailheaderdateposy}/100" font="{regular}" fontsize="{areaheight}*{detailheaderdatesize}/100" color="{fontdefault}" text="{date} {time}, {duration} min" />
+            <drawtext x="0" y="{areaheight}*{detailheadertitleposy}/100" width="84%" font="{regular}" fontsize="{areaheight}*{detailheadertitlesize}/100" color="{fontdefault}" text="{epgname}" />
+        </area>
+    </detailheader>
+
+    <!-- TAB EPGINFO -->
+    <tab name="Info" x="3%" y="23%" width="94%" height="61%" layer="4" scrollheight="{areaheight}/4">
+        <drawtextbox condition="not{isseries}++not{ismovie}" name="shorttext" x="0" y="1%" width="96%" font="{regular}" fontsize="{areaheight}*{detailtextheadersize}/100" color="{fontdefault}" text="{shorttext}" />
+        <drawtextbox condition="not{isseries}++not{ismovie}" x="0" y="{posy(shorttext)} + {height(shorttext)} + 5" width="96%" font="{regular}" fontsize="{areaheight}*{detailtextsize}/100" color="{fontdefault}" text="{description}" />
+
+        <drawimage condition="{isseries}" name="seriesbanner" imagetype="image" path="{seriesbanner1path}" x="{areawidth}*0.5" y="0" width="{areawidth}*0.5" height="{areawidth} * 0.5 * {seriesbanner1height} / {seriesbanner1width}"/>
+        <drawtextbox condition="{isseries}" name="shorttext" x="0" y="0" width="49%" font="{regular}" fontsize="{areaheight}*{detailtextheadersize}/100" color="{fontdefault}" text="{shorttext}" />
+        <drawtextbox condition="{isseries}" x="0" y="{height(shorttext)} + 5" width="96%" float="topright" floatwidth="{areawidth}*0.5" floatheight="{areawidth} * 0.5 * {seriesbanner1height} / {seriesbanner1width} - {height(shorttext)}" font="{regular}" fontsize="{areaheight}*{detailtextsize}/100" color="{fontdefault}" text="{description}" />
+
+        <drawimage condition="{ismovie}" name="movieposter" imagetype="image" path="{posterpath}" x="{areawidth}*0.8" y="0" width="{areawidth}*0.2" height="{areawidth} * 0.2 * {posterheight} / {posterwidth}" />
+        <drawtextbox condition="{ismovie}" name="shorttextmovie" x="0" y="0" width="75%" font="{regular}" fontsize="{areaheight}*{detailtextheadersize}/100" color="{fontdefault}" text="{shorttext}" />
+        <drawtextbox condition="{ismovie}" x="0" y="{height(shorttextmovie)} + 5" width="96%" float="topright" floatwidth="{width(movieposter)} + 10" floatheight="{height(movieposter)} - {height(shorttextmovie)}" font="{regular}" fontsize="{areaheight}*{detailtextsize}/100" color="{fontdefault}" text="{description}" />
+    </tab>
+    <!-- TAB RECINFO -->
+    <tab name="{tr(recinfo)}" x="3%" y="23%" width="94%" height="61%" layer="4" scrollheight="{areaheight}/4">
+        <drawtext align="center" y="0" name="title" font="{regular}" fontsize="{areaheight}*{detailtextheadersize}/100" color="{fontdefault}" text="{tr(recinfo)}" />
+        <drawtext name="line1" x="0" y="{height(title)} + 50" width="96%" font="{regular}" fontsize="{areaheight}*{detailtextsize}/100" color="{fontdefault}" text="{tr(recsize)}: {recordingsize}" />
+        <drawtext name="line2" x="0" y="{posy(line1)} + {height(line1)} + 10" width="96%" font="{regular}" fontsize="{areaheight}*{detailtextsize}/100" color="{fontdefault}" text="{tr(recsizecutted)}: {recordingsizecutted}" />
+        <drawtext name="line3" x="0" y="{posy(line2)} + {height(line2)} + 10" width="96%" font="{regular}" fontsize="{areaheight}*{detailtextsize}/100" color="{fontdefault}" text="{tr(reclength)}: {recordinglength}" />
+        <drawtext name="line4" x="0" y="{posy(line3)} + {height(line3)} + 10" width="96%" font="{regular}" fontsize="{areaheight}*{detailtextsize}/100" color="{fontdefault}" text="{tr(reclengthcutted)}: {recordinglengthcutted}" />
+        <drawtext name="line5" x="0" y="{posy(line4)} + {height(line4)} + 10" width="96%" font="{regular}" fontsize="{areaheight}*{detailtextsize}/100" color="{fontdefault}" text="{tr(bitrate)}: {recordingbitrate}" />
+        <drawtext name="line6" x="0" y="{posy(line5)} + {height(line5)} + 10" width="96%" font="{regular}" fontsize="{areaheight}*{detailtextsize}/100" color="{fontdefault}" text="{tr(format)}: {recordingformat}" />
+        <drawtext x="0" y="{posy(line6)} + {height(line6)} + 10" width="96%" font="{regular}" fontsize="{areaheight}*{detailtextsize}/100" color="{fontdefault}" text="{tr(searchtimer)}: {searchtimer}" />
+    </tab>
+    <!-- TAB ACTORS -->
+    <tab condition="{isseries}||{ismovie}" name="{tr(actors)}" x="3%" y="23%" width="94%" height="61%" layer="4" scrollheight="{areaheight}/4">
+        <drawtext align="center" name="title" y="0" font="{regular}" fontsize="{areaheight}*{detailtextheadersize}/100" color="{fontdefault}" text="{tr(actors)}" />
+        <loop name="actors" x="0" y="{height(title)} + 10" width="{areawidth}" orientation="horizontal" columnwidth="{areawidth}/7" rowheight="{areawidth}/7*1.65" overflow="linewrap" >
+            <drawimage name="thumb" imagetype="image" path="{actors[thumb]}" x="20" y="0" width="{columnwidth}-40" height="{columnwidth} * {actors[thumbheight]} / {actors[thumbwidth]} - 40 * {actors[thumbheight]} / {actors[thumbwidth]}"/>
+            <drawtext align="center" y="{height(thumb)} + 10" width="{columnwidth}" name="actorname" font="{regular}" fontsize="{areaheight}*{detailactors}/100" color="{fontdefault}" text="{actors[name]}" />
+            <drawtext align="center" y="{height(thumb)} + 10 + {height(actorname)}" width="{columnwidth}" font="{regular}" fontsize="{areaheight}*{detailactors}/100" color="{fontdefault}" text="{actors[role]}" />
+        </loop>
+    </tab>
+    <!-- TAB TVDBINFO -->
+    <tab condition="{isseries}" name="TvDBInfo" x="3%" y="23%" width="94%" height="61%" layer="4" scrollheight="{areaheight}/4">
+        <drawimage name="banner" imagetype="image" path="{seriesbanner1path}" align="center" y="10" width="{areawidth}*0.7" height="{areawidth} * 0.7 * {seriesbanner1height} / {seriesbanner1width}"/>
+        <drawimage name="episodeimage" imagetype="image" path="{episodeimagepath}" x="{areawidth}*0.7" y="{height(banner)} + 20" width="{areawidth}*0.3" height="{areawidth} * 0.3 * {episodeimageheight} / {episodeimagewidth}"/>
+        <drawimage name="seasonposter" imagetype="image" path="{seasonposterpath}" x="{areawidth}*0.7" y="{height(banner)} + {height(episodeimage)} + 30" width="{areawidth}*0.3" height="{areawidth} * 0.3 * {seasonposterheight} / {seasonposterwidth}"/>
+        <drawtextbox x="0" y="{height(banner)} + 20" width="96%" float="topright" floatwidth="{width(seasonposter)} + 10" floatheight="{height(episodeimage)} + {height(seasonposter)} + 30" font="{regular}" fontsize="{areaheight}*{detailtextsize}/100" color="{fontdefault}" text="{tr(episode)}: {episodetitle} ({tr(season)} {episodeseason}, {tr(episode)} {episodenumber}) &#10;&#10;{episodeoverview}|&#10;&#10;{tr(gueststars)}: {episodegueststars}||&#10;&#10;{tr(seriesfirstaired)}: {seriesfirstaired}||&#10;{tr(episodefirstaired)}: {episodefirstaired}||&#10;{tr(network)}: {seriesnetwork}||&#10;{tr(genre)}: {seriesgenre}||&#10;{tr(status)}: {seriesstatus}||&#10;{tr(rating)}: {seriesrating}||&#10;{tr(episoderating)}: {episoderating}&#10;|{seriesoverview}&#10;" />
+    </tab>
+    <!-- TAB MOVIEDBINFO -->
+    <tab condition="{ismovie}" name="MovieDBInfo" x="3%" y="23%" width="94%" height="61%" layer="4" scrollheight="{areaheight}/4">
+        <drawimage name="poster" imagetype="image" path="{posterpath}" x="70%" y="10" width="{areawidth}*0.3" height="{areawidth} * 0.3 * {posterheight} / {posterwidth}"/>
+        <drawtextbox x="0" y="10" width="96%" float="topright" floatwidth="{width(poster)} + 10" floatheight="{height(poster)} + 20" font="{regular}" fontsize="{areaheight}*{detailtextsize}/100" color="{fontdefault}" text="{tr(originaltitle)}: {movieoriginalTitle}&#10;&#10;|{tr(genre)}: {moviegenres}&#10;&#10;||{movietagline}&#10;&#10;|{movieoverview}&#10;&#10;|{tr(budget)}: {moviebudget}&#10;||{tr(revenue)}: {movierevenue}&#10;&#10;||{tr(adult)}: {movieadult}&#10;||{tr(releasedate)}: {moviereleasedate}&#10;||{tr(runtime)}: {movieruntime} min&#10;||&#10;{tr(popularity)}: {moviepopularity}&#10;||&#10;{tr(voteaverage)}: {movievoteaverage}&#10;||&#10;{tr(homepage)}: {moviehomepage}|&#10;" />
+    </tab>
+    <!-- TAB SERIESGALERY -->
+    <tab condition="{isseries}" name="{tr(seriesgalery)}" x="3%" y="23%" width="94%" height="61%" layer="4" scrollheight="{areaheight}*0.61">
+        <drawimage name="banner1" imagetype="image" path="{seriesbanner1path}" align="center" y="{areaheight}/2 - {height(banner1)}/2" width="{areawidth}*0.9" height="{areawidth} * 0.9 * {seriesbanner1height} / {seriesbanner1width}"/>       
+        <drawimage name="fanart1" imagetype="image" path="{seriesfanart1path}" align="center" y="{areaheight}" width="{areaheight} * 0.95 * {seriesfanart1width} / {seriesfanart1height}" height="{areaheight} * 0.95"/>
+        <drawimage name="banner2" imagetype="image" path="{seriesbanner2path}" align="center" y="5*{areaheight}/2 - {height(banner2)}/2" width="{areawidth}*0.9" height="{areawidth} * 
+        0.9 * {seriesbanner2height} / {seriesbanner2width}"/>
+        <drawimage name="fanart2" imagetype="image" path="{seriesfanart2path}" align="center" y="3*{areaheight}" width="{areaheight} * 0.95 * {seriesfanart2width} / {seriesfanart2height}" height="{areaheight} * 0.95"/>
+        <drawimage name="banner3" imagetype="image" path="{seriesbanner3path}" align="center" y="9*{areaheight}/2 - {height(banner3)}/2" width="{areawidth}*0.9" height="{areawidth} * 0.9 * {seriesbanner3height} / {seriesbanner3width}"/>
+        <drawimage name="fanart3" imagetype="image" path="{seriesfanart3path}" align="center" y="5*{areaheight}" width="{areaheight} * 0.95 * {seriesfanart3width} / {seriesfanart3height}" height="{areaheight} * 0.95"/>
+        <drawimage name="poster1" imagetype="image" path="{seriesposter1path}" align="center" y="6*{areaheight}" width="{areaheight} * 0.95 * {seriesposter1width} / {seriesposter1height}" height="{areaheight} * 0.95"/>
+        <drawimage name="poster2" imagetype="image" path="{seriesposter2path}" x="20" y="6*{areaheight}" width="{areaheight} * 0.95 * {seriesposter2width} / {seriesposter2height}" height="{areaheight} * 0.95"/>
+        <drawimage name="poster3" imagetype="image" path="{seriesposter3path}" x="{areawidth} - {width(poster3)} - 20" y="6*{areaheight}" width="{areaheight} * 0.95 * {seriesposter3width} / {seriesposter3height}" height="{areaheight} * 0.95"/>
+    </tab>
+    <!-- TAB MOVIEGALERY -->
+    <tab condition="{ismovie}" name="{tr(moviegalery)}" x="3%" y="23%" width="94%" height="61%" layer="4" scrollheight="{areaheight}*0.61">
+        <drawimage name="fanart" imagetype="image" path="{fanartpath}" align="center" y="10" width="{areaheight} * 0.95 * {fanartwidth} / {fanartheight}" height="{areaheight} * 0.95"/>
+        <drawimage name="poster" imagetype="image" path="{posterpath}" align="center" y="{areaheight}" width="{areaheight} * 0.95 * {posterwidth} / {posterheight}" height="{areaheight} * 0.95"/>
+        <drawimage condition="{movieiscollection}" name="collectionfanart" imagetype="image" path="{collectionfanartpath}" align="center" y="2*{areaheight}" width="{areaheight} * 0.95 * {collectionfanartwidth} / {collectionfanartheight}" height="{areaheight} * 0.95"/>
+        <drawimage condition="{movieiscollection}" name="collectionposter" imagetype="image" path="{collectionposterpath}" align="center" y="3*{areaheight}" width="{areaheight} * 0.95 * {collectionposterwidth} / {collectionposterheight}" height="{areaheight} * 0.95"/>
+    </tab>
+
+    <tablabels>
+        <area x="2%" y="85%" width="{areawidth} - 60" height="6%" layer="3">
+            <loop name="tabs" x="0" y="0" orientation="horizontal">
+                <drawrectangle condition="not{tabs[current]}" x="0" y="0" width="{width(label)}" height="100%" color="{menuback}" />
+                <drawrectangle x="{columnwidth}-1" y="0" width="1" height="100%" color="{menubackline}" />
+                <drawrectangle condition="{tabs[current]}" x="0" y="0" width="{width(label)}" height="100%" color="{menubackactive}" />
+                <drawtext name="label" x="0" valign="center" font="{regular}" fontsize="{areaheight}*{tablabels}/100" color="00000000" text="  {tabs[title]}  " />
+            </loop>
+        </area>
+        <area x="2%" y="85%" width="{areawidth} - 60" height="6%" layer="4">
+            <loop name="tabs" x="0" y="0" orientation="horizontal">
+                <drawtext condition="not{tabs[current]}" x="0" valign="center" font="{regular}" fontsize="{areaheight}*{tablabels}/100" color="{fontdefault}" text="  {tabs[title]}  " />
+                <drawtext condition="{tabs[current]}" x="0" valign="center" font="{regular}" fontsize="{areaheight}*{tablabels}/100" color="{fontmenuactive}" text="  {tabs[title]}  " />
+            </loop>
+        </area>
+    </tablabels>
+
+</menudetailedrecording>

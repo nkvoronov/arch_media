@@ -1,0 +1,63 @@
+pkgbase=vdr-streamdev
+pkgname=(vdr-streamdev-{client,server})
+pkgver=0.6.1_ge2a9b97
+_gitname='source-git'
+_verpkg='0.6.1'
+_vdrapi=2.4.0
+pkgrel=20
+pkgdesc="implementation of the VTP (Video Transfer Protocol)"
+url="http://projects.vdr-developer.org/projects/show/plg-streamdev"
+arch=('x86_64' 'i686' 'arm' 'armv6h' 'armv7h')
+license=('GPL2')
+depends=('gcc-libs' "vdr-api=${_vdrapi}")
+makedepends=('git')
+_plugname=${pkgbase//vdr-/}
+source=("${_gitname}::git+git://github.com/vdr-projects/vdr-plugin-streamdev.git#branch=master"
+        'vdr-plugin-streamdev-01_4k_hevc_support.patch'
+        'vdr-plugin-streamdev-02_RU-locale.patch'
+        "50-$_plugname-server.conf")
+md5sums=('SKIP'
+         '541b8cdbc0dfd317d75fec30432ec846'
+         '99e9be776b59903156fe85d02da6eb70'
+         '8c352d8ee7401eeb34fe5ab82e791a21')
+
+pkgver() {
+  cd "${srcdir}/${_gitname}"
+  _git=`git rev-parse --short HEAD`
+  printf "%s_%s" "$_verpkg" "g$_git"
+}
+
+prepare() {
+  cd "${srcdir}/${_gitname}"
+  for f in "$srcdir"/*.patch; do patch -p1 < "$f"; done
+}
+
+build() {
+  cd "${srcdir}/${_gitname}"
+  make -j1
+}
+
+package_vdr-streamdev-client() {
+  pkgdesc+=': client-side'
+  replaces=('vdr-streamdev')
+  conflicts=('vdr-streamdev')
+  backup=("etc/vdr/conf.avail/50-$_plugname-client.conf")
+  cd "${srcdir}/${_gitname}"
+  make DESTDIR="$pkgdir" install-client
+
+  mkdir -p "$pkgdir/etc/vdr/conf.avail"
+  echo "[$_plugname-client]" > "$pkgdir/etc/vdr/conf.avail/50-$_plugname-client.conf"
+}
+
+package_vdr-streamdev-server() {
+  pkgdesc+=': server-side'
+  replaces=('vdr-streamdev')
+  conflicts=('vdr-streamdev')
+  backup=("etc/vdr/conf.avail/50-$_plugname-server.conf"
+          'etc/vdr/plugins/streamdev-server/streamdevhosts.conf')
+  cd "${srcdir}/${_gitname}"
+  make DESTDIR="$pkgdir" install-server
+  install -Dm644 streamdev-server/streamdevhosts.conf "$pkgdir/etc/vdr/plugins/streamdev-server/streamdevhosts.conf"
+  mkdir -p "$pkgdir/etc/vdr/conf.avail"
+  install -Dm644 "$srcdir/50-$_plugname-server.conf" "$pkgdir/etc/vdr/conf.avail/50-$_plugname-server.conf"
+}

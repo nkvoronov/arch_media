@@ -1,0 +1,46 @@
+pkgname=vdr-tvguideng
+pkgver=0.3.0_g65248ba
+_gitname='source-git'
+_verpkg='0.3.0'
+_vdrapi=2.4.0
+pkgrel=20
+pkgdesc="highly customizable 2D EPG viewer plugin."
+url="http://projects.vdr-developer.org/projects/plg-tvguideng"
+arch=('x86_64' 'i686' 'arm' 'armv6h' 'armv7h')
+license=('GPL2')
+depends=("vdr-api=$_vdrapi" 'vdr-skindesigner')
+_plugname=${pkgname//vdr-/}
+source=("${_gitname}::git+https://github.com/vdr-projects/vdr-plugin-tvguideng.git#branch=master"
+        'vdr-plugin-tvguideng-01_gcc6.patch'
+        'vdr-plugin-tvguideng-02_tvguideng_235.patch'
+        'vdr-plugin-tvguideng-03_svdrp_peering.patch'
+        'vdr-plugin-tvguideng-04_tvguide-ng_0.3.0_timer-fix.patch')
+backup=("etc/vdr/conf.avail/50-$_plugname.conf")
+md5sums=('SKIP'
+         '3c505068845952cbecb7700f15096f49'
+         'bf406c306b4e548bddc291bcda6b8fdd'
+         '8d234aac25ae60abf2c30dec7e8023b9'
+         '3b9dc13b406d980444f2474eea9bc861')
+
+pkgver() {
+  cd "${srcdir}/${_gitname}"
+  _git=`git rev-parse --short HEAD`
+  printf "%s_%s" "$_verpkg" "g$_git"
+}
+
+prepare() {
+  cd "${srcdir}/${_gitname}"
+  for f in "$srcdir"/*.patch; do patch -p1 < "$f"; done
+}
+
+build() {
+  cd "${srcdir}/${_gitname}"
+  make
+}
+
+package() {
+  cd "${srcdir}/${_gitname}"
+  make DESTDIR="$pkgdir" install
+  mkdir -p "$pkgdir/etc/vdr/conf.avail"
+  echo "[$_plugname]" > "$pkgdir/etc/vdr/conf.avail/50-$_plugname.conf"
+}

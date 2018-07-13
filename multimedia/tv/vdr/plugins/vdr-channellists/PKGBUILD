@@ -1,0 +1,37 @@
+# This PKGBUILD is part of the VDR4Arch project [https://github.com/vdr4arch]
+
+# Maintainer: Christopher Reimer <mail+vdr4arch[at]c-reimer[dot]de>
+pkgname=vdr-channellists
+pkgver=0.0.6
+_vdrapi=2.4.0
+pkgrel=20
+pkgdesc="Plugin to manage your Channellists"
+url="http://www.zulu-entertainment.de/content.php?f=VDR-Plugins&sub=Channellists"
+arch=('x86_64' 'i686' 'arm' 'armv6h' 'armv7h')
+license=('GPL2')
+depends=('libcdio-paranoia' "vdr-api=${_vdrapi}")
+_plugname=${pkgname//vdr-/}
+backup=("var/lib/vdr/plugins/$_plugname/cd.mpg")
+source=("https://www.dropbox.com/s/47fqg8t59zlzsze/vdr-plugin-$_plugname-$pkgver.tar.gz"
+        'vdr-plugin-channellists-02_RU-locale.patch'
+        "50-$_plugname.conf")
+backup=("etc/vdr/conf.avail/50-$_plugname.conf")
+md5sums=('c1d8134041aaf3f3a7d6fd7da951a2eb'
+         '1f11d6c9d86add971b83d5ca99a03280'
+         '6a30260380a577d8514d37d8f318f8fd')
+
+prepare() {
+  cd "${srcdir}/vdr-plugin-$_plugname-${pkgver}"
+  for f in "$srcdir"/*.patch; do patch -p1 < "$f"; done
+}
+
+build() {
+  cd "${srcdir}/vdr-plugin-$_plugname-${pkgver}"
+  make
+}
+
+package() {
+  cd "${srcdir}/vdr-plugin-$_plugname-${pkgver}"
+  make CFGDIR=$(pkg-config --variable=resdir vdr)/plugins/$_plugname DESTDIR="${pkgdir}" install
+  install -Dm644 "$srcdir/50-$_plugname.conf" "$pkgdir/etc/vdr/conf.avail/50-$_plugname.conf"
+}

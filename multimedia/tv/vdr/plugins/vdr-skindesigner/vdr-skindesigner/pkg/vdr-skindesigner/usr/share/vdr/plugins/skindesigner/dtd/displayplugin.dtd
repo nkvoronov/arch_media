@@ -1,0 +1,55 @@
+<?xml encoding="UTF-8"?>
+
+<!ENTITY % functions SYSTEM "functions.dtd">
+
+<!ELEMENT displayplugin (viewelement|grid|tab|scrollbar|tablabels)* >
+<!ATTLIST displayplugin
+  x CDATA #REQUIRED
+  y CDATA #REQUIRED
+  width CDATA #REQUIRED
+  height CDATA #REQUIRED
+  fadetime CDATA #IMPLIED
+  shifttime CDATA #IMPLIED
+  shifttype CDATA #IMPLIED
+  shiftmode CDATA #IMPLIED
+  startx CDATA #IMPLIED
+  starty CDATA #IMPLIED
+  scaletvx CDATA #IMPLIED
+  scaletvy CDATA #IMPLIED
+  scaletvwidth CDATA #IMPLIED
+  scaletvheight CDATA #IMPLIED
+  hideroot CDATA #IMPLIED
+  debuggrid CDATA #IMPLIED
+>
+
+<!ELEMENT viewelement (areacontainer|area|areascroll)*>
+<!ATTLIST viewelement
+  name CDATA #REQUIRED
+  debug CDATA #IMPLIED
+>
+
+<!ELEMENT scrollbar (areacontainer|area|areascroll)*>
+<!ATTLIST scrollbar
+  debug CDATA #IMPLIED
+>
+
+<!ELEMENT tablabels (areacontainer|area|areascroll)*>
+<!ATTLIST tablabels
+  debug CDATA #IMPLIED
+>
+
+<!ELEMENT tab (loop|fill|drawtext|drawtextbox|drawimage|drawrectangle|drawellipse)*>
+<!ATTLIST tab
+  x CDATA #REQUIRED
+  y CDATA #REQUIRED
+  width CDATA #REQUIRED
+  height CDATA #REQUIRED
+  layer CDATA #REQUIRED
+  name CDATA #REQUIRED
+  scrollheight CDATA #REQUIRED
+  transparency CDATA #IMPLIED
+  condition CDATA #IMPLIED
+  debug (true|false) #IMPLIED
+>
+
+%functions;

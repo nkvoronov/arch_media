@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE globals SYSTEM "../../../../dtd/globals.dtd">
+
+<globals>
+    <!--
+    define all your needed colors here
+    -->
+    <colors>
+        <color name="menuback">55000000</color>
+        <color name="menubackline">FF444444</color>
+        <color name="menubackactive">FF99D235</color>
+        <color name="menubackactivedark">FF659710</color>
+        <color name="menumainheader">FF000000</color>
+        <color name="channelback">B0000000</color>
+        <color name="messageback">D0000000</color>
+        <color name="replayback">B0000000</color>
+        <color name="fontdefault">FFFFFFFF</color>
+        <color name="fontactive">FF99D235</color>
+        <color name="fontmenuactive">FF111111</color>
+        <color name="progressbarback">FF222222</color>
+        <color name="progressbar">FF99D235</color>
+        <color name="progressbartimeshift">FF666666</color>
+        <color name="cutmark">FF666666</color>
+        <color name="icontextactive">FFFFFFFF</color>
+        <color name="icontextinactive">FF333333</color>
+        <color name="icontextalert">FFFF0000</color>
+        <!-- colors svg templates -->
+        <color name="icon">FFFFFFFF</color>
+        <color name="iconactive">FF111111</color>
+        <color name="iconselected">FF800000</color>
+        <color name="iconrecactive">FF99D235</color>
+        <color name="iconrecinactive">FFFFFFFF</color>
+        <!-- colors tvguideng -->
+        <color name="tvgrecmenuback">FF000000</color>
+        <color name="tvgbuttoninactive">FF666666</color>
+        <color name="tvgtimeline">FFAA0000</color>
+        <color name="tvgtextedit">FF111111</color>
+        <color name="tvgtextedittext">FFFFFFFF</color>
+        <color name="tvgtextnotedit">FFFFFFFF</color>
+        <color name="tvgtextnotedittext">FF333333</color>
+        <color name="tvgdayactive">FF52A300</color>
+        <color name="tvgdayinactive">FFA30000</color>
+        <color name="tvgdayselected">AA000000</color>
+        <color name="tvgconflictheaderback">FF444444</color>
+        <color name="tvgconflictfont">FFAA0000</color>
+        <color name="tvgconflict">88AA0000</color>
+        <color name="tvgconflicttimer">FF000000</color>
+        <color name="tvgtimeline1">FF000000</color>
+        <color name="tvgtimeline2">FFFFFFFF</color>
+    </colors>
+    <!--
+    these variables can be used everywhere in the templates
+    variabls of type int can also be used as conditions, just
+    set such a variable to 1 for true and 0 for false
+    -->
+    <variables>
+    </variables>
+    <!--
+    translations used in the skin
+    -->
+    <translations>
+    </translations>
+    <!--
+    The three Fonts FontOSD, FontFix and FontSml configured in VDR
+    can be used in all template "font" attributes with this tokens:
+    {vdrOsd}
+    {vdrFix}
+    {vdrSml} 
+    If you like to use further fonts, just define them below.
+    Syntax:
+    <font name="tokenname">fontname</font>
+    These fonts can then also be used in all templates in the "font" 
+    attribute.
+    if an invalid font is used in a template, vdrOsd is used as default.
+    -->
+    <fonts>
+    </fonts>
+</globals>

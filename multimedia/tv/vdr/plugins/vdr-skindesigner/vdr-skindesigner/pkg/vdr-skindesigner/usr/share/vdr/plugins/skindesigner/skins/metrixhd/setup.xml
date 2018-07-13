@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE setup SYSTEM "../../dtd/setup.dtd">
+
+<setup>
+    <menu>
+        <parameter type="separator" name="sep" displaytext="---------------- MetrixHD ----------------"/>
+        <parameter type="int" name="fadetime" min="0" max="1000" displaytext="{tr(fadetext)}" helptext="{tr(helpfade)}">0</parameter>
+        <parameter type="int" name="fadetimecurrent" min="0" max="1000" displaytext="{tr(fadecurrenttext)}" helptext="{tr(helpfadecurrent)}">50</parameter>
+        <parameter type="int" name="shifttimechannel" min="0" max="1000" displaytext="{tr(shifttimechanneltext)}" helptext="{tr(helpshifttimechannel)}">0</parameter>
+        <parameter type="int" name="shifttimedatetime" min="0" max="1000" displaytext="{tr(shifttimedatetimetext)}" helptext="{tr(helpshifttimedatetime)}">200</parameter>
+        <parameter type="int" name="listfadetime" min="0" max="1000" displaytext="{tr(listfadetimetext)}" helptext="{tr(helplistfadetime)}">0</parameter>
+        <parameter type="int" name="listshifttime" min="0" max="1000" displaytext="{tr(listshifttimetext)}" helptext="{tr(helplistshifttime)}">100</parameter>
+        <parameter type="string" name="showdevices" displaytext="{tr(showdevices)}" helptext="{tr(helpshowdevices)}" options="no,menu,yes">0</parameter>
+        <parameter type="string" name="showweather" displaytext="{tr(showweather)}" helptext="{tr(helpshowweather)}" options="no,menu,yes">1</parameter>
+        <parameter type="string" name="showscrollbar" displaytext="{tr(showscrollbar)}" helptext="{tr(helpshowscrollbar)}" options="no,auto,yes">1</parameter>
+        <parameter type="string" name="recmenuorientation" displaytext="{tr(recmenuorientation)}" options="horizontal,vertical">1</parameter>
+        <parameter type="string" name="weathermenuorientation" displaytext="{tr(weathermenuorientation)}" options="horizontal,vertical">1</parameter>
+        <parameter type="string" name="setupmenuorientation" displaytext="{tr(setupmenuorientation)}" options="horizontal,vertical">1</parameter>
+        <parameter type="int" name="chlistitemsmax" min="8" max="16" displaytext="{tr(chlistitemsmaxtext)}">10</parameter>
+        <parameter type="int" name="listitemsmax" min="8" max="16" displaytext="{tr(listitemsmaxtext)}">14</parameter>
+        <parameter type="bool" name="doitsimple" displaytext="{tr(doitsimple)}">0</parameter>
+        <!-- mainmenu -->
+        <parameter type="separator" name="sepmainmenu" displaytext="---------------- {tr(sepmainmenu)} ----------------"/>
+        <parameter type="string" name="mainmenuorientation" displaytext="{tr(mainmenuorientation)}" helptext="{tr(helpmainmenuorientation)}" options="horizontal,vertical">1</parameter>
+        <parameter type="bool" name="mainmenusmall" displaytext="{tr(mainmenusmall)}">0</parameter>
+        <parameter type="int" name="menuitemsmax" min="1" max="16" displaytext="{tr(menuitemsmaxtext)}">9</parameter>
+        <parameter type="string" name="showinformation" displaytext="{tr(showinformation)}" helptext="{tr(helpshowinformation)}" options="no,oldstyle,yes">2</parameter>
+        <parameter type="int" name="infolistitemsmax" min="1" max="5" displaytext="{tr(infolistitemsmaxtext)}">3</parameter>
+        <parameter type="int" name="shifttimetimers" min="0" max="1000" displaytext="{tr(shifttimetimerstext)}" helptext="{tr(helpshifttimetimers)}">0</parameter>
+        <!-- zapcockpit -->
+        <parameter type="separator" name="sepzapcockpit" displaytext="---------------- {tr(sepzapcockpit)} ----------------"/>
+        <parameter type="int" name="fadetimezapcockpit" displaytext="{tr(fadetimezapcockpit)}">0</parameter>
+        <parameter type="int" name="shifttimezapcockpit" displaytext="{tr(shifttimezapcockpit)}">200</parameter>
+        <parameter type="separator" name="sepzapcockpitchannelhint" displaytext="---------------- {tr(sepzapcockpitchannelhint)} ----------------"/>
+        <parameter type="int" name="zapchannelhintsheight" min="0" max="100" displaytext="{tr(zapchannelhintsheight)}">30</parameter>
+        <parameter type="int" name="zapchannelhintswidth" min="0" max="100" displaytext="{tr(zapchannelhintswidth)}">30</parameter>
+    </menu>
+
+    <translations>
+        <token name="tr(sepmainmenu)">
+            <trans lang="en_EN">Main Menu</trans>
+            <trans lang="de_DE">Hauptmenü</trans>
+        </token>
+        <token name="tr(mainmenusmall)">
+            <trans lang="en_EN">Small Main Menu</trans>
+            <trans lang="de_DE">Schmales Hauptmenü</trans>
+        </token>
+        <token name="tr(fadecurrenttext)">
+            <trans lang="en_EN">Fade time of current element [ms]</trans>
+            <trans lang="de_DE">Einblendzeit des aktiven Elements [ms]</trans>
+        </token>
+        <token name="tr(helpfadecurrent)">
+            <trans lang="en_EN">Fade time in ms. If this is set to a value larger 0 the current OSD element fade in and out.</trans>
+            <trans lang="de_DE">Einblendzeit in ms. Ist dieser Wert auf einen Wert > 0 gesetzt, wird das aktive OSD Element ein- und ausgeblendet</trans>
+        </token>
+        <token name="tr(helpshowinformation)">
+            <trans lang="en_EN">Show information about timers, newest recordings, system load... 'oldstyle' showes the wide timer element but lacks some other infos.</trans>
+            <trans lang="de_DE">Zeige Informationen über Timer, neuste Aufnahmen, Systemlast... 'oldstyle' zeigt dabei des breite Timer-Element, nutzt dafür aber nicht alle Infos.</trans>
+        </token>
+        <token name="tr(helpshowscrollbar)">
+            <trans lang="en_EN">Show Scrollbar in Main Menu. Auto hides the scrollbar if its not needed.</trans>
+            <trans lang="de_DE">Zeige die Scroll-Leiste im Hauptmenü. Auto versteckt die Leiste, wenn sie nicht benötigt wird.</trans>
+        </token>
+        <token name="tr(helpshowweather)">
+            <trans lang="en_EN">Off, main menu only or main menu and channelinfo</trans>
+            <trans lang="de_DE">Aus, nur Hauptmenü oder Haputmenü und Kanalinformationen</trans>
+        </token>
+        <token name="tr(infolistitemsmaxtext)">
+            <trans lang="en_EN">Number of Information lists items (max)</trans>
+            <trans lang="de_DE">Elemente in den Info-Listen (max)</trans>
+        </token>
+        <token name="tr(chlistitemsmaxtext)">
+            <trans lang="en_EN">Number of Channel list items (max)</trans>
+            <trans lang="de_DE">Elemente in der Kanalliste (max)</trans>
+        </token>
+        <token name="tr(listitemsmaxtext)">
+            <trans lang="en_EN">Number of list items (max)</trans>
+            <trans lang="de_DE">Elemente in andern Listen (max)</trans>
+        </token>
+        <token name="tr(menuitemsmaxtext)">
+            <trans lang="en_EN">Number of Main Menu items (max)</trans>
+            <trans lang="de_DE">Elemente im Hauptmenü (max)</trans>
+        </token>
+        <token name="tr(menu)">
+            <trans lang="en_EN">main menu</trans>
+            <trans lang="de_DE">im Hauptmenü</trans>
+        </token>
+        <token name="tr(no)">
+            <trans lang="en_EN">no</trans>
+            <trans lang="de_DE">nein</trans>
+        </token>
+        <token name="tr(yes)">
+            <trans lang="en_EN">yes</trans>
+            <trans lang="de_DE">ja</trans>
+        </token>
+        <token name="tr(auto)">
+            <trans lang="en_EN">automatic</trans>
+            <trans lang="de_DE">automatisch</trans>
+        </token>
+        <token name="tr(oldstyle)">
+            <trans lang="en_EN">oldsytle</trans>
+            <trans lang="de_DE">oldstyle</trans>
+        </token>
+
+        <token name="tr(showscrollbar)">
+            <trans lang="en_EN">Show Scrollbar</trans>
+            <trans lang="de_DE">Zeige Scrollbar</trans>
+        </token>
+        <token name="tr(showweather)">
+            <trans lang="en_EN">Show Weather info</trans>
+            <trans lang="de_DE">Wetter Info anzeigen</trans>
+        </token>
+        <token name="tr(showinformation)">
+            <trans lang="en_EN">Show Information in main menu</trans>
+            <trans lang="de_DE">Zeige Informationen im Hauptmenü</trans>
+        </token>
+        <!-- displaychannel / zapcockpit -->
+        <token name="tr(sepzapcockpit)">
+            <trans lang="en_EN">Zapcockpit</trans>
+            <trans lang="de_DE">Zapcockpit</trans>
+            <trans lang="fi_FI">Zapcockpit</trans>
+            <trans lang="it_IT">Zapcockpit</trans>
+        </token>
+        <token name="tr(sepzapcockpitchannelhint)">
+            <trans lang="en_EN">Zapcockpit channel hints</trans>
+            <trans lang="de_DE">Zapcockpit Kanal Hinweise</trans>
+            <trans lang="fi_FI">Zapcockpit kanavavihjeille</trans>
+            <trans lang="it_IT">Zapcockpit suggerimenti canale</trans>
+        </token>
+        <token name="tr(fadetimezapcockpit)">
+            <trans lang="en_EN">Fade time for zapcockpit elements [ms]</trans>
+            <trans lang="de_DE">Einblendzeit für Zapcockpit Elemente [ms]</trans>
+            <trans lang="fi_FI">Häivytyksen kesto elementeille [ms]</trans>
+            <trans lang="it_IT">Tempo di dissolvenza degli elementi Zapcockpit</trans>
+        </token>
+        <token name="tr(shifttimezapcockpit)">
+            <trans lang="en_EN">Shift time for zapcockpit elements [ms]</trans>
+            <trans lang="de_DE">Einfahrzeit für Zapcockpit Elemente [ms]</trans>
+            <trans lang="fi_FI">Liukuman kesto elementeille [ms]</trans>
+            <trans lang="it_IT">Tempo di cambio degli elementi Zapcockpit [ms]</trans>
+        </token>
+        <token name="tr(doitsimple)">
+            <trans lang="en_EN">Disable text scolling</trans>
+            <trans lang="de_DE">Text-Scrolling abschalten</trans>
+        </token>
+        <token name="tr(zapchannelhintsheight)">
+            <trans lang="en_EN">Height channel hints (% of screen height)</trans>
+            <trans lang="de_DE">Höhe Kanal Hinweise (% der Bildschirmhöhe)</trans>
+            <trans lang="fi_FI">Korkeus (% näytön korkeudesta)</trans>
+            <trans lang="it_IT">Altezza suggerimenti canale (% della altezza del video)</trans>
+        </token>
+        <token name="tr(zapchannelhintswidth)">
+            <trans lang="en_EN">Width channel hints (% of screen width)</trans>
+            <trans lang="de_DE">Breite Kanal Hinweise (% der Bildschirmbreite)</trans>
+            <trans lang="fi_FI">Leveys (% näytön leveydestä)</trans>
+            <trans lang="it_IT">Larghezza suggerimenti canale (% della larghezza del video)</trans>
+        </token>
+        <!-- metrixhd -->
+        <token name="tr(fadetext)">
+            <trans lang="en_EN">Fade time [ms]</trans>
+            <trans lang="de_DE">Einblendzeit [ms]</trans>
+            <trans lang="fi_FI">Häivytyksen kesto [ms]</trans>
+            <trans lang="it_IT">Tempo di dissolvenza [ms]</trans>
+        </token>
+        <token name="tr(helpfade)">
+            <trans lang="en_EN">Fade time in ms. If this is set to a value larger 0 all OSD elements beside the VDR menu fade in and out.</trans>
+            <trans lang="de_DE">Einblendzeit in ms. Ist dieser Wert auf einen Wert > 0 gesetzt, werden alle OSD Elemente ausser dem VDR Menu ein- und ausgeblendet</trans>
+            <trans lang="fi_FI">Häivytyksen kesto millisekunteina. Nollasta eriävä arvo aktivoi häivytyksen.</trans>
+            <trans lang="it_IT">Tempo di dissolvenza in ms. Se settato su un valore maggiore di 0 tutti gli elementi OSD accanto al menu di VDR si dissolvono in entrata ed uscita.</trans>
+        </token>
+        <token name="tr(shifttimechanneltext)">
+            <trans lang="en_EN">Shift time Channel Display [ms]</trans>
+            <trans lang="de_DE">Einfahrzeit Channel Display [ms]</trans>
+            <trans lang="fi_FI">Liukuman kesto kanavanäytössä [ms]</trans>
+            <trans lang="it_IT">Mostra tempi cambio canale [ms]</trans>
+        </token>
+        <token name="tr(helpshifttimechannel)">
+            <trans lang="en_EN">Shifting time in ms. If this is set to a value larger 0 all OSD elements beside the VDR menu are shifted in and out from the bottom of the screen. If fadetime is also set to a value larger 0, still shifting is performed</trans>
+            <trans lang="de_DE">Einfahrzeit in ms. Ist dieser Wert auf einen Wert > 0 gesetzt, werden alle OSD Elemente ausser dem VDR Menu vom unteren Rand des Bildschirms herein- und herausgefahren. Falls fadetime ebenfalls auf einen Wert größer 0 gesetzt ist, wird das OSD trotzdem herein- und herausgefahren.</trans>
+            <trans lang="fi_FI">Liukuman kesto millisekunteina. Nollasta eriävä arvo aktivoi valikkojen transitioefektit riippumatta häivytyksen kestosta.</trans>
+            <trans lang="it_IT">Tempi cambio canale in ms. Se settato su un valore maggiore di 0 tutti gli elementi OSD accanto al menu di VDR vengono spostati in e out dal basso dello schermo. Lo spostamento è effettuato anche con tempo di dissolvenza maggiore di 0</trans>
+        </token>
+        <token name="tr(shifttimedatetimetext)">
+            <trans lang="en_EN">Shift time Channel Date, Time, Weather [ms]</trans>
+            <trans lang="de_DE">Einfahrzeit Channel Date, Time, Wetter [ms]</trans>
+            <trans lang="fi_FI">Liukuman kesto päivämäärä/kello/sää [ms]</trans>
+            <trans lang="it_IT">Tempo di cambio Canale, Data, Tempo, Previsioni. </trans>
+        </token>
+        <token name="tr(helpshifttimedatetime)">
+            <trans lang="en_EN">Shifting time of OSD Elements date, time and weather when switching in ms. If set to 0, the elements are shown immediately.</trans>
+            <trans lang="de_DE">Einfahrzeit der OSD Elemente Datum, Zeit und Wetter während des Umschaltens in ms. Steht dieser Wert auf 0, werden die Elemente sofort angezeigt.</trans>
+            <trans lang="fi_FI">Liukuman kesto millisekunteina. Nollasta eriävä arvo aktivoi päivämäärän, kellonajan ja säätietojen transitioefektit.</trans>
+            <trans lang="it_IT">Tempi di cambio degli elemti OSD, Canale, Data, Tempo, Previsioni espressi in ms. Se impostato a0 gli elementi sono mostrati immediatamente.</trans>
+        </token>
+        <token name="tr(shifttimetimerstext)">
+            <trans lang="en_EN">Shift time Timers Main Menu [ms]</trans>
+            <trans lang="de_DE">Einfahrzeit Timer Hauptmenü [ms]</trans>
+            <trans lang="fi_FI">Liukuman kesto päävalikon ajastimille [ms]</trans>
+            <trans lang="it_IT">Tempi di cambio Menù dei Timer [ms]</trans>
+        </token>
+        <token name="tr(helpshifttimetimers)">
+            <trans lang="en_EN">Shifting time of timers display in main menu in ms. If set to 0, the timers are shown immediately.</trans>
+            <trans lang="de_DE">Einfahrzeit der Timer im Hauptmenü in ms. Steht dieser Wert auf 0, werden die Timer sofort angezeigt.</trans>
+            <trans lang="fi_FI">Liukuman kesto millisekunteina. Nollasta eriävä arvo aktivoi transitioefektit päävalikon ajastimille.</trans>
+            <trans lang="it_IT">Tempi di cambio del display dei Timer nel menù principale in ms. Se impostati a 0, i timers sono mostrati immediatamente.</trans>
+        </token>
+        <token name="tr(listfadetimetext)">
+            <trans lang="en_EN">Fade time menus [ms]</trans>
+            <trans lang="de_DE">Überblendungszeit Menüs [ms]</trans>
+        </token>
+        <token name="tr(listshifttimetext)">
+            <trans lang="en_EN">Shift time menus [ms]</trans>
+            <trans lang="de_DE">Übergangszeit Menüelemente [ms]</trans>
+        </token>
+        <token name="tr(helplistfadetime)">
+            <trans lang="en_EN">Fade time of menu elements when scrolling through the menus. If set to 0, this effect is disabled.</trans>
+            <trans lang="de_DE">Überblendungszeit der Menüelemente beim Bewegen durch die Menüs. Steht dieser Wert auf 0, ist dieser Effekt deaktiviert.</trans>
+        </token>
+        <token name="tr(helplistshifttime)">
+            <trans lang="en_EN">Shift time of menu elements when scrolling through the menus. If set to 0, this effect is disabled.</trans>
+            <trans lang="de_DE">Übergangszeit der Menüelemente beim Bewegen durch die Menüs. Steht dieser Wert auf 0, ist dieser Effekt deaktiviert.</trans>
+        </token>
+        <token name="tr(showdevices)">
+            <trans lang="en_EN">Show DVB device info</trans>
+            <trans lang="de_DE">DVB Karten Info anzeigen</trans>
+            <trans lang="fi_FI">Näytä DVB-laitteiden käyttötiedot</trans>
+            <trans lang="it_IT">Mostra informazioni dei device DVB</trans>
+        </token>
+        <token name="tr(helpshowdevices)">
+            <trans lang="en_EN">If set to true, information about usage of each available DVB device is displayed during channel switching and in the main menu</trans>
+            <trans lang="de_DE">Falls diese Option aktiviert ist, werden beim Umschalten und im Hauptmenü Informationen über alle verfügbaren DVB Devices ausgegeben.</trans>
+            <trans lang="fi_FI">Näytetään DVB-laitteiden käyttötiedot päävalikossa ja kanavanvaihdossa.</trans>
+            <trans lang="it_IT">Se settata su true, sono mostrate info riguardo l'uso di ciascun device DVB durante i cambi canale e nel menù principale.</trans>
+        </token>
+        <token name="tr(mainmenuorientation)">
+            <trans lang="en_EN">Orientation of main menu</trans>
+            <trans lang="de_DE">Ausrichtung des Hauptmenüs</trans>
+            <trans lang="fi_FI">Päävalikon orientaatio</trans>
+            <trans lang="it_IT">Orientamento menù principale</trans>
+        </token>
+        <token name="tr(helpmainmenuorientation)">
+            <trans lang="en_EN">Orientation of main menu. If orientation is set to horizontal, only the current list element is displayed. If set to vertical, 8 elements are shown in the list.</trans>
+            <trans lang="de_DE">Ausrichtung des Hauptmenüs. Falls die Ausrichtung auf horizontal gesetzt ist, wird nur das aktuelle Listenelement ausgegeben. Ist die Ausrichtung vertikal, werden 8 Listenelemente angezeigt.</trans>
+            <trans lang="fi_FI">Päävalikon orientaatio. Vaakasuuntainen: näytetään ainoastaan aktiivinen listaelementti. Pystysuuntainen: näytetään 8 elementtiä listana.</trans>
+            <trans lang="it_IT">Orientamento menù principale. Se l'orientamento è su orizzontale, è mostrato solo l'attuale lista degli elementi. Se settata su verticale, nella lista sono mostrati 8 elementi.</trans>
+        </token>
+        <token name="tr(recmenuorientation)">
+            <trans lang="en_EN">Orientation of recordings menu</trans>
+            <trans lang="de_DE">Ausrichtung des Aufzeichnugsmenüs</trans>
+            <trans lang="fi_FI">Tallennevalikon orientaatio</trans>
+            <trans lang="it_IT">Orientamento menù registrazioni</trans>
+        </token>
+        <token name="tr(weathermenuorientation)">
+            <trans lang="en_EN">Orientation of weatherforecast menu</trans>
+            <trans lang="de_DE">Ausrichtung des Wettermenüs</trans>
+            <trans lang="fi_FI">Säälaajennoksen orientaatio</trans>
+            <trans lang="it_IT">Orientamento menù previsioni del tempo</trans>
+        </token>
+        <token name="tr(setupmenuorientation)">
+            <trans lang="en_EN">Orientation of setup menu</trans>
+            <trans lang="de_DE">Ausrichtung des Einstellungsmenüs</trans>
+        </token>
+        <token name="tr(horizontal)">
+            <trans lang="en_EN">horizontal menu</trans>
+            <trans lang="de_DE">horizontales Menü</trans>
+            <trans lang="fi_FI">vaaka</trans>
+            <trans lang="it_IT">Menù orizzontale</trans>
+        </token>
+        <token name="tr(vertical)">
+            <trans lang="en_EN">vertical menu</trans>
+            <trans lang="de_DE">vertikales Menü</trans>
+            <trans lang="fi_FI">pysty</trans>
+            <trans lang="it_IT">Menù verticale</trans>
+        </token>
+    </translations>
+</setup>

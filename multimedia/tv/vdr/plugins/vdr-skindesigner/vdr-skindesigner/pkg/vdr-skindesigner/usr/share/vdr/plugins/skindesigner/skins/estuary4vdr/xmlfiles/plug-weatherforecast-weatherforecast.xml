@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE menuplugin SYSTEM "../../../dtd/displaymenuplugin.dtd">
+
+<menuplugin x="0" y="0" width="100%" height="100%" fadetime="0" orientation="horizontal">
+    <background orientation="horizontal">
+        <area x="0" y="0" width="100%" height="100%" layer="1">
+            <drawimage imagetype="skinpart" x="0" y="0" width="100%" height="100%" path="background_menu" />
+        </area>
+        <area x="2%" y="10%" width="96%" height="72%" layer="2">
+            <fill color="{menuback}" />
+            <drawrectangle x="0" y="{areaheight}-1" width="100%" height="1" color="{menubackline}"/>
+        </area>
+    </background>
+
+    <scrollbar>
+        <area x="0" y="0" width="1" height="1" layer="1">
+            <fill color="{clrTransparent}" />
+        </area>
+    </scrollbar>    
+
+    <menuitems x="2%" y="10%" orientation="horizontal" width="96%" height="80%" align="center" numlistelements="3">
+        <listelement fadetime="{listfadetime}" shifttime="{listshifttime}">
+            <!-- Background -->
+            <area condition="{current}" indicator="true" y="90%" height="10%" layer="2">
+                <fill color="{menubackactive}" />
+            </area>
+            <area condition="not{current}" y="90%" height="10%" layer="2">
+                <fill color="{menuback}" />
+                <drawrectangle x="{areawidth}-1" y="0" width="1" height="100%" color="{menubackline}"/>
+            </area>
+            <area y="90%" height="10%" layer="3">
+                <drawtextbox condition="not{current}" width="100%" height="100%" align="center" valign="center" font="{regular}" fontsize="40%" color="{fontdefault}" text="{menuitemtext}" />
+                <drawtextbox condition="{current}" width="100%" height="100%" align="center" valign="center" font="{regular}" fontsize="40%" color="{fontmenuactive}" text="{menuitemtext}" />
+            </area>
+        </listelement>
+        <currentelement delay="100" fadetime="200">
+            <area condition="{iscurrent}" x="4%" y="4%" width="92%" height="86%" layer="3">
+                <drawimage name="weathericon" imagetype="icon" path="{icon}" x="0" y="0" width="{areaheight}*0.35" height="{areaheight}*0.35"/>
+                <drawtext align="right" y="0" font="{regular}" fontsize="8%" color="{fontdefault}" text="{city}" />
+                <drawtext align="right" y="9%" font="{regular}" fontsize="8%" color="{fontdefault}" text="{timestamp}" />
+                <drawtext align="right" y="18%" font="{regular}" fontsize="20%" color="{fontdefault}" text="{temperature}°C" />
+                <drawtext align="right" y="36%" font="{regular}" fontsize="8%" color="{fontdefault}" text="{summary}" />
+                <drawtext x="0" y="40%" font="{regular}" fontsize="7%" color="{fontdefault}" text="{tr(apparenttemp)}: {apparenttemperature} °C" />
+                <drawtext x="0" y="48%" font="{regular}" fontsize="7%" color="{fontdefault}" text="{tr(precipitationprobability)}: {precipitationprobability} %" />
+                <drawtext x="0" y="56%" font="{regular}" fontsize="7%" color="{fontdefault}" text="{tr(precipitationintensity)}: {precipitationintensity} l/qm" />
+                <drawtext x="0" y="64%" font="{regular}" fontsize="7%" color="{fontdefault}" text="{tr(humidity)}: {humidity} %" />
+                <drawtext x="0" y="72%" font="{regular}" fontsize="7%" color="{fontdefault}" text="{tr(windspeed)}: {windspeed} km/h" />
+                <drawtext x="0" y="80%" font="{regular}" fontsize="7%" color="{fontdefault}" text="{tr(windbearing)}: {windbearingstring}  ({windbearing} °)" />
+                <drawtext x="0" y="88%" font="{regular}" fontsize="7%" color="{fontdefault}" text="{tr(cloudcover)}: {cloudcover} %" />
+            </area>
+            <area condition="{ishourly}" x="4%" y="4%" width="92%" height="84%" layer="3">
+                <loop name="hourly" x="0" y="0" width="{areawidth}" orientation="horizontal" columnwidth="{areawidth}*0.33-1" rowheight="{areaheight}/4" overflow="linewrap" >
+                    <drawtext x="10" y="10" font="{regular}" fontsize="{rowheight}/3" color="{fontdefault}" text="{hourly[timestamp]}" />
+                    <drawtext x="10" y="{rowheight}/3" font="{regular}" fontsize="{rowheight}/4" color="{fontdefault}" text="{hourly[temperature]}°C" />
+                    <drawtext x="10" y="{rowheight}*2/3" font="{regular}" fontsize="{rowheight}/4" color="{fontdefault}" text="{hourly[summary]}" />
+                    <drawimage imagetype="icon" path="{hourly[icon]}" x="{columnwidth} - 0.7*{rowheight} - 10" valign="center" width="0.7*{rowheight}" height="0.7*{rowheight}"/>
+                    <drawrectangle x="{columnwidth} - 1" y="2" width="1" height="{rowheight} - 4" color="{menubackline}" />
+                    <drawrectangle x="2" y="{rowheight} - 1" width="{columnwidth} - 4" height="1" color="{menubackline}" />
+                </loop>
+            </area>
+            <area condition="{isdaily}" x="4%" y="4%" width="92%" height="84%" layer="3">
+                <loop name="daily" x="0" y="0" orientation="vertical" columnwidth="{areawidth}" rowheight="{areaheight}/7" overflow="cut">
+                    <drawtext x="0" font="{regular}" fontsize="{rowheight}/2" y="5" color="{fontdefault}" text="{daily[dayname]} {daily[day]}" />
+                    <drawtext x="35%" font="{regular}" fontsize="{rowheight}/2" y="5" color="{fontdefault}" text="{daily[temperaturemin]}°C - {daily[temperaturemax]}°C" />
+                    <drawtext x="0" font="{regular}" fontsize="{rowheight}*0.3" width="{columnwidth} - {rowheight}*0.7" y="{rowheight}*0.6" color="{fontdefault}" text="{daily[summary]}" />
+                    <drawimage imagetype="icon" path="{daily[icon]}" x="{columnwidth} - {rowheight}" valign="center" width="0.8*{rowheight}" height="0.8*{rowheight}"/>
+                    <drawrectangle x="0" y="{rowheight} - 1" width="{columnwidth}" height="1" color="{menubackline}" />
+                </loop>
+            </area>
+        </currentelement>
+    </menuitems>
+</menuplugin>

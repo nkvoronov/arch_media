@@ -1,0 +1,79 @@
+<menuchannels x="0" y="0" width="100%" height="100%" fadetime="0">
+    <menuitems x="0" y="10%" orientation="vertical" width="100%" height="82%" align="center" numlistelements="{chlistitemsmax}">
+        <listelement fadetime="{listfadetime}" shifttime="{listshifttime}">
+            <areacontainer condition="not{current}">
+                <!-- Background -->
+                <area x="1%" width="58%" layer="2">
+                    <fill color="{clrTransparent}" />
+                    <fill condition="{separator}" color="{menuseparator}" />
+                </area>
+                <area condition="not{separator}" x="2%" width="7%" layer="3">
+                    <drawimage name="logo" imagetype="channellogo" path="{channelid}" x="0" width="100%" height="100%" valign="center" />
+                </area>
+                <area condition="not{separator}" x="10%" width="44%" layer="3">
+                    <drawtext name="menutext" x="20" y="2" font="{light}" fontsize="60%" color="{fontdefault}" text="{number} {name}" />
+                    <drawtext x="20" y="50%" font="{light}" fontsize="50%" color="{fontdefault}" text="{sourcedescription}, Transp. {transponder}" />
+                </area>
+                <area condition="not{separator}" x="55%" width="5%" layer="3">
+                    <drawimage condition="{isEncrypted}" imagetype="icon" path="ico_crypt" x="0" valign="center" width="{areaheight}*0.5*1.76" height="{areaheight}*0.5"/>
+<!--                <drawimage condition="not{isEncrypted}" imagetype="icon" path="ico_crypt" x="0" valign="center" width="{areaheight}*0.5*1.76" height="{areaheight}*0.5"/> -->
+                </area>
+                <area condition="{separator}" x="7%" width="52%" layer="3">
+                    <drawtext x="20" valign="center" font="{light}" fontsize="95%" color="{fontdefault}" text="{name}" />
+                </area>
+            </areacontainer>
+            <areacontainer condition="{current}">
+                <!-- Background -->
+                <area indicator="true" x="1%" width="58%" layer="2">
+                    <fill condition="{current}" color="{menuactive}" />
+                    <fill condition="{separator}" color="{menuseparator}" />
+                </area>
+                <area condition="not{separator}" x="2%" width="7%" layer="3">
+                    <drawimage name="logo" imagetype="channellogo" path="{channelid}" x="0" width="100%" height="100%" valign="center" />
+                </area>
+                <area condition="not{separator}++{doitsimple}" x="10%" width="44%" layer="3">
+                    <drawtext name="menutext"  x="20" y="2" font="{light}" fontsize="60%" color="{fontactive}" text="{number} {name}" />
+                    <drawtext x="20" y="50%"  font="{light}" fontsize="50%" color="{fontactive}" text="{sourcedescription}, Transp. {transponder}" />
+                </area>
+                <areascroll condition="not{separator}++not{doitsimple}" scrollelement="menutext" mode="forthandback" orientation="horizontal" delay="2000" scrollspeed="medium" x="10%" width="44%" layer="3">
+                    <drawtext name="menutext"  x="20" y="2" font="{light}" fontsize="60%" color="{fontactive}" text="{number} {name}" />
+                    <drawtext x="20" y="50%"  font="{light}" fontsize="50%" color="{fontactive}" text="{sourcedescription}, Transp. {transponder}" />
+                </areascroll>
+                <area condition="not{separator}" x="55%" width="5%" layer="3">
+                    <drawimage condition="{isEncrypted}" imagetype="icon" path="ico_crypt_active" x="0" valign="center" width="{areaheight}*0.5*1.76" height="{areaheight}*0.5"/>
+<!--                <drawimage condition="not{isEncrypted}" imagetype="icon" path="ico_crypt" x="0" valign="center" width="{areaheight}*0.5*1.76" height="{areaheight}*0.5"/> -->
+                </area>
+                <area condition="{separator}" x="7%" width="52%" layer="3">
+                    <drawtext x="20" valign="center" font="{light}" fontsize="95%" color="{fontdefault}" text="{name}" />
+                </area>
+            </areacontainer>
+
+        </listelement>
+        <currentelement delay="0" fadetime="{fadetimecurrent}">
+            <area x="63%" y="0" width="36%" height="100%" layer="2">
+                <drawtext name="channame" x="2%" y="0" width="96%" font="{semibold}" fontsize="8%" color="{fontactive}" text="{name}" />
+                <drawimage name="logo" align="center" imagetype="channellogo" path="{channelid}" x="10" y="{height(channame)}" width="50%" height="20%" />
+                <!--progressbar for now -->
+                <drawtext name="start" x="{areawidth}/4 - {width(start)}" y="{height(channame)} + {height(logo)} + 15" font="{semibold}" fontsize="7%" color="{fontactive}" text="{presenteventstart}" />
+                <drawtext name="stop" x="{areawidth}*3/4" y="{height(channame)} + {height(logo)} + 15" font="{semibold}" fontsize="7%" color="{fontactive}" text="{presenteventstop}" />
+                <drawrectangle x="{areawidth}/4+10" y="{height(channame)} + {height(logo)} + {height(start)} / 2 + 15" width="{areawidth}/2 - 20" height="1" color="{fontactive}" />
+                <drawrectangle x="{areawidth}/4+10" y="{height(channame)} + {height(logo)} + {height(start)} / 2 + 13" width="{areawidth}/2 * {presenteventelapsed} / {presenteventduration} - 20 * {presenteventelapsed} / {presenteventduration}" height="5" color="{fontactive}" />
+                <!-- now -->
+                <drawtext name="now" x="2%" y="{posy(start)} + {height(start)} + 5" width="96%" font="{semibold}" fontsize="7%" color="{fontactive}" text="{presenteventtitle}" />
+                <!-- shorttext and description -->
+                <drawtext name="nowshort" x="2%" y="{posy(now)} + {height(now)}" width="96%" font="{light}" fontsize="6%" color="{fontactive}" text="{presenteventshorttext}" />
+                <drawtextbox name="nowdesc" x="2%" y="{posy(nowshort)} + {height(nowshort)}" width="96%" height="28%" font="{light}" fontsize="6%" color="{fontactive}" text="{presenteventdescription}" />
+                <!-- next -->
+                <drawtext name="nexttime" x="2%" y="{posy(nowdesc)} + {height(nowdesc)} + 10" width="96%" font="{semibold}" fontsize="7%" color="{fontactive}" text="Von: {nexteventstart} - {nexteventstop}  ({nexteventduration} min)" />
+                <drawtext name="next" x="2%" y="{posy(nexttime)} + {height(nexttime)}" width="96%" font="{semibold}" fontsize="6%" color="{fontactive}" text="{nexteventtitle}" />
+            </area>
+        </currentelement>
+    </menuitems>
+    <scrollbar>
+        <area x="60%" y="10%" width="2%" height="82%" layer="3">
+            <fill color="{scrollbar}" />
+            <drawrectangle x="2" y="2" width="{areawidth} - 4" height="{areaheight} - 4" color="{clrTransparent}" />
+            <drawrectangle x="4" y="4 + {areaheight} * {offset} / 1000" width="{areawidth} - 8" height="{areaheight} * {height} / 1000 - 8" color="{scrollbar}" />
+        </area>
+    </scrollbar>
+</menuchannels>

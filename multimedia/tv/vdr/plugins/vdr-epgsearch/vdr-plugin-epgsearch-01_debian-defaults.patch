@@ -1,0 +1,133 @@
+--- a/mail.c
++++ b/mail.c
+@@ -40,7 +40,7 @@
+ extern bool isUTF8;
+ using namespace std;
+ 
+-string cMailNotifier::MailCmd = "sendEmail.pl";
++string cMailNotifier::MailCmd = "sendEmail";
+ 
+ // ----------------------
+ // cMailTimerNotification
+@@ -243,7 +243,7 @@
+ {
+     string mailCmd = MailCmd;
+     LogFile.Log(3, "starting mail script: %s with parameters: %s", mailCmd.c_str(), ScriptArgs.c_str());
+-    if (mailCmd == "sendEmail.pl") // beautify output for standard script
++    if (mailCmd == "sendEmail") // beautify output for standard script
+         ScriptArgs += " | cut -d\" \" -f 6-";
+ 
+     cCommand cmd;
+--- a/epgsearchsetup.c
++++ b/epgsearchsetup.c
+@@ -123,7 +123,7 @@
+     FavoritesMenuMode[3] = tr("before 'next'");
+ 
+     MailMethod[0] = "sendmail";
+-    MailMethod[1] = "sendEmail.pl";
++    MailMethod[1] = "sendEmail";
+ 
+     Setup();
+ }
+@@ -858,7 +858,7 @@
+     AddHelp(tr("Help$Specify the email address where notifications should be sent to."));
+ 
+     Add(new cMenuEditStraItem(tr("Mail method"), &data->mailViaScript, 2, MailMethod));
+-    AddHelp(tr("Help$Specify here the method to use when sending mails.\nYou can choose between\n - 'sendmail': requires a properly configured email system\n - 'SendEmail.pl': simple script for mail delivery"));
++    AddHelp(tr("Help$Specify here the method to use when sending mails.\nYou can choose between\n - 'sendmail': requires a properly configured email system\n - 'SendEmail': simple script for mail delivery"));
+ 
+     if (data->mailViaScript) {
+         cOsdItem* sep = new cOsdItem(tr("--- Email account ---"));
+--- a/doc-src/en/epgsearch.1.txt
++++ b/doc-src/en/epgsearch.1.txt
+@@ -85,8 +85,8 @@
+ =item -m file,  --mailcmd=file
+ 
+ the external command to be used for mail delivery. The default uses
+-'sendEmail.pl'. If you are using a different command or script make sure that
+-it has the same parameter interface as sendEmail.pl.
++'sendEmail'. If you are using a different command or script make sure that
++it has the same parameter interface as sendEmail.
+ 
+ =back
+ 
+@@ -768,7 +768,7 @@
+ 
+ =head3 1.4.7 Email notification
+ 
+-Please make sure, that 'sendEmail.pl' is in the path of your executables and
++Please make sure, that 'sendEmail' is in the path of your executables and
+ that the 'epgsearchupdmail.templ' and 'epgsearchconflmail.templ' exists in
+ epgsearch's configurations directory!
+ 
+@@ -811,7 +811,7 @@
+ 
+ You can choose between:
+ 
+-  - sendEmail.pl: this is a simply script shipped with epgsearch, that allows
++  - sendEmail: this is a simply script shipped with epgsearch, that allows
+     mail delivery also on systems without a configured mail server. Please
+     copy it to your $PATH
+   - sendmail: requires a properly configured mail system
+@@ -842,7 +842,7 @@
+ =back
+ 
+ After the account setup, check if it works with 'Test'. If you are
+-using 'sendEmail.pl' for mail delivery, there should be something like 'Email
++using 'sendEmail' for mail delivery, there should be something like 'Email
+ sent successfully' at the end of the test output. The test function is not
+ available for method 'sendmail'.
+ 
+--- a/doc-src/en/epgsearch.4.txt
++++ b/doc-src/en/epgsearch.4.txt
+@@ -794,7 +794,7 @@
+ 
+ If you want to get email notifications about timers added/modified/removed by
+ the search timer thread or about timer conflicts, first copy the script
+-'sendEmail.pl' to the place where your executables are (e.g. /usr/local/bin)
++'sendEmail' to the place where your executables are (e.g. /usr/local/bin)
+ and then configure your email account in the setup. Press 'Test' to check if
+ it works. There should be something like 'Email successfully sent' at the end
+ of the output.
+--- a/doc-src/de/epgsearch.1.txt
++++ b/doc-src/de/epgsearch.1.txt
+@@ -86,10 +86,10 @@
+ 
+ =item -m file,  --mailcmd=file
+ 
+-das externe Kommando für den Emailversand. Als Standard wird 'sendEmail.pl'
++das externe Kommando für den Emailversand. Als Standard wird 'sendEmail'
+ benutzt. Wenn ein abweichendes Kommando oder Skript verwendet wird, muss
+ sichergestellt sein, dass das gleiche Paramter-Interface verwendet wird, wie
+-bei sendEmail.pl.
++bei sendEmail.
+ 
+ =back
+ 
+@@ -794,7 +794,7 @@
+ 
+ =head3 1.4.7 Email-Benachrichtigungen
+ 
+-(Bitte sicherstellen, dass 'sendEmail.pl' im Pfad der ausführbaren Dateien
++(Bitte sicherstellen, dass 'sendEmail' im Pfad der ausführbaren Dateien
+ liegt und 'epgsearchupdmail.templ' und 'epgsearchconflmail.templ' im
+ Konfig-Verzeichnis von epgsearch existieren!)
+ 
+@@ -838,7 +838,7 @@
+ 
+ Zur Auswahl stehen
+ 
+-  - sendEmail.pl: ein einfaches Skript, das auch auf Systemen ohne
++  - sendEmail: ein einfaches Skript, das auch auf Systemen ohne
+     konfigurierten Mailserver den Versand von Emails erlaubt. Das Skript wird
+     mit epgsearch ausgeliefert und sollte im $PATH liegen.
+   - sendmail: setzt ein korrekt aufgesetzes Mailsystem voraus.
+@@ -873,7 +873,7 @@
+ =back
+ 
+ Nach Angabe der Email-Konto-Daten bitte mit 'Test' prüfen, ob alles
+-funktioniert. Wenn mit 'sendEmail.pl' gearbeitet wird, sollte am Ende der
++funktioniert. Wenn mit 'sendEmail' gearbeitet wird, sollte am Ende der
+ Test-Ausgabe etwas wie 'Email sent successfully' auftauchen. Die Testfunktion
+ gibt es bei der Methode 'sendmail' leider nicht.
+ 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE displayvolume SYSTEM "../../../dtd/displayvolume.dtd">
+
+<displayvolume x="20%" y="85%" width="60%" height="15%" fadetime="{fadetime}" shifttime="{shifttime}" shiftmode="slowed" shifttype="bottom">
+
+    <background>
+        <area x="0" y="0" width="100%" height="100%" layer="1">
+            <fill color="{replayback}" />
+        </area>
+    </background>
+
+    <volume>
+        <area x="5%" y="5%" width="90%" height="30%" layer="2">
+            <drawtext x="0" y="0" font="{regular}" fontsize="100%" color="{fontdefault}" text="{tr(volume)}: {volpercent}%" />
+            <drawimage condition="not{mute}" imagetype="icon" path="volume" x="{areawidth} - {areaheight}" y="0" width="{areaheight}" height="{areaheight}"/>
+            <drawimage condition="{mute}" imagetype="icon" path="mute" x="{areawidth} - {areaheight}" y="0" width="{areaheight}" height="{areaheight}"/>
+        </area>
+        <area x="10%" y="50%" width="80%" height="20%" layer="2">
+            <drawrectangle x="0" y="0" width="100%" height="100%" color="{progressbarback}" />
+            <drawrectangle x="0" y="0" width="{volume}/{maxvolume}*{areawidth}" height="100%" color="{progressbar}" />
+        </area>
+    </volume>
+
+</displayvolume>

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# please update this script to fit your needs
+# this script is call every time the according viewelement will be drawn, so keep it short and fast ;)
+
+OUTPUTFLDR="/tmp/skindesigner/"
+mkdir -p ${OUTPUTFLDR}
+
+# there can be 2 files, vdrcpu and vdrmem
+rm -f ${OUTPUTFLDR}/vdrcpu ${OUTPUTFLDR}/vdrmem
+
+read vdr_cpu vdr_mem  < <(ps -C vdr -o %cpu=,%mem= | sort | tail -n1)
+echo $vdr_cpu > ${OUTPUTFLDR}/vdrcpu
+echo $vdr_mem > ${OUTPUTFLDR}/vdrmem

@@ -1,0 +1,32 @@
+pkgname=vdr-imonlcd
+_gitname='source-git'
+_verpkg=1.0.2
+pkgver=1.0.2
+epoch=1
+_vdrapi=2.4.0
+pkgrel=20
+pkgdesc="shows information about the current state of VDR on iMON LCD"
+url="http://projects.vdr-developer.org/projects/show/plg-imonlcd"
+arch=('x86_64' 'i686' 'arm' 'armv6h' 'armv7h')
+license=('GPL3')
+depends=('freetype2' 'gcc-libs' "vdr-api=$_vdrapi")
+optdepends=()
+_plugname=${pkgname//vdr-/}
+source=("${_gitname}::git+https://github.com/vdr-projects/vdr-plugin-imonlcd.git#branch=master"
+        '92-imonlcd.rules'
+        "50-$_plugname.conf")
+backup=("etc/vdr/conf.avail/50-$_plugname.conf")
+md5sums=('SKIP'
+         '4f012281b8a7025e99067e9945aabda0'
+         'bdd88de7c03a24e7a42573b40ed7da32')
+
+build() {
+  cd "${srcdir}/${_gitname}"
+  make
+}
+package() {
+  cd "${srcdir}/${_gitname}"
+  make DESTDIR="$pkgdir" install
+  install -Dm644 "$srcdir/92-imonlcd.rules" "$pkgdir/usr/lib/udev/rules.d/92-imonlcd.rules"
+  install -Dm644 "$srcdir/50-$_plugname.conf" "$pkgdir/etc/vdr/conf.avail/50-$_plugname.conf"
+}

@@ -1,0 +1,34 @@
+<?xml encoding="UTF-8"?>
+
+<!ENTITY % functions SYSTEM "functions.dtd">
+
+<!ELEMENT displaymessage (background | message)*>
+<!ATTLIST displaymessage
+  x CDATA #REQUIRED
+  y CDATA #REQUIRED
+  width CDATA #REQUIRED
+  height CDATA #REQUIRED
+  fadetime CDATA #IMPLIED
+  shifttime CDATA #IMPLIED
+  shifttype CDATA #IMPLIED
+  shiftmode CDATA #IMPLIED
+  startx CDATA #IMPLIED
+  starty CDATA #IMPLIED
+  scaletvx CDATA #IMPLIED
+  scaletvy CDATA #IMPLIED
+  scaletvwidth CDATA #IMPLIED
+  scaletvheight CDATA #IMPLIED
+  debuggrid CDATA #IMPLIED
+>
+
+<!ELEMENT background (areacontainer|area|areascroll)*>
+<!ATTLIST background
+  debug CDATA #IMPLIED
+>
+
+<!ELEMENT message (areacontainer|area|areascroll)*>
+<!ATTLIST message
+  debug CDATA #IMPLIED
+>
+
+%functions;

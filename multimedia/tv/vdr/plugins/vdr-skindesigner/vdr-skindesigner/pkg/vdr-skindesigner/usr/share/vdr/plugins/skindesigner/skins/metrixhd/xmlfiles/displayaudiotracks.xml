@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE displayaudiotracks SYSTEM "../../../dtd/displayaudiotracks.dtd">
+
+<displayaudiotracks x="42%" y="30%" width="26%" height="70%" fadetime="{fadetime}">
+    <background>
+        <area x="0" y="{areaheight} - {numtracks} * {areaheight} / 10 - {areaheight} / 10" width="100%" height="{areaheight} / 10 + {areaheight} / 10 * {numtracks}" layer="1">
+            <fill color="{menuback}" />
+        </area>
+    </background>
+    
+    <header>
+        <area x="0" y="{areaheight} - {numtracks} * {areaheight} / 10 - {areaheight} / 10" width="100%" height="{areaheight} / 10" layer="2">
+            <drawtext align="center" valign="center" font="{regular}" fontsize="80%" color="{fontdefault}" text="{title}" />
+            <drawrectangle x="{areawidth} - 1.2*{areaheight} - 5" y="0" width="1.2*{areaheight}" height="{areaheight}/2" color="{icontextactive}" />
+            <drawrectangle x="{areawidth} - 1.2*{areaheight} - 4" y="1" width="1.2*{areaheight} - 2" height="{areaheight}/2 - 2" color="00000000" />
+            <drawtext name="stereo" condition="{isstereo}" x="{areawidth} - 1.2*{areaheight} - 1 + {areaheight}/2 - {width(stereo)}/2" y="10%" fontsize="35%" font="{regular}" color="{icontextactive}" text="Stereo" />
+            <drawtext name="ac3" condition="{isac3}" x="{areawidth} - 1.2*{areaheight} - 1 + {areaheight}/2 - {width(ac3)}/2" y="10%" fontsize="35%" font="{regular}" color="{icontextactive}" text="AC3" />
+        </area>
+    </header>
+    
+    <menuitems x="0" y="{areaheight} - {numelements} * {areaheight} / 10" orientation="vertical" width="100%" height="{numelements} * {areaheight} / 10" align="top" numlistelements="{numelements}">
+        <listelement>
+            <!-- Background -->
+            <area x="1%" width="98%" layer="2">
+                <fill condition="not{current}" color="{clrTransparent}" />
+                <fill condition="{current}" color="{menuactive}" />
+            </area>
+            <area x="1%" width="98%" layer="3">
+                <drawtext condition="not{current}" x="10" valign="center" font="{light}" fontsize="60%" color="{fontdefault}" text="{title}" />
+                <drawtext condition="{current}" x="10" valign="center" font="{light}" fontsize="60%" color="{fontactive}" text="{title}" />
+            </area>
+        </listelement>
+    </menuitems>
+</displayaudiotracks>

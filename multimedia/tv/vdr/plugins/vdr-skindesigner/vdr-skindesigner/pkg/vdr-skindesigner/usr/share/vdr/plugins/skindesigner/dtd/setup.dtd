@@ -1,0 +1,30 @@
+<?xml encoding="UTF-8"?>
+
+<!ELEMENT setup (menu,translations)>
+<!ELEMENT menu (submenu | parameter)*>
+<!ELEMENT translations (token)*>
+
+<!ELEMENT submenu (submenu | parameter)*>
+<!ATTLIST submenu
+  name NMTOKEN #REQUIRED
+  displaytext CDATA #REQUIRED
+  >
+
+<!ELEMENT parameter (#PCDATA)>
+<!ATTLIST parameter
+  name NMTOKEN #REQUIRED
+  type (int|bool|string|separator) #REQUIRED
+  min NMTOKEN #IMPLIED
+  max NMTOKEN #IMPLIED
+  displaytext CDATA #REQUIRED
+  helptext CDATA #IMPLIED
+  options CDATA #IMPLIED
+  >
+
+<!ELEMENT token (trans)+>
+<!ATTLIST token
+  name CDATA #REQUIRED>
+
+<!ELEMENT trans (#PCDATA)>
+<!ATTLIST trans
+  lang NMTOKEN #REQUIRED>

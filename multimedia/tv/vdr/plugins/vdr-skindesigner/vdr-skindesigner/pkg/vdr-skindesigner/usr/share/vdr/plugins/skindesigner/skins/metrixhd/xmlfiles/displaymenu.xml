@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE displaymenu SYSTEM "../../../dtd/displaymenu.dtd" [
+<!ENTITY displaymenudefault SYSTEM "displaymenudefault.xml">
+<!ENTITY displaymenumain SYSTEM "displaymenumain.xml">
+<!ENTITY displaymenusetup SYSTEM "displaymenusetup.xml">
+<!ENTITY displaymenuschedules SYSTEM "displaymenuschedules.xml">
+<!ENTITY displaymenutimers SYSTEM "displaymenutimers.xml">
+<!ENTITY displaymenuchannels SYSTEM "displaymenuchannels.xml">
+<!ENTITY displaymenurecordings SYSTEM "displaymenurecordings.xml">
+<!ENTITY displaymenudetailepg SYSTEM "displaymenudetailepg.xml">
+<!ENTITY displaymenudetailrecording SYSTEM "displaymenudetailrecording.xml">
+<!ENTITY displaymenudetailtext SYSTEM "displaymenudetailtext.xml">
+]>
+
+<displaymenu x="3%" y="5%" width="94%" height="90%">
+
+    <background>
+        <!-- background left Menu -->
+        <area x="0" y="0" width="63%" height="100%" layer="1">
+            <fill color="{menuback}" />
+        </area>
+        <!-- background date -->
+        <area x="40%" y="0" width="13%" height="10%" layer="2">
+            <fill color="{menuactive}" />
+        </area>
+        <!-- background right detail view -->
+        <area x="63%" y="3%" width="37%" height="94%" layer="1">
+            <fill color="{menuheader}" />
+        </area>
+    </background>
+
+    <header>
+        <area x="0" y="0" width="40%" height="10%" layer="2">
+            <drawtext condition="not{hasicon}" x="10" width="{areawidth}-10" valign="center" font="{light}" fontsize="75%" color="{fontdefault}" text="{title}" />
+            <drawimage condition="{hasicon}" name="menuicon" imagetype="menuicon" path="{icon}" x="10" valign="center" width="{areaheight}*8/10" height="80%"/>
+            <drawtext condition="{hasicon}" x="{width(menuicon)}+20" valign="center" width="{areawidth}-{width(menuicon)}-30" font="{light}" fontsize="75%" color="{fontdefault}" text="{title}" />
+        </area>
+    </header>
+
+    <datetime>
+        <area x="40%" y="0" width="12%" height="10%" layer="3">
+            <drawtext align="right" y="0" font="{light}" fontsize="50%" color="{fontactive}" text="{dayname}" />
+            <drawtext align="right" y="45%" font="{light}" fontsize="50%" color="{fontactive}" text="{day}. {monthnameshort}" />
+        </area>
+        <area x="53%" y="0" width="10%" height="10%" layer="3">
+            <drawtext align="center" valign="center" font="{light}" fontsize="80%" color="{fontdefault}" text="{time}" />
+        </area>
+    </datetime>
+
+    <message>
+        <area x="5%" y="75%" width="90%" height="15%" layer="7">
+            <fill color="{menuactive}" />
+            <drawrectangle condition="{status}" x="10" y="0" width="10" height="100%" color="{clrGreen}" />
+            <drawrectangle condition="{info}" x="10" y="0" width="10" height="100%" color="{clrBlue}" />
+            <drawrectangle condition="{warning}" x="10" y="0" width="10" height="100%" color="{clrYellow}" />
+            <drawrectangle condition="{error}" x="10" y="0" width="10" height="100%" color="{clrRed}" />
+            <drawtext align="center" valign="center" font="{light}" fontsize="50%" color="{fontactive}" text="{text}" />
+        </area>
+    </message>
+    
+    <sortmode>
+        <area x="35%" y="2%" width="6%" height="6%" layer="4">
+            <drawimage condition="{sortnumber}" imagetype="icon" path="ico_sort_number" x="0" y="0" width="100%" height="100%"/>
+            <drawimage condition="{sortname}" imagetype="icon" path="ico_sort_name" x="0" y="0" width="100%" height="100%"/>
+            <drawimage condition="{sorttime}" imagetype="icon" path="ico_sort_time" x="0" y="0" width="100%" height="100%"/>
+            <drawimage condition="{sortprovider}" imagetype="icon" path="ico_sort_provider" x="0" y="0" width="100%" height="100%"/>
+        </area>
+    </sortmode>
+
+    <colorbuttons>
+        <area x="0" y="92%" width="15%" height="8%" layer="6">
+            <drawtext condition="{red1}" x="20" valign="center" font="{light}" fontsize="80%" color="{fontdefault}" text="{red}" />
+            <drawrectangle condition="{red1}" x="0" y="0" width="10" height="100%" color="{clrRed}" />
+            <drawtext condition="{green1}" x="20" valign="center" font="{light}" fontsize="80%" color="{fontdefault}" text="{green}" />
+            <drawrectangle condition="{green1}" x="0" y="0" width="10" height="100%" color="{clrGreen}" />
+            <drawtext condition="{yellow1}" x="20" valign="center" font="{light}" fontsize="80%" color="{fontdefault}" text="{yellow}" />
+            <drawrectangle condition="{yellow1}" x="0" y="0" width="10" height="100%" color="{clrYellow}" />
+            <drawtext condition="{blue1}" x="20" valign="center" font="{light}" fontsize="80%" color="{fontdefault}" text="{blue}" />
+            <drawrectangle condition="{blue1}" x="0" y="0" width="10" height="100%" color="{clrBlue}" />
+        </area>
+        <area x="15%" y="92%" width="15%" height="8%" layer="6">
+            <drawtext condition="{red2}" x="20" valign="center" font="{light}" fontsize="80%" color="{fontdefault}" text="{red}" />
+            <drawrectangle condition="{red2}" x="0" y="0" width="10" height="100%" color="{clrRed}" />
+            <drawtext condition="{green2}" x="20" valign="center" font="{light}" fontsize="80%" color="{fontdefault}" text="{green}" />
+            <drawrectangle condition="{green2}" x="0" y="0" width="10" height="100%" color="{clrGreen}" />
+            <drawtext condition="{yellow2}" x="20" valign="center" font="{light}" fontsize="80%" color="{fontdefault}" text="{yellow}" />
+            <drawrectangle condition="{yellow2}" x="0" y="0" width="10" height="100%" color="{clrYellow}" />
+            <drawtext condition="{blue2}" x="20" valign="center" font="{light}" fontsize="80%" color="{fontdefault}" text="{blue}" />
+            <drawrectangle condition="{blue2}" x="0" y="0" width="10" height="100%" color="{clrBlue}" />
+        </area>
+        <area x="30%" y="92%" width="15%" height="8%" layer="6">
+            <drawtext condition="{red3}" x="20" valign="center" font="{light}" fontsize="80%" color="{fontdefault}" text="{red}" />
+            <drawrectangle condition="{red3}" x="0" y="0" width="10" height="100%" color="{clrRed}" />
+            <drawtext condition="{green3}" x="20" valign="center" font="{light}" fontsize="80%" color="{fontdefault}" text="{green}" />
+            <drawrectangle condition="{green3}" x="0" y="0" width="10" height="100%" color="{clrGreen}" />
+            <drawtext condition="{yellow3}" x="20" valign="center" font="{light}" fontsize="80%" color="{fontdefault}" text="{yellow}" />
+            <drawrectangle condition="{yellow3}" x="0" y="0" width="10" height="100%" color="{clrYellow}" />
+            <drawtext condition="{blue3}" x="20" valign="center" font="{light}" fontsize="80%" color="{fontdefault}" text="{blue}" />
+            <drawrectangle condition="{blue3}" x="0" y="0" width="10" height="100%" color="{clrBlue}" />
+        </area>
+        <area x="45%" y="92%" width="15%" height="8%" layer="6">
+            <drawtext condition="{red4}" x="20" valign="center" font="{light}" fontsize="80%" color="{fontdefault}" text="{red}" />
+            <drawrectangle condition="{red4}" x="0" y="0" width="10" height="100%" color="{clrRed}" />
+            <drawtext condition="{green4}" x="20" valign="center" font="{light}" fontsize="80%" color="{fontdefault}" text="{green}" />
+            <drawrectangle condition="{green4}" x="0" y="0" width="10" height="100%" color="{clrGreen}" />
+            <drawtext condition="{yellow4}" x="20" valign="center" font="{light}" fontsize="80%" color="{fontdefault}" text="{yellow}" />
+            <drawrectangle condition="{yellow4}" x="0" y="0" width="10" height="100%" color="{clrYellow}" />
+            <drawtext condition="{blue4}" x="20" valign="center" font="{light}" fontsize="80%" color="{fontdefault}" text="{blue}" />
+            <drawrectangle condition="{blue4}" x="0" y="0" width="10" height="100%" color="{clrBlue}" />
+        </area>
+    </colorbuttons>
+
+    <scrollbar>
+        <area x="60%" y="10%" width="2%" height="82%" layer="3">
+            <fill color="{scrollbar}" />
+            <drawrectangle x="2" y="2" width="{areawidth} - 4" height="{areaheight} - 4" color="{clrTransparent}" />
+            <drawrectangle x="4" y="4 + {areaheight} * {offset} / 1000" width="{areawidth} - 8" height="{areaheight} * {height} / 1000 - 8" color="{scrollbar}" />
+        </area>
+    </scrollbar>
+    &displaymenudefault;
+    &displaymenumain;
+    &displaymenusetup;
+    &displaymenuschedules;
+    &displaymenutimers;
+    &displaymenuchannels;
+    &displaymenurecordings;
+    &displaymenudetailepg;
+    &displaymenudetailrecording;
+    &displaymenudetailtext;
+</displaymenu>

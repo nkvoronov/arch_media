@@ -1,0 +1,17 @@
+post_install() {
+  mkdir -p /etc/vdr/plugins/live
+  cd /etc/vdr/plugins/live
+  if [ ! -e live.pem ] || [ ! -e live-key.pem ]; then
+    openssl req -new -x509 -keyout live-key.pem -out live.pem -days 9999 -nodes -batch
+  fi
+}
+
+post_upgrade() {
+  post_install
+}
+
+post_remove() {
+  rm /etc/vdr/plugins/live/live.pem
+  rm /etc/vdr/plugins/live/live-key.pem
+  rmdir /etc/vdr/plugins/live 2> /dev/null
+}

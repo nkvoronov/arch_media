@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE globals SYSTEM "../../../../dtd/globals.dtd">
+
+<globals>
+    <colors>
+        <color name="menuback">EE8CC04B</color>
+<!--        <color name="menualternate">EE75a968</color> -->
+        <color name="menuheader">EEC7053D</color>
+        <color name="menuactive">EFC7053D</color>
+        <color name="menuseparator">33FFFFFF</color>
+        <color name="fontdefault">FF000000</color>
+        <color name="fontseparator">FF000000</color>
+        <!-- colors svg templates -->
+        <color name="icon">FF000000</color>
+        <color name="iconactive">FFFFFFFF</color>
+        <color name="iconselected">FF000000</color>
+        <color name="iconrecactive">EFFFFFFF</color>
+        <color name="iconrecinactive">FF000000</color>
+    </colors>
+
+    <variables>
+    </variables>
+
+    <translations>
+    </translations>
+
+    <fonts>
+        <font name="light">VDROpen Sans:Regular</font>
+    </fonts>
+</globals>

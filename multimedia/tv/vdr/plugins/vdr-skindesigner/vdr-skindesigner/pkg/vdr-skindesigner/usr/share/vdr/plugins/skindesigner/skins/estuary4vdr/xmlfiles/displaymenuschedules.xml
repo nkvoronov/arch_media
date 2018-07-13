@@ -1,0 +1,280 @@
+<menuschedules x="0" y="0" width="100%" height="100%" fadetime="0" scaletvx="39%" scaletvy="8%" scaletvwidth="60%" scaletvheight="60%">
+
+    <header>
+        <area x="1%" y="0" width="60%" height="7%" layer="2">
+            <drawtext condition="{whatsonnow}||{whatsonnext}||{whatsonfavorites}" x="0" valign="center" font="{regular}" fontsize="{areaheight}*{headerfontsize}/100" color="{fontdefault}" text="{title}" />
+            <drawimage name="logo" condition="{whatson}" imagetype="channellogo" path="{channelid}" x="0" width="8%" height="100%" valign="center" />
+            <drawtext condition="{whatson}" x="{posx(logo)} + {width(logo)}+20" valign="center" font="{regular}" fontsize="{areaheight}*{headerfontsize}/100" color="{fontdefault}" text="{channelnumber} - {channelname}" />
+        </area>
+    </header>
+
+    <background>
+        <area x="0" y="0" width="100%" height="100%" layer="1">
+            <drawimage condition="eq({indexschedulesmenustyle}, 0)" imagetype="skinpart" x="0" y="0" width="100%" height="100%" path="background_menu_tvframe" />
+            <drawimage condition="eq({indexschedulesmenustyle}, 1)" imagetype="skinpart" x="0" y="0" width="100%" height="100%" path="background_menu" />
+        </area>
+        <area condition="eq({indexschedulesmenustyle}, 0)" x="39%" y="70%" width="60%" height="20%" layer="2">
+            <fill color="{menuback}" />
+        </area>
+    </background>
+
+    <scrollbar>
+        <area condition="lt({height}, 1000) ++ eq({indexschedulesmenustyle}, 0)" x="33%" y="9%" width="{areawidth}*0.01" height="82%" layer="2">
+            <fill color="{menuback}" />
+        </area>
+        <area condition="lt({height}, 1000) ++ eq({indexschedulesmenustyle}, 1)" x="98%" y="9%" width="{areawidth}*0.01" height="82%" layer="2">
+            <fill color="{menuback}" />
+        </area>
+        <area condition="lt({height}, 1000) ++ eq({indexschedulesmenustyle}, 0)" x="33%" y="9%" width="{areawidth}*0.01" height="82%" layer="3">
+            <drawrectangle x="0" y="{areaheight} * {offset} / 1000" width="100%" height="{areaheight} * {height} / 1000" color="{progressbar}" />
+        </area>
+        <area condition="lt({height}, 1000) ++ eq({indexschedulesmenustyle}, 1)" x="98%" y="9%" width="{areawidth}*0.01" height="82%" layer="3">
+            <drawrectangle x="0" y="{areaheight} * {offset} / 1000" width="100%" height="{areaheight} * {height} / 1000" color="{progressbar}" />
+        </area>
+    </scrollbar>
+
+    <menuitems condition="eq({indexschedulesmenustyle}, 0)" x="2%" y="9%" orientation="vertical" width="98%" height="82%" align="center" numlistelements="{numitemsscheduelesnarrow}">
+        <listelement fadetime="{listfadetime}" shifttime="{listshifttime}">
+            <!-- background and progressbar -->
+            <area condition="{current}" indicator="true" x="0" y="0" width="{areawidth}*0.305" height="100%" layer="2">
+                <drawrectangle x="0" y="0" width="100%" height="100%" color="{menubackactive}" />
+            </area>
+            <area x="0" y="0" width="{areawidth}*0.305" height="100%" layer="2">
+                <drawrectangle condition="not{current}" x="0" y="0" width="100%" height="100%" color="{menuback}" />
+                <drawrectangle condition="not{current}" x="0" y="{areaheight}-1" width="100%" height="1" color="{menubackline}" />
+                <drawrectangle condition="{running}" x="65%" y="{areaheight}*0.1" width="{areawidth}*0.34" height="{areaheight}*0.12" color="{progressbarback}" />
+                <drawrectangle condition="{running}" x="65%" y="{areaheight}*0.1 + 1" width="{areawidth}*0.34*{elapsed}/{duration} - {elapsed}/{duration}" height="{areaheight}*0.12 - 3" color="{progressbar}" />
+            </area>
+            <!-- timer -->
+            <area condition="not{separator} ++ {timerfull}" x="0" y="0" width="{areawidth}*0.305" height="100%" layer="4">
+                <drawimage condition="not{current}" imagetype="icon" path="ico_timer" x="{areawidth} - {areaheight}*0.5 - 5" y="5" width="0.5*{areaheight}" height="0.5*{areaheight}" />
+                <drawimage condition="{current}" imagetype="icon" path="ico_timer_active" x="{areawidth} - {areaheight}*0.5 - 5" y="5" width="0.5*{areaheight}" height="0.5*{areaheight}" />
+            </area>
+            <area condition="not{separator} ++ {timerpartitial}" x="0" y="0" width="{areawidth}*0.305" height="100%" layer="4">
+                <drawimage condition="not{current}" imagetype="icon" path="ico_timer" x="{areawidth} - {areaheight}*0.35 - 5" y="5" width="0.35*{areaheight}" height="0.35*{areaheight}" />
+                <drawimage condition="{current}" imagetype="icon" path="ico_timer_active" x="{areawidth} - {areaheight}*0.35 - 5" y="5" width="0.35*{areaheight}" height="0.35*{areaheight}" />
+            </area>
+            <!-- day or channel separator -->
+            <area condition="{separator}" x="1%" width="{areawidth}*0.295" layer="3">
+                <drawtext x="0" valign="center" font="{regular}" fontsize="{areaheight}*{schedulesseparator}/100" color="{fontactive}" text="{title}" />
+            </area>
+            <!-- element whatson -->
+            <area condition="not{separator}++{whatson}++not{current}" x="1%" width="{areawidth}*0.295" layer="3">
+                <drawtext condition="{istoday}" x="0" y="{areaheight}*{schedulesposydate}/100" font="{regular}" fontsize="{areaheight}*{schedulessizedate}/100" color="{fontdefault}" text="{start} - {stop}" />
+                <drawtext condition="not{istoday}" x="0" y="{areaheight}*{schedulesposydate}/100" font="{regular}" fontsize="{areaheight}*{schedulessizedate}/100" color="{fontdefault}" text="{day} {daynumeric}.{month} {start} - {stop}" />
+            </area>
+            <areascroll condition="not{separator}++{whatson}++not{current}" scrollelement="menutext" mode="forthandback" orientation="horizontal" delay="1000" scrollspeed="medium" x="1%" width="{areawidth}*0.295" layer="3">
+                <drawtext name="menutext" x="0" y="{areaheight}*{schedulesposytitle}/100" font="{regular}" fontsize="{areaheight}*{schedulessizetitle}/100" color="{fontdefault}" text="{title}" />
+            </areascroll>
+            <area condition="not{separator}++{whatson}++{current}" x="1%" width="{areawidth}*0.295" layer="3">
+                <drawtext condition="{istoday}" x="0" y="{areaheight}*{schedulesposydate}/100" font="{regular}" fontsize="{areaheight}*{schedulessizedate}/100" color="{fontmenuactive}" text="{start} - {stop}" />
+                <drawtext condition="not{istoday}" x="0" y="{areaheight}*{schedulesposydate}/100" font="{regular}" fontsize="{areaheight}*{schedulessizedate}/100" color="{fontmenuactive}" text="{day} {daynumeric}.{month} {start} - {stop}" />
+            </area>
+            <areascroll condition="not{separator}++{whatson}++{current}" scrollelement="menutext" mode="forthandback" orientation="horizontal" delay="1000" scrollspeed="medium" x="1%" width="{areawidth}*0.295" layer="3">
+                <drawtext name="menutext" x="0" y="{areaheight}*{schedulesposytitle}/100" font="{regular}" fontsize="{areaheight}*{schedulessizetitle}/100" color="{fontmenuactive}" text="{title}" />
+            </areascroll>
+            <!-- element whatsonnow -->
+            <area condition="not{separator}++{whatsonnow}" x="1%" width="6%" layer="3">
+                <drawimage name="logo" imagetype="channellogo" path="{channelid}" width="90%" height="90%" align="center" valign="center" />
+            </area>
+            <area condition="not{separator}++{whatsonnow}++not{current}" x="8%" width="22%" layer="3">
+                <drawtext x="0" y="{areaheight}*{schedulesposydate}/100" font="{regular}" fontsize="{areaheight}*{schedulessizedate}/100" color="{fontdefault}" text="{start} - {stop}" />
+            </area>
+            <areascroll condition="not{separator}++{whatsonnow}++not{current}" scrollelement="menutext" mode="forthandback" orientation="horizontal" delay="1000" scrollspeed="medium" x="8%" width="22%" layer="3">
+                <drawtext name="menutext" y="{areaheight}*{schedulesposytitle}/100" font="{regular}" fontsize="{areaheight}*{schedulessizetitle}/100" color="{fontdefault}" text="{title}" />
+            </areascroll>
+            <area condition="not{separator}++{whatsonnow}++{current}" x="8%" width="22%" layer="3">
+                <drawtext x="0" y="{areaheight}*{schedulesposydate}/100" font="{regular}" fontsize="{areaheight}*{schedulessizedate}/100" color="{fontmenuactive}" text="{start} - {stop}" />
+            </area>
+            <areascroll condition="not{separator}++{whatsonnow}++{current}" scrollelement="menutext" mode="forthandback" orientation="horizontal" delay="1000" scrollspeed="medium" x="8%" width="22%" layer="3">
+                <drawtext name="menutext" y="{areaheight}*{schedulesposytitle}/100" font="{regular}" fontsize="{areaheight}*{schedulessizetitle}/100" color="{fontmenuactive}" text="{title}" />
+            </areascroll>
+           <!-- element whatsonnext -->
+            <area condition="not{separator}++{whatsonnext}" x="1%" width="6%" layer="3">
+                <drawimage name="logo" imagetype="channellogo" path="{channelid}" width="90%" height="90%" align="center" valign="center" />
+            </area>
+            <area condition="not{separator}++{whatsonnext}++not{current}" x="8%" width="22%" layer="3">
+                <drawtext x="0" y="{areaheight}*{schedulesposydate}/100" font="{regular}" fontsize="{areaheight}*{schedulessizedate}/100" color="{fontdefault}" text="{start} - {stop}" />
+            </area>
+            <areascroll condition="not{separator}++{whatsonnext}++not{current}" scrollelement="menutext" mode="forthandback" orientation="horizontal" delay="1000" scrollspeed="medium" x="8%" width="22%" layer="3">
+                <drawtext name="menutext" x="0" y="{areaheight}*{schedulesposytitle}/100" font="{regular}" fontsize="{areaheight}*{schedulessizetitle}/100" color="{fontdefault}" text="{title}" />
+            </areascroll>
+            <area condition="not{separator}++{whatsonnext}++{current}" x="8%" width="22%" layer="3">
+                <drawtext x="0" y="{areaheight}*{schedulesposydate}/100" font="{regular}" fontsize="{areaheight}*{schedulessizedate}/100" color="{fontmenuactive}" text="{start} - {stop}" />
+            </area>
+            <areascroll condition="not{separator}++{whatsonnext}++{current}" scrollelement="menutext" mode="forthandback" orientation="horizontal" delay="1000" scrollspeed="medium" x="8%" width="22%" layer="3">
+                <drawtext name="menutext" x="0" y="{areaheight}*{schedulesposytitle}/100" font="{regular}" fontsize="{areaheight}*{schedulessizetitle}/100" color="{fontmenuactive}" text="{title}" />
+            </areascroll>
+           <!-- element whatsonfavorites -->
+            <area condition="not{separator}++{whatsonfavorites}" x="1%" width="6%" layer="3">
+                <drawimage name="logo" imagetype="channellogo" path="{channelid}" width="90%" height="90%" align="center" valign="center" />
+            </area>
+            <area condition="not{separator}++{whatsonfavorites}++not{current}" x="8%" width="22%" layer="3">
+                <drawtext condition="{istoday}" x="0" y="{areaheight}*{schedulesposydate}/100" font="{regular}" fontsize="{areaheight}*{schedulessizedate}/100" color="{fontdefault}" text="{start} - {stop}" />
+                <drawtext condition="not{istoday}" x="0" y="{areaheight}*{schedulesposydate}/100" font="{regular}" fontsize="{areaheight}*{schedulessizedate}/100" color="{fontdefault}" text="{day} {daynumeric}.{month} {start} - {stop}" />
+            </area>
+            <areascroll condition="not{separator}++{whatsonfavorites}++not{current}" scrollelement="menutext" mode="forthandback" orientation="horizontal" delay="1000" scrollspeed="medium" x="8%" width="22%" layer="3">
+                <drawtext name="menutext" x="0" y="{areaheight}*{schedulesposytitle}/100" font="{regular}" fontsize="{areaheight}*{schedulessizetitle}/100" color="{fontdefault}" text="{title}" />
+            </areascroll>
+            <area condition="not{separator}++{whatsonfavorites}++{current}" x="8%" width="22%" layer="3">
+                <drawtext condition="{istoday}" x="0" y="{areaheight}*{schedulesposydate}/100" font="{regular}" fontsize="{areaheight}*{schedulessizedate}/100" color="{fontmenuactive}" text="{start} - {stop}" />
+                <drawtext condition="not{istoday}" x="0" y="{areaheight}*{schedulesposydate}/100" font="{regular}" fontsize="{areaheight}*{schedulessizedate}/100" color="{fontmenuactive}" text="{day} {daynumeric}.{month} {start} - {stop}" />
+            </area>
+            <areascroll condition="not{separator}++{whatsonfavorites}++{current}" scrollelement="menutext" mode="forthandback" orientation="horizontal" delay="1000" scrollspeed="medium" x="8%" width="22%" layer="3">
+                <drawtext name="menutext" x="0" y="{areaheight}*{schedulesposytitle}/100" font="{regular}" fontsize="{areaheight}*{schedulessizetitle}/100" color="{fontmenuactive}" text="{title}" />
+            </areascroll>
+        </listelement>
+        <currentelement delay="100" fadetime="200">
+            <area condition="{hasposter}" x="39%" y="76%" width="7%" height="22%" layer="3">
+                <drawimage imagetype="image" path="{posterpath}" x="0" valign="center" width="{areawidth}" height="{areawidth} * {posterheight} / {posterwidth}" />
+            </area>
+            <areascroll condition="{hasposter}" orientation="vertical" mode="forthandback" delay="3000" scrollspeed="medium" x="47%" y="76%" width="49%" height="20%" layer="3">
+                <drawtext x="0" y="0" font="{regular}" width="100%" fontsize="{areaheight}*{schedulessizecurrenttitle}/100" color="{fontdefault}" text="{day} {daynumeric}.{month} {start} - {stop} {title}" />
+                <drawtextbox name="shorttext" x="0" y="21%" width="100%" font="{regular}" fontsize="{areaheight}*{schedulessizecurrenttitle}/100" color="{fontdefault}" text="{shorttext}" />
+                <drawtextbox x="0" y="{posy(shorttext)} + {height(shorttext)}" width="100%" font="{regular}" fontsize="{areaheight}*{schedulessizecurrenttext}/100" color="{fontdefault}" text="{description}" />
+            </areascroll>
+            <areascroll condition="not{hasposter}" orientation="vertical" mode="forthandback" delay="3000" scrollspeed="medium" x="39%" y="76%" width="57%" height="20%" layer="3">
+                <drawtext x="0" y="0" font="{regular}" width="100%" fontsize="{areaheight}*{schedulessizecurrenttitle}/100" color="{fontdefault}" text="{day} {daynumeric}.{month} {start} - {stop} {title}" />
+                <drawtextbox name="shorttext" x="0" y="21%" width="100%" font="{regular}" fontsize="{areaheight}*{schedulessizecurrenttitle}/100" color="{fontdefault}" text="{shorttext}" />
+                <drawtextbox x="0" y="{posy(shorttext)} + {height(shorttext)}" width="100%" font="{regular}" fontsize="{areaheight}*{schedulessizecurrenttext}/100" color="{fontdefault}" text="{description}" />
+            </areascroll>
+        </currentelement>
+    </menuitems>
+
+    <menuitems condition="eq({indexschedulesmenustyle}, 1)" x="2%" y="9%" orientation="vertical" width="95%" height="82%" align="center" numlistelements="{numitemsscheduleswide}">
+        <listelement fadetime="{listfadetime}" shifttime="{listshifttime}">
+            <!-- background and progressbar -->
+            <area condition="{current}" indicator="true" x="0" y="0" width="100%" height="100%" layer="2">
+                <drawrectangle x="0" y="0" width="100%" height="100%" color="{menubackactive}" />
+            </area>
+            <area x="0" y="0" width="100%" height="100%" layer="2">
+                <drawrectangle condition="not{current}" x="0" y="0" width="100%" height="100%" color="{menuback}" />
+                <drawrectangle condition="not{current}" x="0" y="{areaheight}-1" width="100%" height="1" color="{menubackline}" />
+                <drawrectangle condition="{running}" x="30%" y="20%" width="10%" height="60%" color="{progressbarback}" />
+                <drawrectangle condition="{running}" x="{areawidth}*0.3 + 1" y="{areaheight}*0.2 + 1" width="{areawidth}*0.1*{elapsed}/{duration} - {elapsed}/{duration} - 1" height="{areaheight}*0.6 - 3" color="{progressbar}" />
+            </area>
+            <!-- timer -->
+            <area condition="not{separator} ++ {timerfull}" x="94%" y="0" width="5%" height="100%" layer="4">
+                <drawimage condition="not{current}" imagetype="icon" path="ico_timer" align="right" valign="center" width="0.9*{areaheight}" height="0.9*{areaheight}" />
+                <drawimage condition="{current}" imagetype="icon" path="ico_timer_active" align="right" valign="center" width="0.9*{areaheight}" height="0.9*{areaheight}" />
+            </area>
+            <area condition="not{separator} ++ {timerpartitial}" x="94%" y="0" width="5%" height="100%" layer="4">
+                <drawimage condition="not{current}" imagetype="icon" path="ico_timer" align="right" valign="center" width="0.55*{areaheight}" height="0.55*{areaheight}" />
+                <drawimage condition="{current}" imagetype="icon" path="ico_timer_active" align="right" valign="center" width="0.55*{areaheight}" height="0.55*{areaheight}" />
+            </area>
+            <!-- day or channel separator -->
+            <area condition="{separator}" x="1%" width="99%" layer="3">
+                <drawtext x="0" valign="center" font="{regular}" fontsize="{areaheight}*{schedulessizewide}/100" color="{fontactive}" text="{title}" />
+            </area>
+            <!-- element whatson -->
+            <area condition="not{separator}++{whatson}++not{current}" x="1%" width="100%" layer="3">
+                <drawtext x="0" valign="center" font="{regular}" fontsize="{areaheight}*{schedulessizewide}/100" color="{fontdefault}" text="{day}" />
+                <drawtext x="5%" valign="center" font="{regular}" fontsize="{areaheight}*{schedulessizewide}/100" color="{fontdefault}" text="{daynumeric}.{month}  {start} - {stop}" />
+                <drawtext condition="not{running}" x="30%" valign="center" width="69%" font="{regular}" fontsize="{areaheight}*{schedulessizewide}/100" color="{fontdefault}" text="{title}" />
+                <drawtext condition="{running}" x="41%" valign="center" width="58%" font="{regular}" fontsize="{areaheight}*{schedulessizewide}/100" color="{fontdefault}" text="{title}" />
+            </area>
+            <area condition="not{separator}++{whatson}++{current}" x="1%" width="100%" layer="3">
+                <drawtext x="0" valign="center" font="{regular}" fontsize="{areaheight}*{schedulessizewide}/100" color="{fontmenuactive}" text="{day}" />
+                <drawtext x="5%" valign="center" font="{regular}" fontsize="{areaheight}*{schedulessizewide}/100" color="{fontmenuactive}" text="{daynumeric}.{month}  {start} - {stop}" />
+                <drawtext condition="not{running}" x="30%" valign="center" width="69%" font="{regular}" fontsize="{areaheight}*{schedulessizewide}/100" color="{fontmenuactive}" text="{title}" />
+                <drawtext condition="{running}" x="41%" valign="center" width="58%" font="{regular}" fontsize="{areaheight}*{schedulessizewide}/100" color="{fontmenuactive}" text="{title}" />
+            </area>
+            <!-- element whatsonnow -->
+            <area condition="not{separator}++{whatsonnow}" x="0" width="10%" layer="3">
+                <drawimage condition="{channellogoexists}" name="logo" imagetype="channellogo" path="{channelid}" width="95%" height="95%" align="center" valign="center" />
+                <drawtext condition="not{channellogoexists}++not{current}" align="center" valign="center" font="{regular}" fontsize="{areaheight}*{schedulessizewidesmall}/100" color="{fontdefault}" text="{channelname}" />
+                <drawtext condition="not{channellogoexists}++{current}" align="center" valign="center" font="{regular}" fontsize="{areaheight}*{schedulessizewidesmall}/100" color="{fontmenuactive}" text="{channelname}" />
+            </area>
+            <area condition="not{separator}++{whatsonnow}++not{current}" x="11%" width="18%" layer="3">
+                <drawtext x="0" valign="center" font="{regular}" fontsize="{areaheight}*{schedulessizewide}/100" color="{fontdefault}" text="{start} - {stop}" />
+            </area>
+            <area condition="not{separator}++{whatsonnow}++not{current}" x="41%" width="59%" layer="3">
+                <drawtext x="0" valign="center" font="{regular}" fontsize="{areaheight}*{schedulessizewide}/100" color="{fontdefault}" text="{title}" />
+            </area>
+            <area condition="not{separator}++{whatsonnow}++{current}" x="11%" width="18%" layer="3">
+                <drawtext x="0" valign="center" font="{regular}" fontsize="{areaheight}*{schedulessizewide}/100" color="{fontmenuactive}" text="{start} - {stop}" />
+            </area>
+            <areascroll condition="not{separator}++{whatsonnow}++{current}" scrollelement="scheduletitle" orientation="vertical" mode="forthandback" delay="3000" scrollspeed="medium" x="41%" width="59%" layer="3">
+                <drawtext name="scheduletitle" x="0" valign="center" font="{regular}" fontsize="{areaheight}*{schedulessizewide}/100" color="{fontmenuactive}" text="{title}" />
+            </areascroll>
+            <!-- element whatsonnext -->
+            <area condition="not{separator}++{whatsonnext}" x="0" width="10%" layer="3">
+                <drawimage condition="{channellogoexists}" name="logo" imagetype="channellogo" path="{channelid}" width="95%" height="95%" align="center" valign="center" />
+                <drawtext condition="not{channellogoexists}++not{current}" align="center" valign="center" font="{regular}" fontsize="{areaheight}*{schedulessizewidesmall}/100" color="{fontdefault}" text="{channelname}" />
+                <drawtext condition="not{channellogoexists}++{current}" align="center" valign="center" font="{regular}" fontsize="{areaheight}*{schedulessizewidesmall}/100" color="{fontmenuactive}" text="{channelname}" />
+            </area>
+            <area condition="not{separator}++{whatsonnext}++not{current}" x="11%" width="18%" layer="3">
+                <drawtext x="0" valign="center" font="{regular}" fontsize="{areaheight}*{schedulessizewide}/100" color="{fontdefault}" text="{start} - {stop}" />
+            </area>
+            <area condition="not{separator}++{whatsonnext}++not{current}" x="31%" width="69%" layer="3">
+                <drawtext x="0" valign="center" font="{regular}" fontsize="{areaheight}*{schedulessizewide}/100" color="{fontdefault}" text="{title}" />
+            </area>
+            <area condition="not{separator}++{whatsonnext}++{current}" x="11%" width="18%" layer="3">
+                <drawtext x="0" valign="center" font="{regular}" fontsize="{areaheight}*{schedulessizewide}/100" color="{fontmenuactive}" text="{start} - {stop}" />
+            </area>
+            <areascroll condition="not{separator}++{whatsonnext}++{current}" scrollelement="scheduletitle" orientation="vertical" mode="forthandback" delay="3000" scrollspeed="medium" x="31%" width="69%" layer="3">
+                <drawtext name="scheduletitle" x="0" valign="center" font="{regular}" fontsize="{areaheight}*{schedulessizewide}/100" color="{fontmenuactive}" text="{title}" />
+            </areascroll>
+            <!-- element whatsonfavorites -->
+            <area condition="not{separator}++{whatsonfavorites}" x="0" width="10%" layer="3">
+                <drawimage condition="{channellogoexists}" name="logo" imagetype="channellogo" path="{channelid}" width="95%" height="95%" align="center" valign="center" />
+                <drawtext condition="not{channellogoexists}++not{current}" align="center" valign="center" font="{regular}" fontsize="{areaheight}*{schedulessizewidesmall}/100" color="{fontdefault}" text="{channelname}" />
+                <drawtext condition="not{channellogoexists}++{current}" align="center" valign="center" font="{regular}" fontsize="{areaheight}*{schedulessizewidesmall}/100" color="{fontmenuactive}" text="{channelname}" />
+            </area>
+            <area condition="not{separator}++{whatsonfavorites}++not{current}" x="11%" width="18%" layer="3">
+                <drawtext x="0" valign="center" font="{regular}" fontsize="{areaheight}*{schedulessizewide}/100" color="{fontdefault}" text="{start} - {stop}" />
+            </area>
+            <area condition="not{separator}++{whatsonfavorites}++not{current}" x="31%" width="69%" layer="3">
+                <drawtext x="0" valign="center" font="{regular}" fontsize="{areaheight}*{schedulessizewide}/100" color="{fontdefault}" text="{title}" />
+            </area>
+            <area condition="not{separator}++{whatsonfavorites}++{current}" x="11%" width="18%" layer="3">
+                <drawtext x="0" valign="center" font="{regular}" fontsize="{areaheight}*{schedulessizewide}/100" color="{fontmenuactive}" text="{start} - {stop}" />
+            </area>
+            <areascroll condition="not{separator}++{whatsonfavorites}++{current}" scrollelement="scheduletitle" orientation="vertical" mode="forthandback" delay="3000" scrollspeed="medium" x="31%" width="69%" layer="3">
+                <drawtext name="scheduletitle" x="0" valign="center" font="{regular}" fontsize="{areaheight}*{schedulessizewide}/100" color="{fontmenuactive}" text="{title}" />
+            </areascroll>
+        </listelement>
+        <currentelement delay="1000" fadetime="200">
+            <areacontainer condition="{schedulesshowcurrent} ++ lt({numitem}, 11)">
+                <area x="20%" y="{menuitemy}+{menuitemheight}" width="80%" height="31%" layer="4">
+                    <fill color="{messageback}" />
+                </area>
+                <area condition="{hasposter}" x="21%" y="{menuitemy}+{menuitemheight}" width="12%" height="30%" layer="5">
+                    <drawimage imagetype="image" path="{posterpath}" x="0" valign="center" width="{areawidth}" height="{areawidth} * {posterheight} / {posterwidth}" />
+                </area>
+                <areascroll condition="{hasposter}" orientation="vertical" mode="forthandback" delay="3000" scrollspeed="medium" x="34%" y="{menuitemy}+{menuitemheight} + {areaheight}*0.01" width="65%" height="29%" layer="5">
+                    <drawtext name="datetime" x="0" y="0" font="{regular}" width="100%" fontsize="{areaheight}*{schedulessizecurrenttext}/100" color="{fontdefault}" text="{day} {daynumeric}.{month} {start} - {stop}" />
+                    <drawtext name="title" x="0" y="{height(datetime)}" font="{regular}" width="100%" fontsize="{areaheight}*{schedulessizecurrenttitle}/100" color="{fontdefault}" text="{title}" />
+                    <drawtextbox name="shorttext" x="0" y="{posy(title)} + {height(title)}" width="100%" font="{regular}" fontsize="{areaheight}*{schedulessizecurrenttext}/100" color="{fontdefault}" text="{shorttext}" />
+                    <drawtextbox x="0" y="{posy(shorttext)} + {height(shorttext)} + 10" width="100%" font="{regular}" fontsize="{areaheight}*{schedulessizecurrenttext}/100" color="{fontdefault}" text="{description}" />
+                </areascroll>
+                <areascroll condition="not{hasposter}" orientation="vertical" mode="forthandback" delay="3000" scrollspeed="medium" x="21%" y="{menuitemy}+{menuitemheight} + {areaheight}*0.01" width="78%" height="29%" layer="5">
+                    <drawtext name="datetime" x="0" y="0" font="{regular}" width="100%" fontsize="{areaheight}*{schedulessizecurrenttext}/100" color="{fontdefault}" text="{day} {daynumeric}.{month} {start} - {stop}" />
+                    <drawtext name="title" x="0" y="{height(datetime)}" font="{regular}" width="100%" fontsize="{areaheight}*{schedulessizecurrenttitle}/100" color="{fontdefault}" text="{title}" />
+                    <drawtextbox name="shorttext" x="0" y="{posy(title)}+{height(title)}" width="100%" font="{regular}" fontsize="{areaheight}*{schedulessizecurrenttext}/100" color="{fontdefault}" text="{shorttext}" />
+                    <drawtextbox x="0" y="{posy(shorttext)} + {height(shorttext)} + 10" width="100%" font="{regular}" fontsize="{areaheight}*{schedulessizecurrenttext}/100" color="{fontdefault}" text="{description}" />
+                </areascroll>
+            </areacontainer>
+            <areacontainer condition="{schedulesshowcurrent} ++ gt({numitem}, 10)">
+                <area x="20%" y="{menuitemy} - {areaheight}*0.31" width="80%" height="31%" layer="4">
+                    <fill color="{messageback}" />
+                </area>
+                <area condition="{hasposter}" x="21%" y="{menuitemy} - {areaheight}*0.31" width="12%" height="30%" layer="5">
+                    <drawimage imagetype="image" path="{posterpath}" x="0" valign="center" width="{areawidth}" height="{areawidth} * {posterheight} / {posterwidth}" />
+                </area>
+                <areascroll condition="{hasposter}" orientation="vertical" mode="forthandback" delay="3000" scrollspeed="medium" x="34%" y="{menuitemy} + {areaheight}*0.01 - {areaheight}*0.31" width="65%" height="29%" layer="5">
+                    <drawtext name="datetime" x="0" y="0" font="{regular}" width="100%" fontsize="{areaheight}*{schedulessizecurrenttext}/100" color="{fontdefault}" text="{day} {daynumeric}.{month} {start} - {stop}" />
+                    <drawtext name="title" x="0" y="{height(datetime)}" font="{regular}" width="100%" fontsize="{areaheight}*{schedulessizecurrenttitle}/100" color="{fontdefault}" text="{title}" />
+                    <drawtextbox name="shorttext" x="0" y="{posy(title)} + {height(title)}" width="100%" font="{regular}" fontsize="{areaheight}*{schedulessizecurrenttext}/100" color="{fontdefault}" text="{shorttext}" />
+                    <drawtextbox x="0" y="{posy(shorttext)} + {height(shorttext)} + 10" width="100%" font="{regular}" fontsize="{areaheight}*{schedulessizecurrenttext}/100" color="{fontdefault}" text="{description}" />
+                </areascroll>
+                <areascroll condition="not{hasposter}" orientation="vertical" mode="forthandback" delay="3000" scrollspeed="medium" x="21%" y="{menuitemy} + {areaheight}*0.01 - {areaheight}*0.31" width="78%" height="29%" layer="5">
+                    <drawtext name="datetime" x="0" y="0" font="{regular}" width="100%" fontsize="{areaheight}*{schedulessizecurrenttext}/100" color="{fontdefault}" text="{day} {daynumeric}.{month} {start} - {stop}" />
+                    <drawtext name="title" x="0" y="{height(datetime)}" font="{regular}" width="100%" fontsize="{areaheight}*{schedulessizecurrenttitle}/100" color="{fontdefault}" text="{title}" />
+                    <drawtextbox name="shorttext" x="0" y="{posy(title)}+{height(title)}" width="100%" font="{regular}" fontsize="{areaheight}*{schedulessizecurrenttext}/100" color="{fontdefault}" text="{shorttext}" />
+                    <drawtextbox x="0" y="{posy(shorttext)} + {height(shorttext)} + 10" width="100%" font="{regular}" fontsize="{areaheight}*{schedulessizecurrenttext}/100" color="{fontdefault}" text="{description}" />
+                </areascroll>
+            </areacontainer>
+        </currentelement>
+    </menuitems>
+</menuschedules>

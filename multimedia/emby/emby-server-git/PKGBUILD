@@ -1,52 +1,45 @@
 pkgname=emby-server-git
-pkgver=3.4.1.0
+pkgver=3.5.0.0
 pkgrel=1
 pkgdesc='Bring together your videos, music, photos, and live television'
-arch=('i686' 'x86_64')
+arch=('any')
 url='http://emby.media'
-license=('GPL2')
-depends=('ffmpeg' 'imagemagick' 'mono' 'referenceassemblies-pcl' 'sqlite')
-provides=('emby-server')
+license=('custom')
+depends=('dotnet-runtime' 'ffmpeg' 'skia-sharp60' 'sqlite')
 conflicts=('emby-server' 'emby-server-beta-git' 'emby-server-dev-git')
 install='emby-server.install'
-source=("emby-server-${pkgver}.tar.gz::https://github.com/MediaBrowser/Emby/archive/${pkgver}.tar.gz"
-  'emby-server'
-  'emby-migrate-database'
-  'emby-server.conf'
-  'emby-server.service')
-md5sums=('9ee355c0a3763d573ae0bfb13b1921f9'
-  'a4f8dd28453fab4a94275e3d7e20154b'
-  '00802787748a25a18fcc35abb1a7f4ae'
-  '0df10bc7efad50d95ec1d2d1230dd083'
-  'ecc4e25b240623186382489732ea7bb3')
+source=("https://github.com/MediaBrowser/Emby.Releases/releases/download/${pkgver}/embyserver-netcore_${pkgver}.zip"
+        'emby-server'
+        'emby-migrate-database'
+        'emby-server.conf'
+        'emby-server.service'
+        'emby-server.sysusers'
+        'emby-server.tmpfiles'
+        'license.docx')
 backup=('etc/conf.d/emby-server')
+sha256sums=('f9585c1d049c35704629909bc728480d75c055e85e3e8bfb5378ad6c367288be'
+            'fcab0c95fb94179ca52d63b354b2ca44b8e35885469cb2b3d006b5fbc5622490'
+            'b25bf83a0ab371aff3b13b82f7af71b51bfe6d7e51eb8a8a3dd8f0774ffce6a5'
+            '5d14f999784df1a0fff89e5c35f9b36cd938d097a8e7037997774ef01c7c179a'
+            'efdaabd3002fee13a6831e90fd700dea4d7c6c954ede00da6f28c1eada33ad8c'
+            '9caba923f3673f3e1ba4c8b002253e5de462078ab8602ddaf3976125cdc9a172'
+            '58121e34d260be790f3d00bef05bb43459c6f6cf15bc6ae680b3ebc442f842d6'
+            'a6d7ea65dcb06392479a85e1a10a7aeb872d803da6f784f6935fcd4ee63008c6')
 
 prepare() {
-  cd Emby-$pkgver
-  sed 's/libMagickWand-6.Q8.so/libMagickWand-6.Q16HDRI.so/' -i MediaBrowser.Server.Mono/ImageMagickSharp.dll.config
-}
-
-build() {
-  cd Emby-${pkgver}
-
-  xbuild \
-    /p:Configuration='Release Mono' \
-    /p:Platform='Any CPU' \
-    /p:OutputPath="${srcdir}/build" \
-    /t:build MediaBrowser.sln
-  mono --aot='full' -O='all' ../build/MediaBrowser.Server.Mono.exe
+  rm -rf system/{electron,runtimes}
 }
 
 package() {
-  install -dm 755 "${pkgdir}"/{etc/conf.d,usr/{bin,lib/systemd/system}}
-  cp -dr --no-preserve='ownership' build "${pkgdir}"/usr/lib/emby-server
-  find "${pkgdir}" -type f -name *.dylib -delete
-  install -m 755 emby-server "${pkgdir}"/usr/bin/
-  install -m 755 emby-migrate-database "${pkgdir}"/usr/bin/
-  install -m 644 emby-server.service "${pkgdir}"/usr/lib/systemd/system/
-  install -m 644 emby-server.conf "${pkgdir}"/etc/conf.d/emby-server
-
-  install -dm 755 "${pkgdir}"/var/lib/emby
-  chown 422:422 -R "${pkgdir}"/var/lib/emby
+  install -dm 755 "${pkgdir}"/usr/lib
+  cp -dr --no-preserve='ownership' system "${pkgdir}"/usr/lib/emby-server
+  ln -s ../libSkiaSharp.so.60.0.0 "${pkgdir}"/usr/lib/emby-server/libSkiaSharp.so
+  install -Dm 755 emby-server -t "${pkgdir}"/usr/bin/
+  install -Dm 755 emby-migrate-database -t "${pkgdir}"/usr/bin/
+  install -Dm 644 emby-server.service -t "${pkgdir}"/usr/lib/systemd/system/
+  install -Dm 644 emby-server.sysusers "${pkgdir}"/usr/lib/sysusers.d/emby-server.conf
+  install -Dm 644 emby-server.tmpfiles "${pkgdir}"/usr/lib/tmpfiles.d/emby-server.conf
+  install -Dm 644 emby-server.conf "${pkgdir}"/etc/conf.d/emby-server
+  install -Dm 644 license.docx -t "${pkgdir}"/usr/share/licenses/emby-server/
 }
 

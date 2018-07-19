@@ -1,7 +1,7 @@
 pkgname=media-build-git
 _gitname='source-git'
 _branch=master
-pkgver=3115479_4.17.5_1_ARCH
+pkgver=3115479_4.17.6_1_ARCH
 pkgrel=1
 pkgdesc="Experimental build system for media drivers CrazyCat"
 url="https://bitbucket.org/CrazyCat/media_build"

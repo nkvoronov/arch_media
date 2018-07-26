@@ -1,7 +1,7 @@
 pkgname=vdr-vnsiserver
-pkgver=1.6.0_g0b44ed8
+pkgver=1.7.0_gab52d71
 _gitname='source-git'
-_verpkg='1.6.0'
+_verpkg='1.7.0'
 _vdrapi=2.4.0
 epoch=2
 pkgrel=20

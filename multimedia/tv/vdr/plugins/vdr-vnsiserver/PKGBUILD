@@ -1,10 +1,10 @@
 pkgname=vdr-vnsiserver
-pkgver=1.7.0_gab52d71
+pkgver=1.7.0_g2ed5d19
 _gitname='source-git'
 _verpkg='1.7.0'
 _vdrapi=2.4.0
 epoch=2
-pkgrel=20
+pkgrel=1
 url="https://github.com/FernetMenta/vdr-plugin-vnsiserver"
 arch=('x86_64' 'i686' 'arm' 'armv6h' 'armv7h')
 license=('GPL2')

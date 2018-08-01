@@ -1,5 +1,5 @@
 pkgname=emby-server-git
-pkgver=3.5.0.0
+pkgver=3.5.2.0
 pkgrel=1
 pkgdesc='Bring together your videos, music, photos, and live television'
 arch=('any')
@@ -17,7 +17,7 @@ source=("https://github.com/MediaBrowser/Emby.Releases/releases/download/${pkgve
         'emby-server.tmpfiles'
         'license.docx')
 backup=('etc/conf.d/emby-server')
-sha256sums=('f9585c1d049c35704629909bc728480d75c055e85e3e8bfb5378ad6c367288be'
+sha256sums=('fe5561c27a5d2bbe79a9717ecb2eb8ce4f243592494b813250d2db56da5a3710'
             'fcab0c95fb94179ca52d63b354b2ca44b8e35885469cb2b3d006b5fbc5622490'
             'b25bf83a0ab371aff3b13b82f7af71b51bfe6d7e51eb8a8a3dd8f0774ffce6a5'
             '5d14f999784df1a0fff89e5c35f9b36cd938d097a8e7037997774ef01c7c179a'

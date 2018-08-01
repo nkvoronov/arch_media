@@ -1,7 +1,7 @@
 pkgname=kodi-addon-pvr-vdr-vnsi-git
 _gitname='source-git'
-_verpkg='2.6.26'
-pkgver=2.6.26_gdbbe1d0
+_verpkg='2.6.30'
+pkgver=2.6.30_ga3cd179
 pkgrel=1
 _branch=Krypton
 pkgdesc='VDR VNSI PVR client addon for Kodi'

@@ -1,8 +1,0 @@
-includedir=/usr/include
-libdir=/usr/lib
-
-Name: libskindesignerapi
-Description: skindesigner API Library
-Version: 0.1.2
-Cflags: -I/usr/include
-Libs: -L/usr/lib -lskindesignerapi

@@ -1,5 +1,5 @@
 pkgname=oscam-svn
-pkgver=11429
+pkgver=11431
 pkgrel=1
 _svnname='source-svn'
 pkgdesc="The Open Source Conditional Access Module daemon"
@@ -25,21 +25,26 @@ pkgver() {
 
 build() {
   cd "${srcdir}/${_svnname}"
-  make allyesconfig
-  ./config.sh --disable WITH_SSL
+  make defconfig
+  ./config.sh --disable CARDREADER_DB2COM
   make CONF_DIR=/etc/oscam \
+       USE_SSL=1 \
        USE_LIBUSB=1 \
        USE_PCSC=1 \
-       OSCAM_BIN=oscam
+       OSCAM_BIN=oscam \
+       LIST_SMARGO_BIN=list_smargo \
+       SVN_REV=$pkgver \
+       EXTRA_CC_WARN=-w
 }
 
 package() {
   cd "${srcdir}/${_svnname}"
 
-  install -D -m 755 "oscam" "$pkgdir/usr/bin/oscam"
-  install -D -m 644 "$srcdir/oscam.conf" "$pkgdir/etc/conf.d/oscam"
-  install -D -m 644 "$srcdir/oscam.service" "$pkgdir/usr/lib/systemd/system/oscam.service"
-  install -m 755 -d "$pkgdir/etc/oscam"
+  #Install binaries
+  install -Dm755 oscam "$pkgdir/usr/bin/oscam"
+  install -Dm755 list_smargo "$pkgdir/usr/bin/list_smargo"
+
+  #Install man-pages
   install -m 755 -d "$pkgdir/usr/share/doc/oscam"/{example,monitor}
   install -m 644 "Distribution/doc/txt"/* "${pkgdir}/usr/share/doc/oscam/"
   install -m 644 "Distribution/doc/example"/* "${pkgdir}/usr/share/doc/oscam/example"
@@ -47,4 +52,12 @@ package() {
   install -m 755 -d "$pkgdir/usr/share/man"/{man1,man5}
   install -m 644 "Distribution/doc/man"/*.1 "${pkgdir}/usr/share/man/man1"
   install -m 644 "Distribution/doc/man"/*.5 "${pkgdir}/usr/share/man/man5"
+
+  #Install config
+  install -Dm644 "$srcdir/oscam.conf" "$pkgdir/etc/conf.d/oscam"
+
+  #Install service file
+  install -Dm644 "$srcdir/oscam.service" "$pkgdir/usr/lib/systemd/system/oscam.service"
+  install -m 755 -d "$pkgdir/etc/oscam"
+
 }

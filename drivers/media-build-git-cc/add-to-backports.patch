@@ -1,0 +1,12 @@
+diff -Naur a/backports/backports.txt b/backports/backports.txt
+--- a/backports/backports.txt	2018-04-04 18:39:18.134425343 +0300
++++ b/backports/backports.txt	2018-04-04 18:42:06.499873296 +0300
+@@ -25,6 +25,8 @@
+ add pr_fmt.patch
+ add debug.patch
+ add drx39xxj.patch
++add linux-062-imon_pad_ignore_diagonal.patch
++add imon-fix.patch
+ add noretpoline.patch
+ 
+ [4.14.255]

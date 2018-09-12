@@ -1,24 +1,28 @@
 pkgname=tvheadend-git
 _gitname='source-git'
-pkgver=4.3.r1307.g923b6bc1b
+pkgver=4.3.r1325.ge71dd168f
 pkgrel=1
 pkgdesc="TV streaming server for Linux"
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h')
 url="https://tvheadend.org/"
 license=('GPL3')
-depends=('avahi' 'openssl' 'python2' 'uriparser' 'ffmpeg')
-makedepends=('git')
+
+license=('GPL3')
+depends=('avahi' 'ffmpeg' 'libdvbcsa' 'libfdk-aac' 'libhdhomerun' 'openssl' 'pcre2' 'uriparser')
+makedepends=('git' 'python')
 optdepends=('xmltv: For an alternative source of programme listings')
 provides=('tvheadend')
 conflicts=('tvheadend' 'hts-tvheadend' 'hts-tvheadend-svn' 'tvheadend-git')
 install=tvheadend.install
 source=("${_gitname}::git+https://github.com/tvheadend/tvheadend.git#branch=master"
+  'dvb-scan-tables::git+https://github.com/tvheadend/dtv-scan-tables.git#branch=tvheadend'
   'ua-VoliaCable'
   'tv_grab_file'
   'tvheadend.bin'
   'tvheadend.conf'
   'tvheadend.service')
 md5sums=('SKIP'
+  'SKIP'
   '5c58449a9e8ab121d48e7139e55405ad'
   '6b3ee77305fe47e39fed09d04a32e383'
   '7c5ba5607c3850a96005c7a99722186f'
@@ -31,25 +35,46 @@ pkgver() {
   git describe --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
 }
 
-#prepare() {
-#  cd "${srcdir}/${_gitname}"
-#  for f in "$srcdir"/*.patch; do patch -p1 < "$f"; done
-#}
+prepare() {
+  cd "${srcdir}"
+  _dvbscan="${_gitname}/data/dvb-scan"
+  rm -rf "${_dvbscan}"
+  cp -a "dvb-scan-tables" "${_dvbscan}"
+  rm -rf "${_dvbscan}/.git"
+  touch "${_dvbscan}/.stamp"
+}
 
 build() {
   cd "${srcdir}/${_gitname}"
-  ./configure --prefix=/usr \
-  --mandir=/usr/share/man/man1 \
-  --python=python2 \
-  --nowerror \
-  --enable-tvhcsa \
-  --enable-dvbcsa \
-  --disable-dvben50221 \
-  --enable-hdhomerun_client \
-  --enable-hdhomerun_static \
-  --enable-ffmpeg_static \
-  --enable-libav \
-  --enable-bundle
+
+  # "Fix" build with GCC 8
+  CFLAGS="${CFLAGS} \
+  -Wno-error=stringop-truncation \
+  -Wno-error=stringop-overflow \
+  -Wno-error=discarded-qualifiers"
+
+  ./configure --prefix=/usr --mandir=/usr/share/man/man1 --release \
+  --python=python3 \
+  --enable-avahi \
+  --enable-zlib \
+  --disable-ffmpeg_static --enable-libav \
+  --disable-libx264_static --enable-libx264 \
+  --disable-libx265_static --enable-libx265 \
+  --disable-libvpx_static --enable-libvpx \
+  --disable-libtheora_static --enable-libtheora \
+  --disable-libvorbis_static --enable-libvorbis \
+  --disable-libfdkaac_static --enable-libfdkaac \
+  --disable-libopus_static --enable-libopus \
+  --disable-nvenc \
+  --enable-vaapi \
+  --enable-inotify \
+  --enable-epoll \
+  --disable-pcre --enable-pcre2 \
+  --enable-uriparser \
+  --enable-dvben50221 \
+  --enable-dbus_1 \
+  --disable-hdhomerun_static --enable-hdhomerun_client \
+  --enable-tvhcsa
 
   make
 }

@@ -1,0 +1,42 @@
+pkgname=kodi-addon-pvr-hts-git
+_gitname='source-git'
+_verpkg='3.4.28'
+pkgver=3.4.28_g3211941
+pkgrel=1
+_branch=Krypton
+pkgdesc='Tvheadend HTSP PVR client addon for Kodi'
+arch=('armv7h' 'i686' 'x86_64')
+url="https://github.com/kodi-pvr/pvr.hts"
+license=('GPL')
+makedepends=('cmake' 'git' 'kodi-platform')
+depends=('kodi>=16.0')
+provides=('kodi-addon-pvr-hts')
+conflicts=('kodi-addon-pvr-hts' 'kodi-pvr-addons')
+source=("${_gitname}::git+https://github.com/kodi-pvr/pvr.hts.git#branch=${_branch}")
+md5sums=('SKIP')
+
+pkgver() {
+  cd "${srcdir}/${_gitname}"
+  _git=`git rev-parse --short HEAD`
+  printf "%s_%s" "$_verpkg" "g$_git"
+}
+
+build() {
+  cd "${srcdir}/${_gitname}"
+
+  rm -rf build
+  mkdir build
+  cd build
+
+  cmake \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_INSTALL_LIBDIR=/usr/lib/kodi \
+  -DCMAKE_BUILD_TYPE=Release \
+  ..
+  make
+}
+
+package() {
+  cd "${srcdir}/${_gitname}/build"
+  make DESTDIR="$pkgdir" install
+}

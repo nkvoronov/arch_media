@@ -34,7 +34,7 @@ prepare() {
   [[ -d kodi-build ]] && rm -rf kodi-build
   mkdir kodi-build
   cd "${srcdir}/${_gitname}"
-  cp -PR ../../../theme/* addons/skin.estuary/
+  cp -PR ../../theme/* addons/skin.estuary/
 }
 
 build() {

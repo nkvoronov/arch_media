@@ -1,8 +1,8 @@
 pkgbase=kodi-git
 pkgname=('kodi-git' 'kodi-eventclients-git' 'kodi-tools-texturepacker-git' 'kodi-dev-git')
 _gitname='source-git'
-_verpkg='18.0b3'
-pkgver=18.0b3_gc2e1b316f56
+_verpkg='18.0b4'
+pkgver=18.0b4_g9d3a68a7cbc
 pkgrel=1
 _branch=master
 arch=('i686' 'x86_64')
@@ -15,7 +15,7 @@ makedepends=('afpfs-ng' 'bluez-libs' 'boost' 'cmake' 'curl' 'cwiid' 'doxygen'
              'libxrandr' 'libxslt' 'lirc' 'lzo' 'mesa' 'nasm' 'nss-mdns' 'python2-pillow'
              'python2-pybluez' 'python2-simplejson' 'rapidjson' 'rtmpdump' 'shairplay'
              'smbclient' 'swig' 'taglib' 'tinyxml' 'upower')
-source=("${_gitname}::git+https://github.com/xbmc/xbmc.git#tag=18.0b3-Leia")
+source=("${_gitname}::git+https://github.com/xbmc/xbmc.git#tag=18.0b4-Leia")
 sha256sums=('SKIP')
 
 pkgver() {

@@ -1,20 +1,33 @@
 pkgname=kodi-addon-pvr-iptvsimple-git
 _gitname='source-git'
-_verpkg='2.4.14'
-pkgver=2.4.14_g2a649d7
+_verpkg='3.5.5'
+pkgver=3.5.5_gc7c136a
 pkgrel=1
-_branch=Krypton
-pkgdesc='IPTV Simple PVR client addon for Kodi'
-arch=('i686' 'x86_64')
+pkgdesc="Kodi's IPTV Simple client addon."
+arch=('armv7h' 'i686' 'x86_64')
 url="https://github.com/kodi-pvr/pvr.iptvsimple"
-license=('GPL')
+license=('GPL3')
 groups=('kodi')
-makedepends=('cmake' 'git' 'kodi-platform')
-depends=('kodi>=16.0')
+makedepends=('cmake' 'git' 'kodi-platform-git' 'rapidxml')
+depends=('kodi-git')
 provides=('kodi-addon-pvr-iptvsimple')
 conflicts=('kodi-addon-pvr-iptvsimple' 'kodi-pvr-addons')
-source=("${_gitname}::git+https://github.com/kodi-pvr/pvr.iptvsimple.git#branch=${_branch}")
+source=("${_gitname}::git+https://github.com/kodi-pvr/pvr.iptvsimple.git")
 md5sums=('SKIP')
+API=99
+
+case "$API" in
+  15)  depends+=('libplatform-legacy')
+       source[0]="${_gitname}::git+https://github.com/kodi-pvr/pvr.hts.git#branch=Isengard" ;;
+  16)  depends+=('libplatform-legacy')
+       source[0]="${_gitname}::git+https://github.com/kodi-pvr/pvr.hts.git#branch=Jarvis" ;;
+  17)  depends+=('p8-platform')
+       makedepends+=('kodi-dev-git')
+       source[0]="${_gitname}::git+https://github.com/kodi-pvr/pvr.hts.git#branch=Krypton" ;;
+  99)  depends+=('p8-platform')
+       makedepends+=('kodi-dev-git') ;;
+  *)   error "Unknown API version. Follow instructions in PKGBUILD." && false
+esac
 
 pkgver() {
   cd "${srcdir}/${_gitname}"
@@ -24,18 +37,15 @@ pkgver() {
 
 build() {
   cd "${srcdir}/${_gitname}"
-
-  rm -rf build
-  mkdir build
-  cd build
-
-  cmake ../ -DCMAKE_INSTALL_PREFIX=/usr \
-  -DCMAKE_INSTALL_LIBDIR=/usr/lib/kodi \
-  -DCMAKE_BUILD_TYPE=Release  || return 1
-  make || return 1
+  cmake \
+    -DADDONS_TO_BUILD=pvr.iptvsimple \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=/usr/lib/kodi \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_MODULE_PATH=/usr/lib/kodi
 }
 
 package() {
-  cd "${srcdir}/${_gitname}/build"
-  make DESTDIR="$pkgdir" install
+  cd "${srcdir}/${_gitname}"
+  make prefix=/usr DESTDIR="$pkgdir" install
 }

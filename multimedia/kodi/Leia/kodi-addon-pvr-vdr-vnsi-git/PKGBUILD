@@ -1,19 +1,33 @@
 pkgname=kodi-addon-pvr-vdr-vnsi-git
 _gitname='source-git'
-_verpkg='2.6.30'
-pkgver=2.6.30_ga3cd179
+_verpkg='3.6.31'
+pkgver=3.6.31_g6bbdb78
 pkgrel=1
-_branch=Krypton
 pkgdesc='VDR VNSI PVR client addon for Kodi'
 arch=('armv7h' 'i686' 'x86_64')
 url="https://github.com/kodi-pvr/pvr.vdr.vnsi"
-license=('GPL')
-makedepends=('cmake' 'git' 'kodi-platform')
-depends=('kodi>=16.0')
+license=('GPL3')
+groups=('kodi')
+makedepends=('cmake' 'git' 'kodi-platform-git')
+depends=('kodi-git')
 provides=('kodi-addon-pvr-vdr-vnsi')
 conflicts=('kodi-addon-pvr-vdr-vnsi' 'kodi-pvr-addons')
-source=("${_gitname}::git+https://github.com/kodi-pvr/pvr.vdr.vnsi.git#branch=${_branch}")
+source=("${_gitname}::git+https://github.com/FernetMenta/pvr.vdr.vnsi.git")
 md5sums=('SKIP')
+API=99
+
+case "$API" in
+  15)  depends+=('libplatform-legacy')
+       source[0]="${_gitname}::git+https://github.com/kodi-pvr/pvr.vdr.vnsi.git#branch=Isengard" ;;
+  16)  depends+=('libplatform-legacy')
+       source[0]="${_gitname}::git+https://github.com/kodi-pvr/pvr.vdr.vnsi.git#branch=Jarvis" ;;
+  17)  depends+=('p8-platform')
+       makedepends+=('kodi-dev-git')
+       source[0]="${_gitname}::git+https://github.com/FernetMenta/pvr.vdr.vnsi.git#branch=Krypton" ;;
+  99)  depends+=('p8-platform')
+       makedepends+=('kodi-dev-git') ;;
+  *)   error "Unknown API version. Follow instructions in PKGBUILD." && false
+esac
 
 pkgver() {
   cd "${srcdir}/${_gitname}"
@@ -29,10 +43,11 @@ build() {
   cd build
 
   cmake \
-  -DCMAKE_INSTALL_PREFIX=/usr \
-  -DCMAKE_INSTALL_LIBDIR=/usr/lib/kodi \
-  -DCMAKE_BUILD_TYPE=Release \
-  ..
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=/usr/lib/kodi \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_MODULE_PATH=/usr/lib/kodi \
+    ..
   make
 }
 

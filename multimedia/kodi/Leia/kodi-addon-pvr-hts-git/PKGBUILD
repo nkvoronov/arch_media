@@ -1,19 +1,33 @@
 pkgname=kodi-addon-pvr-hts-git
 _gitname='source-git'
-_verpkg='3.4.28'
-pkgver=3.4.28_g3211941
+_verpkg='4.4.2'
+pkgver=4.4.2_g4d0cb6d
 pkgrel=1
-_branch=Krypton
 pkgdesc='Tvheadend HTSP PVR client addon for Kodi'
 arch=('armv7h' 'i686' 'x86_64')
 url="https://github.com/kodi-pvr/pvr.hts"
-license=('GPL')
-makedepends=('cmake' 'git' 'kodi-platform')
-depends=('kodi>=16.0')
+license=('GPL3')
+groups=('kodi')
+makedepends=('cmake' 'git' 'kodi-platform-git')
+depends=('kodi-git')
 provides=('kodi-addon-pvr-hts')
 conflicts=('kodi-addon-pvr-hts' 'kodi-pvr-addons')
-source=("${_gitname}::git+https://github.com/kodi-pvr/pvr.hts.git#branch=${_branch}")
+source=("${_gitname}::git+https://github.com/kodi-pvr/pvr.hts.git")
 md5sums=('SKIP')
+API=99
+
+case "$API" in
+  15)  depends+=('libplatform-legacy')
+       source[0]="${_gitname}::git+https://github.com/kodi-pvr/pvr.hts.git#branch=Isengard" ;;
+  16)  depends+=('libplatform-legacy')
+       source[0]="${_gitname}::git+https://github.com/kodi-pvr/pvr.hts.git#branch=Jarvis" ;;
+  17)  depends+=('p8-platform')
+       makedepends+=('kodi-dev-git')
+       source[0]="${_gitname}::git+https://github.com/kodi-pvr/pvr.hts.git#branch=Krypton" ;;
+  99)  depends+=('p8-platform')
+       makedepends+=('kodi-dev-git') ;;
+  *)   error "Unknown API version. Follow instructions in PKGBUILD." && false
+esac
 
 pkgver() {
   cd "${srcdir}/${_gitname}"
@@ -29,10 +43,11 @@ build() {
   cd build
 
   cmake \
-  -DCMAKE_INSTALL_PREFIX=/usr \
-  -DCMAKE_INSTALL_LIBDIR=/usr/lib/kodi \
-  -DCMAKE_BUILD_TYPE=Release \
-  ..
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=/usr/lib/kodi \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_MODULE_PATH=/usr/lib/kodi \
+    ..
   make
 }
 

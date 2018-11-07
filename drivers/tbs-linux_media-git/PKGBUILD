@@ -2,7 +2,7 @@
 _pkgname=linux_media
 _gitname=media_build
 pkgname="tbs-$_pkgname-git"
-pkgver=r1127.4735369_4.18.16_arch1_1_ARCH
+pkgver=r1149.639c351_4.18.16_arch1_1_ARCH
 _extramodules=extramodules-ARCH
 pkgrel=1
 pkgdesc="TBS linux open source drivers"
@@ -16,7 +16,7 @@ install='tbs-media_build-git.install'
 conflicts=('tbs-dvb-drivers')
 source=('add-to-backports.patch'
         'tbs-media_build-git.install')
-md5sums=('4769fd01c4f0e413f85b7d33d0c67c9e'
+md5sums=('288d7ee2daf331fee3812b270d79d9cb'
          '59f8329e80cbcb94235eda483983efc8')
 
 prepare() {

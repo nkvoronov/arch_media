@@ -1,0 +1,40 @@
+pkgname=kodi-visualization-projectm-git
+_gitname='source-git'
+_verpkg=2.1.0
+pkgver=2.1.0_gb5be54b
+pkgrel=1
+_branch=master
+pkgdesc='ProjectM visualization addon for Kodi'
+arch=('i686' 'x86_64')
+url='https://github.com/notspiff/visualization.projectm'
+license=('GPL')
+groups=('kodi-git')
+makedepends=('cmake')
+depends=('kodi-git' 'kodi-platform-git' 'projectm-git')
+source=("${_gitname}::git+https://github.com/xbmc/visualization.projectm.git#tag=v${_verpkg}")
+md5sums=('SKIP')
+
+pkgver() {
+  cd "${srcdir}/${_gitname}"
+  _git=`git rev-parse --short HEAD`
+  printf "%s_%s" "$_verpkg" "g$_git"
+}
+
+build() {
+  cd "${srcdir}/${_gitname}"
+
+  rm -rf build
+  mkdir build
+  cd build
+
+  cmake \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_BUILD_TYPE=Release \
+  ..
+  make
+}
+
+package() {
+  cd "${srcdir}/${_gitname}/build"
+  make DESTDIR="$pkgdir" install
+}

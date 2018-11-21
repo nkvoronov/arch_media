@@ -1,0 +1,47 @@
+pkgname=kodi-screensavers-rsxs-git
+_gitname='source-git'
+_verpkg='2.0.0'
+pkgver=2.0.0_gbe03db6
+pkgrel=1
+_commit=be03db6
+_branch=master
+pkgdesc='RSXS screensavers addon for Kodi'
+arch=('i686' 'x86_64')
+url='https://github.com/notspiff/screensavers.rsxs'
+license=('GPL')
+groups=('kodi')
+makedepends=('cmake')
+depends=('kodi-git' 'libpng')
+source=(
+  "${_gitname}::git+https://github.com/notspiff/screensavers.rsxs.git#commit=${_commit}")
+md5sums=('SKIP')
+
+pkgver() {
+  cd "${srcdir}/${_gitname}"
+  _git=`git rev-parse --short HEAD`
+  printf "%s_%s" "$_verpkg" "g$_git"
+}
+
+#prepare() {
+#  cd "${srcdir}/${_gitname}"
+#  for f in "$srcdir"/*.patch; do patch -p1 < "$f"; done
+#}
+
+build() {
+  cd "${srcdir}/${_gitname}"
+
+  rm -rf build
+  mkdir build
+  cd build
+
+  cmake \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_BUILD_TYPE=Release \
+  ..
+  make
+}
+
+package() {
+  cd "${srcdir}/${_gitname}/build"
+  make DESTDIR="$pkgdir" install
+}

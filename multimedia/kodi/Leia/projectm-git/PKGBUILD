@@ -1,0 +1,40 @@
+pkgname=projectm-git
+_gitname='source-git'
+_verpkg=3.1.0
+pkgver=3.1.0_g6240b9d1
+pkgrel=1
+conflicts=('projectm')
+provides=('projectm')
+pkgdesc="Music visualizer which uses 3D accelerated iterative image based rendering (git version)"
+arch=('x86_64' 'i686')
+url='https://github.com/projectM-visualizer/projectm'
+license=('LGPL')
+depends=('sdl2' 'libxext' 'glm')
+source=("${_gitname}::git+https://github.com/projectM-visualizer/projectm.git#tag=v${_verpkg}"
+        'datadir.patch')
+sha256sums=('SKIP'
+            '3ef356d31943e43b0aa2efeda893ed0062e10e087fd2254b4d94e5ffc6db0303')
+
+pkgver() {
+  cd "${srcdir}/${_gitname}"
+  _git=`git rev-parse --short HEAD`
+  printf "%s_%s" "$_verpkg" "g$_git"
+}
+
+prepare() {
+  cd "${srcdir}/${_gitname}"
+  for f in "$srcdir"/*.patch; do patch -p1 < "$f"; done
+}
+
+build() {
+  cd "${srcdir}/${_gitname}"
+  ./autogen.sh
+  ./configure --prefix=/usr --enable-sdl
+  make
+}
+
+package() {
+  cd "${srcdir}/${_gitname}"
+  DESTDIR="$pkgdir" make install
+  DESTDIR="$pkgdir" install -Dm644 "${srcdir}/${_gitname}/src/COPYING" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}

@@ -10,10 +10,16 @@ depends=('gcc-libs' "vdr-api=${_vdrapi}")
 _plugname=${pkgname//vdr-/}
 source=("http://wirbel.htpc-forum.de/wirbelscan/vdr-wirbelscan-dev-$pkgver.tgz"
         'vdr-plugin-wirbelscan-01_makefile.patch'
+        'vdr-plugin-wirbelscan-02-fix_segv.patch'
+        'vdr-plugin-wirbelscan-03-channel_count.patch'
+        'vdr-plugin-wirbelscan-04-detect.patch'
         "50-$_plugname.conf")
 backup=("etc/vdr/conf.avail/50-$_plugname.conf")
 md5sums=('4fd1df45997bad5dce90db10665b860c'
          'febdd0289ea2d53838774da9a1894bcd'
+         '4736446d2a9cc1def8d5155f92c4ff18'
+         'caa1abc15056cbbd1273468eaf49ff3d'
+         'c1aab5fb3446e10d1d3592eaa0e708db'
          'cb2ff89d8c275d790cf613d4cf9fa180')
 
 prepare() {

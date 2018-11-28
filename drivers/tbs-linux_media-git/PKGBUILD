@@ -2,7 +2,7 @@
 _pkgname=linux_media
 _gitname=media_build
 pkgname="tbs-$_pkgname-git"
-pkgver=r1149.639c351_4.19.2_arch1_1_ARCH
+pkgver=r1149.639c351_4.19.4_arch1_1_ARCH
 _extramodules=extramodules-ARCH
 pkgrel=1
 pkgdesc="TBS linux open source drivers"

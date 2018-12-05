@@ -1,8 +1,8 @@
 pkgbase=kodi-git
 pkgname=('kodi-git' 'kodi-eventclients-git' 'kodi-tools-texturepacker-git' 'kodi-dev-git')
 _gitname='source-git'
-_verpkg='18.0rc1'
-pkgver=18.0rc1_g314c302559b
+_verpkg='18.0rc2'
+pkgver=18.0rc2_g812855d84e7
 pkgrel=1
 _branch=master
 arch=('i686' 'x86_64')
@@ -40,7 +40,7 @@ _crossguid_version="8f399e8bd4"
 _fstrcmp_version="0.7.D001"
 _flatbuffers_version="1.9.0"
 source=(
-  "${_gitname}::git+https://github.com/xbmc/xbmc.git#tag=18.0rc1-Leia"
+  "${_gitname}::git+https://github.com/xbmc/xbmc.git#tag=18.0rc2-Leia"
   "ffmpeg-$_ffmpeg_version.tar.gz::https://github.com/xbmc/FFmpeg/archive/$_ffmpeg_version.tar.gz"
   "libdvdcss-$_libdvdcss_version.tar.gz::https://github.com/xbmc/libdvdcss/archive/$_libdvdcss_version.tar.gz"
   "libdvdnav-$_libdvdnav_version.tar.gz::https://github.com/xbmc/libdvdnav/archive/$_libdvdnav_version.tar.gz"

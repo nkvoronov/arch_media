@@ -1,11 +1,33 @@
 pkgbase=kodi-git
 pkgname=('kodi-git' 'kodi-eventclients-git' 'kodi-tools-texturepacker-git' 'kodi-dev-git')
 _gitname='source-git'
-_verpkg='18.0rc4'
-pkgver=18.0rc4_g14086a7bd3a
+_verpkg='18.0rc5'
+pkgver=18.0rc5_g3cbd6c1eecd
 pkgrel=1
+_codename=Leia
+_tag="$_verpkg.2-$_codename"
 _branch=master
-arch=('i686' 'x86_64')
+
+# Found on their respective github release pages. One can check them against
+# what is pulled down when not specifying them in the cmake step.
+# $CHROOT/build/kodi-devel/src/kodi-build/build/download
+#
+# https://github.com/xbmc/FFmpeg/tags
+# https://github.com/xbmc/libdvdcss/tags
+# https://github.com/xbmc/libdvdnav/tags
+# https://github.com/xbmc/libdvdread/tags
+#
+# fmt and crossguid can be found http://mirrors.kodi.tv/build-deps/sources/
+#
+_ffmpeg_version="4.0.3-$_codename-RC5"
+_libdvdcss_version="1.4.2-$_codename-Beta-5"
+_libdvdnav_version="6.0.0-$_codename-Alpha-3"
+_libdvdread_version="6.0.0-$_codename-Alpha-3"
+_fmt_version="5.1.0"
+_crossguid_version="8f399e8bd4"
+_fstrcmp_version="0.7.D001"
+_flatbuffers_version="1.9.0"
+arch=('x86_64')
 url="http://kodi.tv"
 license=('GPL2')
 makedepends=(
@@ -18,29 +40,8 @@ makedepends=(
   'shairplay' 'smbclient' 'speex' 'swig' 'taglib' 'tinyxml' 'unzip' 'upower'
   'yajl' 'zip' 'git' 'giflib' 'rapidjson' 'ghostscript'
 )
-# Found on their respective github release pages. One can check them against
-# what is pulled down when not specifying them in the cmake step.
-# $CHROOT/build/kodi-pre-release/src/kodi-build/build/download
-#
-# https://github.com/xbmc/FFmpeg/tags
-# https://github.com/xbmc/libdvdcss/tags
-# https://github.com/xbmc/libdvdnav/tags
-# https://github.com/xbmc/libdvdread/tags
-#
-# fmt and crossguid can be found http://mirrors.kodi.tv/build-deps/sources/
-#
-_codename=Leia
-_rtype=Alpha
-_ffmpeg_version="4.0.2-$_codename-$_rtype"3
-_libdvdcss_version="1.4.1-$_codename-Beta"-3
-_libdvdnav_version="6.0.0-$_codename-$_rtype"-3
-_libdvdread_version="6.0.0-$_codename-$_rtype"-3
-_fmt_version="3.0.1"
-_crossguid_version="8f399e8bd4"
-_fstrcmp_version="0.7.D001"
-_flatbuffers_version="1.9.0"
 source=(
-  "${_gitname}::git+https://github.com/xbmc/xbmc.git#tag=18.0rc4-Leia"
+  "${_gitname}::git+https://github.com/xbmc/xbmc.git#tag=$_tag"
   "ffmpeg-$_ffmpeg_version.tar.gz::https://github.com/xbmc/FFmpeg/archive/$_ffmpeg_version.tar.gz"
   "libdvdcss-$_libdvdcss_version.tar.gz::https://github.com/xbmc/libdvdcss/archive/$_libdvdcss_version.tar.gz"
   "libdvdnav-$_libdvdnav_version.tar.gz::https://github.com/xbmc/libdvdnav/archive/$_libdvdnav_version.tar.gz"
@@ -53,21 +54,21 @@ source=(
   'cpuinfo'
 )
 noextract=(
-  "ffmpeg-$_ffmpeg_version.tar.gz"
   "libdvdcss-$_libdvdcss_version.tar.gz"
   "libdvdnav-$_libdvdnav_version.tar.gz"
   "libdvdread-$_libdvdread_version.tar.gz"
+  "ffmpeg-$_ffmpeg_version.tar.gz"
   "fmt-$_fmt_version.tar.gz"
   "crossguid-$_crossguid_version.tar.gz"
   "fstrcmp-$_fstrcmp_version.tar.gz"
   "flatbuffers-$_flatbuffers_version.tar.gz"
 )
 sha256sums=('SKIP'
-            '0e4980abac7b886e0eb5f4157941947be3c10d616a19bd311dc2f9fd2eb6a631'
-            '579aa102ac14ff4a21aa4081fe47f8cb3941002a37ee96286d3737afd79e80d9'
+            '9a971662e44353c120f2ccf87655571998956e699a2dd800ec708b8b928a53c8'
+            '38816f8373e243bc5950449b4f3b18938c4e1c59348e3411e23f31db4072e40d'
             '071e414e61b795f2ff9015b21a85fc009dde967f27780d23092643916538a57a'
             'a30b6aa0aad0f2c505bc77948af2d5531a80b6e68112addb4c123fca24d5d3bf'
-            'dce62ab75a161dd4353a98364feb166d35e7eea382169d59d9ce842c49c55bad'
+            '73d4cab4fa8a3482643d8703de4d9522d7a56981c938eca42d929106ff474b44'
             '3d77d09a5df0de510aeeb940df4cb534787ddff3bb1828779753f5dfa1229d10'
             'e4018e850f80700acee8da296e56e15b1eef711ab15157e542e7d7e1237c3476'
             '5ca5491e4260cacae30f1a5786d109230db3f3a6e5a0eb45d0d0608293d247e3'
@@ -101,23 +102,22 @@ build() {
   # export CFLAGS+=" -march=native"
   # export CXXFLAGS="${CFLAGS}"
 
-  cmake \
-    -DCMAKE_INSTALL_PREFIX=/usr \
+  cmake -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INSTALL_LIBDIR=/usr/lib \
     -DENABLE_EVENTCLIENTS=ON \
+    -DENABLE_INTERNAL_FFMPEG=ON \
+    -DENABLE_INTERNAL_FMT=ON \
+    -DENABLE_INTERNAL_CROSSGUID=ON \
+    -DENABLE_INTERNAL_FSTRCMP=ON \
+    -DENABLE_INTERNAL_FLATBUFFERS=ON \
     -Dlibdvdcss_URL="$srcdir/libdvdcss-$_libdvdcss_version.tar.gz" \
     -Dlibdvdnav_URL="$srcdir/libdvdnav-$_libdvdnav_version.tar.gz" \
     -Dlibdvdread_URL="$srcdir/libdvdread-$_libdvdread_version.tar.gz" \
     -DFFMPEG_URL="$srcdir/ffmpeg-$_ffmpeg_version.tar.gz" \
-    -DENABLE_INTERNAL_FFMPEG=ON \
     -DFMT_URL="$srcdir/fmt-$_fmt_version.tar.gz" \
-    -DENABLE_INTERNAL_FMT=ON \
     -DCROSSGUID_URL="$srcdir/crossguid-$_crossguid_version.tar.gz" \
-    -DENABLE_INTERNAL_CROSSGUID=ON \
     -DFSTRCMP_URL="$srcdir/fstrcmp-$_fstrcmp_version.tar.gz" \
-    -DENABLE_INTERNAL_FSTRCMP=ON \
     -DFLATBUFFERS_URL="$srcdir/flatbuffers-$_flatbuffers_version.tar.gz" \
-    -DENABLE_INTERNAL_FLATBUFFERS=ON \
     -DLIRC_DEVICE=/run/lirc/lircd \
     .
   make VERBOSE=1

@@ -1,10 +1,10 @@
 pkgname=vdr-epgsearch
-pkgver=2.4.0_g84b59b8
+pkgver=2.4.0_g49ba796
 _gitname='source-git'
 _verpkg='2.4.0'
 _vdrapi=2.4.0
 epoch=1
-pkgrel=20
+pkgrel=1
 pkgdesc="Searchtimer and replacement of the VDR program menu"
 url="http://winni.vdr-developer.org/epgsearch"
 arch=('x86_64' 'i686' 'arm' 'armv6h' 'armv7h')

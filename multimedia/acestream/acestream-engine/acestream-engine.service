@@ -6,7 +6,8 @@ After=network.target
 Type=simple
 User=acestream
 Group=video
-ExecStart=/usr/bin/acestreamengine --client-console --bind-all
+EnvironmentFile=/etc/acestream-engine/acestream-engine.conf
+ExecStart=/usr/bin/acestreamengine-client-console --bind-all $ACE_PARAM
 
 [Install]
 WantedBy=multi-user.target

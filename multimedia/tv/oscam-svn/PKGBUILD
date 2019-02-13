@@ -1,5 +1,5 @@
 pkgname=oscam-svn
-pkgver=11490
+pkgver=11495
 pkgrel=1
 _svnname='source-svn'
 pkgdesc="The Open Source Conditional Access Module daemon"
@@ -11,7 +11,7 @@ makedepends=('subversion')
 provides=('oscam')
 conflicts=('oscam')
 install=oscam.install
-source=("${_svnname}::svn+http://www.streamboard.tv/svn/oscam/trunk"
+source=("${_svnname}::svn+http://www.streamboard.tv/svn/oscam/trunk#revision=11495"
   'oscam.conf'
   'oscam.service')
 md5sums=('SKIP'

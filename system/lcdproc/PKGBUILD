@@ -1,6 +1,8 @@
 pkgname=lcdproc
-pkgver=0.5.9
-pkgrel=5
+_gitname='source-git'
+pkgver=0.5.9.r193.ge08546c
+_pkgver=0.5.9
+pkgrel=10
 pkgdesc="Utility to drive one or more LCD (and LCD-like) devices"
 arch=('i686' 'x86_64')
 url="http://lcdproc.omnipotent.net/"
@@ -18,7 +20,7 @@ backup=(
     'etc/lcdvc.conf'
 )
 source=(
-    "https://github.com/lcdproc/lcdproc/archive/$pkgname-$pkgver.tar.gz"
+    "${_gitname}::git+https://github.com/lcdproc/lcdproc.git#branch=master"
     'cp1251.fnt'
     'iso8859_15.fnt'
     'lcd_numbers.py'
@@ -27,7 +29,7 @@ source=(
     'lcdd.service'
     'lcdproc-0.5.6-imon_cp1251_fonts.patch'
 )
-md5sums=('868da7e44d92fac01612066eb19a0928'
+md5sums=('SKIP'
          'c2e77b239ef4d1b7c7fcdb69e4afce36'
          'd2d65b2e6f97eb3be10d902e28d2bf39'
          '7daec0195c7c9143331fc5381a286fbc'
@@ -36,13 +38,18 @@ md5sums=('868da7e44d92fac01612066eb19a0928'
          'd28b72b6b64998b22cceefce58d1be84'
          '7869e97c407431c25bb3b3a489d59428')
 
+pkgver() {
+  cd "${srcdir}/${_gitname}"
+  git describe --long | sed 's/^v0.5.7/0.5.9/;s/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
 prepare() {
-  cd "$pkgname-$pkgname-$pkgver"
+  cd "${srcdir}/${_gitname}"
   for f in "$srcdir"/*.patch; do patch -p1 < "$f"; done
 }
 
 build() {
-  cd "$pkgname-$pkgname-$pkgver"
+  cd "${srcdir}/${_gitname}"
   sh ./autogen.sh
   ./configure \
   --prefix=/usr \
@@ -57,7 +64,7 @@ build() {
 }
 
 package() {
-  cd "$pkgname-$pkgname-$pkgver"
+  cd "${srcdir}/${_gitname}"
   make DESTDIR="$pkgdir" install
   sed -e "s/server\/drivers\//\/usr\/lib\/lcdproc\//g" -i "$pkgdir/etc/LCDd.conf"
   install -Dm644 "$srcdir/lcdd.service" "$pkgdir/usr/lib/systemd/system/lcdd.service"

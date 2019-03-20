@@ -1,21 +1,20 @@
-# Maintainer: swearchnick <swearchnick[at]gmail[dot]com>
+pkgname="tbsdtv-git"
 _pkgname=linux_media
 _gitname=media_build
-pkgname="tbs-$_pkgname-git"
-pkgver=r1149.639c351_4.20.12_arch1_1_ARCH
+pkgver=r1179.db82890_4.20.12_arch1_1_ARCH
 _extramodules=extramodules-ARCH
 pkgrel=1
 pkgdesc="TBS linux open source drivers"
 arch=('x86_64')
 url="https://github.com/tbsdtv/linux_media"
 license=('GPL2')
-depends=('tbs-firmware')
+depends=('tbsdtv-firmware')
 makedepends=('git' 'linux-headers' 'patchutils' 'perl-proc-processtable')
 provides=("$_pkgname")
-install='tbs-media_build-git.install'
-conflicts=('tbs-dvb-drivers')
+install='tbsdtv-git.install'
+conflicts=('tbs-linux_media-git')
 source=('add-to-backports.patch'
-        'tbs-media_build-git.install')
+        'tbsdtv-git.install')
 md5sums=('288d7ee2daf331fee3812b270d79d9cb'
          '59f8329e80cbcb94235eda483983efc8')
 

@@ -1,9 +1,9 @@
 pkgname=vdr-dynamite
 _gitname='source-git'
 _verpkg='0.0.5'
-pkgver=0.0.5_g8081711
+pkgver=0.0.5_gd8aea41
 _vdrapi=2.4.0
-pkgrel=20
+pkgrel=1
 pkgdesc="A VDR plugin add hotplug functionality to the vdr"
 url="https://github.com/flensrocker/vdr-plugin-dynamite.git"
 arch=('x86_64' 'i686' 'arm' 'armv6h' 'armv7h')

@@ -1,5 +1,5 @@
 pkgname=vdr-epgsearch
-pkgver=2.4.0_gb9fa4f6
+pkgver=2.4.0_g770de32
 _gitname='source-git'
 _verpkg='2.4.0'
 _vdrapi=2.4.0

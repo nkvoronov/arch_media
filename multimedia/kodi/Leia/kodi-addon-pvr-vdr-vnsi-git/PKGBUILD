@@ -1,7 +1,7 @@
 pkgname=kodi-addon-pvr-vdr-vnsi-git
 _gitname='source-git'
-_verpkg='3.6.2'
-pkgver=3.6.2_gcbb75ab
+_verpkg='3.6.3'
+pkgver=3.6.3_g4909f69
 pkgrel=1
 pkgdesc='VDR VNSI PVR client addon for Kodi'
 arch=('armv7h' 'i686' 'x86_64')
@@ -12,7 +12,7 @@ makedepends=('cmake' 'git' 'kodi-platform-git')
 depends=('kodi-git')
 provides=('kodi-addon-pvr-vdr-vnsi')
 conflicts=('kodi-addon-pvr-vdr-vnsi' 'kodi-pvr-addons')
-source=("${_gitname}::git+https://github.com/FernetMenta/pvr.vdr.vnsi.git")
+source=("${_gitname}::git+https://github.com/kodi-pvr/pvr.vdr.vnsi#branch=Leia")
 md5sums=('SKIP')
 API=99
 

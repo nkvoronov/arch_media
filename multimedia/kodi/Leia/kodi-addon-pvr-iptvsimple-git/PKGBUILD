@@ -1,7 +1,7 @@
 pkgname=kodi-addon-pvr-iptvsimple-git
 _gitname='source-git'
 _verpkg='3.5.7'
-pkgver=3.5.7_g73feb2f
+pkgver=3.5.7_g66d9680
 pkgrel=1
 pkgdesc="Kodi's IPTV Simple client addon."
 arch=('armv7h' 'i686' 'x86_64')
@@ -12,7 +12,7 @@ makedepends=('cmake' 'git' 'kodi-platform-git' 'rapidxml')
 depends=('kodi-git')
 provides=('kodi-addon-pvr-iptvsimple')
 conflicts=('kodi-addon-pvr-iptvsimple' 'kodi-pvr-addons')
-source=("${_gitname}::git+https://github.com/kodi-pvr/pvr.iptvsimple.git")
+source=("${_gitname}::git+https://github.com/kodi-pvr/pvr.iptvsimple.git#branch=Leia")
 md5sums=('SKIP')
 API=99
 

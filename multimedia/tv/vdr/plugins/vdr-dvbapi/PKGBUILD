@@ -1,7 +1,7 @@
 pkgname=vdr-dvbapi
 _gitname='source-git'
-_verpkg='2.2.4'
-pkgver=2.2.4_g37b18ec
+_verpkg='2.2.5'
+pkgver=2.2.5_g197e752
 _vdrapi=2.4.0
 epoch=2
 pkgrel=1
@@ -16,7 +16,7 @@ source=("${_gitname}::git+git://github.com/manio/vdr-plugin-dvbapi.git#branch=ma
         'vdr-plugin-dvbapi-02_RU-locale.patch')
 backup=("etc/vdr/conf.avail/50-$_plugname.conf")
 md5sums=('SKIP'
-         'ea6908f51cc42d42f0a4a249fe374f89')
+         '89844e88a09fcffad1fec7ef3413a4f9')
 
 pkgver() {
   cd "${srcdir}/${_gitname}"

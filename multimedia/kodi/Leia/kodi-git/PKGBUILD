@@ -1,8 +1,8 @@
 pkgbase=kodi-git
 pkgname=('kodi-git' 'kodi-eventclients-git' 'kodi-tools-texturepacker-git' 'kodi-dev-git')
 _gitname='source-git'
-_verpkg='18.2'
-pkgver=18.2_gf2643566d0f
+_verpkg='18.3'
+pkgver=18.3_g89472b7d690
 pkgrel=1
 _codename=Leia
 _tag="$_verpkg-$_codename"
@@ -19,7 +19,7 @@ _branch=master
 #
 # fmt and crossguid can be found http://mirrors.kodi.tv/build-deps/sources/
 #
-_ffmpeg_version="4.0.3-$_codename-$_verpkg"
+_ffmpeg_version="4.0.3-$_codename-18.2"
 _libdvdcss_version="1.4.2-$_codename-Beta-5"
 _libdvdnav_version="6.0.0-$_codename-Alpha-3"
 _libdvdread_version="6.0.0-$_codename-Alpha-3"

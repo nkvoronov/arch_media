@@ -1,7 +1,7 @@
 pkgname=kodi-visualization-projectm-git
 _gitname='source-git'
 _verpkg=2.2.0
-pkgver=2.2.0_g9ddd936
+pkgver=2.2.0_g5e5e8a9
 pkgrel=1
 pkgdesc='ProjectM visualization addon for Kodi'
 arch=('i686' 'x86_64')

@@ -1,7 +1,7 @@
 pkgname=kodi-addon-audioencoder-lame-git
 _gitname='source-git'
 _verpkg='2.0.1'
-pkgver=2.0.1_g563d35e
+pkgver=2.0.1_g5b9a37b
 pkgrel=1
 pkgdesc="Lame Audio Encoder add-on for Kodi"
 arch=('x86_64')

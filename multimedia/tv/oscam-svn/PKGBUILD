@@ -1,5 +1,5 @@
 pkgname=oscam-svn
-pkgver=11539
+pkgver=11546
 pkgrel=1
 _svnname='source-svn'
 pkgdesc="The Open Source Conditional Access Module daemon"

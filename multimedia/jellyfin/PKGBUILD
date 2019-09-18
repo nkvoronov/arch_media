@@ -1,10 +1,6 @@
-# Maintainer: Luca Weiss <luca (at) z3ntu (dot) xyz>
-# Contributor: Maxime Gauduin <alucryd@archlinux.org>
-# Contributor: Daniel Seymour <dannyseeless@gmail.com>
-
 pkgname=jellyfin
 pkgver=10.3.7
-pkgrel=1
+pkgrel=2
 pkgdesc='The Free Software Media System'
 arch=('i686' 'x86_64' 'armv6h')
 url='https://github.com/jellyfin/jellyfin'
@@ -20,8 +16,8 @@ source=("$pkgname-$pkgver.tar.gz::https://github.com/jellyfin/jellyfin/archive/v
 backup=('etc/conf.d/jellyfin')
 sha512sums=('c36461a24157d4718bcc689d2a3a7782eeee5ae7271e61f6c9116c56e1d78e66393d906ef9fa28c1dd4179bfbb1d458bbc1117301fc02bc602e1c670a250cb3b'
             '9105dda8996673e58e50502d743e605400571bc8da099a93c72d799f9cf3a9ad916cc823a7f92ca5e4e62d095b00934ca6dc0114047c0b6b902e3b15397ffa31'
-            '2aa97a1a7a8a447171b59be3e93183e09cbbc32c816843cc47c6777b9aec48bd9c1d9d354f166e0b000ad8d2e94e6e4b0559aa52e5c159abbc103ed2c5afa3f0'
-            '99d02080b1b92e731250f39ddd13ceca7129d69d0c05e0939620cbc3f499a9574668c63fa889704a4905560888131e980d7ab1fbcc5837b04d33ce26daa9d42b'
+            'ffecc6cdb01c928bf0763d1c62369c95ca41bb05e887ee320c7059b8ff20654f01e67e7cd42a42a906b1e9db861e58c952f6b17bcbe82e6e2fe2f4d6afb3d23c'
+            '0f20ac3fd56855fd4bad0bbba2dd5d8d33894c7bfa21f1bb574d8b6e194faba69f0936c93444e3338cbde4da2b9bb0c59fa07dcab64b73ae722d5655d876570a'
             '6fc2638e6ec4b1ee0240e17815c91107b694e5fde72c1bc7956c83067bbeacb632de899b86837e47a0ec04288131b15c20746373b45e0669c8976069a55d627a'
             '45a62b62d97b9a83289d4dfde684163b1bcf340c1921fb958e5a701812c61b392901841940c67e5fa5148783277d5b4dc65ba01d3a22e8f855ea62154ad9be33')
 

@@ -1,7 +1,7 @@
 pkgname="tbsdtv-git"
 _pkgname=linux_media
 _gitname=media_build
-pkgver=r1225.3ebbebf_5.2.13_arch1_1_ARCH
+pkgver=r1247.91dc897_5.2.14_arch2_1_ARCH
 _extramodules=extramodules-ARCH
 pkgrel=1
 pkgdesc="TBS linux open source drivers"

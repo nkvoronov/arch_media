@@ -1,0 +1,34 @@
+pkgname=kodi-addon-inputstream-adaptive-git
+_gitname='source-git'
+_verpkg='2.3.21'
+pkgver=2.3.21_g6e3b7e2
+pkgrel=1
+pkgdesc="InputStream client for adaptive streams for Kodi 18+"
+arch=('x86_64' 'i686' 'armv7h')
+url="https://github.com/peak3d/inputstream.adaptive"
+license=('GPL2')
+depends=('kodi-git>=18' 'expat')
+makedepends=('kodi-dev-git>=18' 'cmake' 'git')
+provides=("${pkgname%-git}")
+conflicts=("${pkgname%-git}")
+source=("${_gitname}::git+https://github.com/peak3d/inputstream.adaptive.git#branch=Leia")
+md5sums=('SKIP')
+
+pkgver() {
+  cd "${srcdir}/${_gitname}"
+  _git=`git rev-parse --short HEAD`
+  printf "%s_%s" "$_verpkg" "g$_git"
+}
+
+build() {
+  cd "$srcdir/${_gitname}"
+  mkdir -p build && pushd build
+  cmake .. -DCMAKE_INSTALL_PREFIX="/usr"
+  make
+  popd
+}
+
+package() {
+  cd "${srcdir}/${_gitname}/build"
+  make DESTDIR="$pkgdir/" install
+}

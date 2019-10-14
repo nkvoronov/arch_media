@@ -1,9 +1,9 @@
 pkgname=projectm-git
 _gitname='source-git'
-_verpkg=3.1.0
-pkgver=3.1.0_g8505a80e
+_verpkg=3.1.1rc4
+pkgver=3.1.1rc4_ge85bf0386
 pkgrel=1
-_commit=8505a80e6f514c17cc81b2f45e95e482b672f434
+_commit=e85bf0386d3ba7f6e9122462c3fef02ebd536057
 conflicts=('projectm')
 provides=('projectm')
 pkgdesc="Music visualizer which uses 3D accelerated iterative image based rendering (git version)"

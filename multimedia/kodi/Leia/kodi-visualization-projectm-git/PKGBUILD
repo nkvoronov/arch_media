@@ -7,9 +7,9 @@ pkgdesc='ProjectM visualization addon for Kodi'
 arch=('i686' 'x86_64')
 url='https://github.com/notspiff/visualization.projectm'
 license=('GPL')
-groups=('kodi-git')
+groups=('kodi')
 makedepends=('cmake')
-depends=('kodi-git' 'kodi-platform-git' 'projectm-git')
+depends=('kodi' 'kodi-platform' 'projectm-git')
 source=("${_gitname}::git+https://github.com/xbmc/visualization.projectm.git#branch=Leia")
 md5sums=('SKIP')
 

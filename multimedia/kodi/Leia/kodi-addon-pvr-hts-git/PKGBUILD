@@ -1,15 +1,15 @@
 pkgname=kodi-addon-pvr-hts-git
 _gitname='source-git'
-_verpkg='4.4.19'
-pkgver=4.4.19_gd5488d2
+_verpkg='4.4.20'
+pkgver=4.4.20_gbfb35bc
 pkgrel=1
 pkgdesc='Tvheadend HTSP PVR client addon for Kodi'
 arch=('armv7h' 'i686' 'x86_64')
 url="https://github.com/kodi-pvr/pvr.hts"
 license=('GPL3')
 groups=('kodi')
-makedepends=('cmake' 'kodi-platform-git' 'git')
-depends=('kodi-git' 'p8-platform')
+makedepends=('cmake' 'kodi-platform' 'git')
+depends=('kodi' 'p8-platform')
 provides=('kodi-addon-pvr-hts')
 conflicts=('kodi-addon-pvr-hts' 'kodi-pvr-addons')
 source=("${_gitname}::git+https://github.com/kodi-pvr/pvr.hts.git#branch=Leia")
@@ -22,10 +22,10 @@ case "$API" in
   16)  depends+=('libplatform-legacy')
        source[0]="${_gitname}::git+https://github.com/kodi-pvr/pvr.hts.git#branch=Jarvis" ;;
   17)  depends+=('p8-platform')
-       makedepends+=('kodi-dev-git')
+       makedepends+=('kodi-dev')
        source[0]="${_gitname}::git+https://github.com/kodi-pvr/pvr.hts.git#branch=Krypton" ;;
   99)  depends+=('p8-platform')
-       makedepends+=('kodi-dev-git') ;;
+       makedepends+=('kodi-dev') ;;
   *)   error "Unknown API version. Follow instructions in PKGBUILD." && false
 esac
 

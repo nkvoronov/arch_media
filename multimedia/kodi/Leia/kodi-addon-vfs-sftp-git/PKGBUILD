@@ -8,8 +8,8 @@ arch=('i686' 'x86_64' 'armv6h' 'armv7h' 'aarch64')
 url="https://github.com/xbmc/vfs.sftp"
 license=('GPL')
 groups=('kodi-addons')
-makedepends=('cmake' 'kodi-platform-git' 'git' 'kodi-dev-git>=18.0')
-depends=('kodi-git' 'p8-platform')
+makedepends=('cmake' 'kodi-platform' 'git' 'kodi-dev>=18.0')
+depends=('kodi' 'p8-platform')
 source=("${_gitname}::git+https://github.com/xbmc/vfs.sftp.git#branch=Leia")
 md5sums=('SKIP')
 

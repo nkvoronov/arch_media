@@ -1,15 +1,15 @@
 pkgname=kodi-addon-pvr-iptvsimple-git
 _gitname='source-git'
-_verpkg='3.8.4'
-pkgver=3.8.4_g6a66a7b
+_verpkg='3.8.5'
+pkgver=3.8.5_gb6ee62e
 pkgrel=1
 pkgdesc="Kodi's IPTV Simple client addon."
 arch=('armv7h' 'i686' 'x86_64')
 url="https://github.com/kodi-pvr/pvr.iptvsimple"
 license=('GPL3')
 groups=('kodi')
-makedepends=('cmake' 'git' 'kodi-platform-git' 'rapidxml')
-depends=('kodi-git')
+makedepends=('cmake' 'git' 'kodi-platform' 'rapidxml')
+depends=('kodi')
 provides=('kodi-addon-pvr-iptvsimple')
 conflicts=('kodi-addon-pvr-iptvsimple' 'kodi-pvr-addons')
 source=("${_gitname}::git+https://github.com/kodi-pvr/pvr.iptvsimple.git#branch=Leia")
@@ -22,10 +22,10 @@ case "$API" in
   16)  depends+=('libplatform-legacy')
        source[0]="${_gitname}::git+https://github.com/kodi-pvr/pvr.hts.git#branch=Jarvis" ;;
   17)  depends+=('p8-platform')
-       makedepends+=('kodi-dev-git')
+       makedepends+=('kodi-dev')
        source[0]="${_gitname}::git+https://github.com/kodi-pvr/pvr.hts.git#branch=Krypton" ;;
   99)  depends+=('p8-platform')
-       makedepends+=('kodi-dev-git') ;;
+       makedepends+=('kodi-dev') ;;
   *)   error "Unknown API version. Follow instructions in PKGBUILD." && false
 esac
 

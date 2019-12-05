@@ -1,6 +1,6 @@
 [Unit]
 Description=Tvheadend - a TV streaming server and DVR
-After=tmp.mount network.target
+After=syslog.target network.target auditd.service
 
 [Service]
 ExecStart=/usr/bin/tvheadend.bin

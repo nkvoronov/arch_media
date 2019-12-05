@@ -10,7 +10,7 @@ cflag=
 
 if [ $# -lt 1 ]; then
   if [ "$TVH_XMLTV_TYPE" = "file" ]; then
-    sudo cat "$TVH_XMLTV_LOCATION"
+    cat "$TVH_XMLTV_LOCATION"
     exit 0
   elif [ "$TVH_XMLTV_TYPE" = "script" ]; then
     if [ -e "$TVH_XMLTV_LOCATION" ] ; then

@@ -1,7 +1,7 @@
 pkgname=kodi-addon-audioencoder-flac-git
 _gitname='source-git'
-_verpkg='2.0.4'
-pkgver=2.0.4_g10c60a3
+_verpkg='2.0.5'
+pkgver=2.0.5_ge820521
 pkgrel=1
 pkgdesc="FLAC Audio Encoder add-on for Kodi"
 arch=('x86_64')

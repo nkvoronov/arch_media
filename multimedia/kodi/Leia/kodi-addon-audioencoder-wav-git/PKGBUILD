@@ -1,7 +1,7 @@
 pkgname=kodi-addon-audioencoder-wav-git
 _gitname='source-git'
-_verpkg='2.0.2'
-pkgver=2.0.2_g408723e
+_verpkg='2.0.3'
+pkgver=2.0.3_g40ad8d7
 pkgrel=1
 pkgdesc="Wav Audio Encoder add-on for Kodi"
 arch=('x86_64')

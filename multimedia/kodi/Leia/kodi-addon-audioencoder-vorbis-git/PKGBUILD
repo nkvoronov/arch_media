@@ -1,7 +1,7 @@
 pkgname=kodi-addon-audioencoder-vorbis-git
 _gitname='source-git'
-_verpkg='2.0.3'
-pkgver=2.0.3_g2989c5b
+_verpkg='2.0.4'
+pkgver=2.0.4_g8e6c74e
 pkgrel=1
 pkgdesc="Vorbis Audio Encoder add-on for Kodi"
 arch=('x86_64')

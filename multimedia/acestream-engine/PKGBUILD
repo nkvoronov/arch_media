@@ -1,7 +1,7 @@
 pkgname=acestream-engine
-pkgver=3.1.35
-pkgrel=10
-_ubuntuver=18.04
+_gitname='source-git'
+pkgver=3.1.49
+pkgrel=11
 pkgdesc="ACE Stream engine"
 arch=('x86_64')
 url="http://acestream.org/"
@@ -9,24 +9,23 @@ license=('unknown')
 depends=('openssl-1.0' 'net-tools' 'python2-setuptools' 'python2-xlib' 'python2-apsw' 'python2-lxml' 'python2-typing')
 optdepends=('libappindicator-gtk2: GTK+ gui support')
 install='acestream-engine.install'
-source=(
-  "acestream-engine.service"
-  "http://acestream.org/downloads/linux-beta/acestream_${pkgver}_ubuntu_${_ubuntuver}_x86_64.tar.gz"
+source=("${_gitname}::git+https://github.com/nkvoronov/tools-ace.git#branch=v${pkgver}"
   "python2-m2crypto-0.24.0::https://archive.archlinux.org/packages/p/python2-m2crypto/python2-m2crypto-0.24.0-4-x86_64.pkg.tar.xz"
+  'acestream-engine.service'
   'acestream-engine.conf'
   'acestreamengine-client-console'
 )
-sha256sums=('a534aaee88f56fd163efa044b32f6a5e699b02263b1a4cd203cc2a02661553ef'
-            'c20f427e635238857eb2c2a8402e3d90690c252f7f187d295fbc038f2a2be001'
-            '177c22681be64a7533b3303652da8724aa20edcbead87be90765bc5040f4cff5'
-            '886a9e322bf90ed6368a16880e3824229b1222720d22344d22e0afaa3da66aa8'
-            'f9ed639f05d597e68bbcfb37c182c16c526dd62d9271fbc224d77a0ae45eccac')
+md5sums=('SKIP'
+  '76c0e541580e30593df8041fd23c65ba'
+  '7248777109644a95cfb86e23a73a6bc9'
+  '281cedb2d9c23eca86831962a1e112e9'
+  '6495a56d50a73e46d1b259a604425ce2')
 
 package() {
   mkdir -p "$pkgdir/etc/acestream-engine"
   mkdir -p "$pkgdir/usr/bin"
   mkdir -p "$pkgdir/usr/share"
-  cd "$srcdir"
+  cd "${srcdir}/${_gitname}/acestream"
   install -Dm755 acestreamengine "$pkgdir/usr/share/acestream/acestreamengine"
   sed -i "/ROOT=/c\ROOT=\/usr\/share\/acestream" "start-engine"
   install -Dm755 "start-engine" "$pkgdir/usr/share/acestream/start-engine"

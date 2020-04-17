@@ -1,0 +1,1 @@
+KERNEL=="lcd[0-9]*", SUBSYSTEM=="usbmisc", SUBSYSTEMS=="usb", ATTRS{idVendor}=="15c2", ATTRS{idProduct}=="0038", SYMLINK+="lcd0"

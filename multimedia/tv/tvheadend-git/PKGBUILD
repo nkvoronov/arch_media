@@ -62,8 +62,8 @@ build() {
   --python=python3 \
   --enable-avahi \
   --enable-zlib \
-  --enable-hdhomerun_client \
-  --enable-hdhomerun_static \
+  --disable-hdhomerun_client \
+  --disable-hdhomerun_static \
   --disable-ffmpeg_static --enable-libav \
   --disable-libx264_static --enable-libx264 \
   --disable-libx265_static --enable-libx265 \

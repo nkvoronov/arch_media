@@ -1,7 +1,7 @@
 pkgname=kodi-addon-inputstream-rtmp-git
 _gitname='source-git'
 _verpkg='2.0.3'
-pkgver=2.0.3_g80f03a9
+pkgver=2.0.3_g5311e2f
 pkgrel=1
 pkgdesc="librtmp support for Kodi 18+"
 arch=('x86_64' 'i686' 'armv7h')

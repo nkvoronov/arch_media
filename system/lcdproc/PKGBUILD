@@ -3,7 +3,7 @@ _gitname='source-git'
 pkgver=0.5.9.r166.g79fa5386
 _pkgver=0.5.9
 _commit=79fa538647c3e09a87ecc86aae1abbb82e0a25c5
-pkgrel=1
+pkgrel=2
 pkgdesc="Utility to drive one or more LCD (and LCD-like) devices"
 arch=('x86_64')
 url="http://lcdproc.omnipotent.net/"
@@ -36,7 +36,7 @@ md5sums=('SKIP'
          '7daec0195c7c9143331fc5381a286fbc'
          'ab7f5366557d4395b8d22c17e741a57a'
          '5290b8bf8c7afd5d0c9c655680086f5f'
-         'd86a015bc7abd0699aabc51c6273429c'
+         '58020551dff3b0965027b950c2daca00'
          '7869e97c407431c25bb3b3a489d59428')
 
 pkgver() {

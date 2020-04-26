@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Kodi
-Comment=This session will start Kodi media center
-Exec=/usr/bin/kodi-standalone
-TryExec=/usr/bin/kodi-standalone
-Type=Application
-DesktopNames=Kodi
-X-GDM-SessionRegisters=true

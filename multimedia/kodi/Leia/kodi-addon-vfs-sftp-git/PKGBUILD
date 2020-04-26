@@ -1,14 +1,14 @@
 pkgname=kodi-addon-vfs-sftp-git
 _gitname='source-git'
-_verpkg='1.0.0'
-pkgver=1.0.0_g2eb89fc
+_verpkg='1.0.6'
+pkgver=1.0.6_g2eb89fc
 pkgrel=1
 pkgdesc='SFTP Addon for Kodi'
 arch=('i686' 'x86_64' 'armv6h' 'armv7h' 'aarch64')
 url="https://github.com/xbmc/vfs.sftp"
 license=('GPL')
 groups=('kodi-addons')
-makedepends=('cmake' 'kodi-platform' 'git' 'kodi-dev>=18.0')
+makedepends=('cmake' 'kodi-platform' 'git' 'kodi-dev')
 depends=('kodi' 'p8-platform')
 source=("${_gitname}::git+https://github.com/xbmc/vfs.sftp.git#branch=Leia")
 md5sums=('SKIP')

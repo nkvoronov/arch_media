@@ -1,5 +1,5 @@
 pkgname=jellyfin
-pkgver=10.5.4
+pkgver=10.5.5
 pkgrel=1
 pkgdesc='The Free Software Media System'
 arch=('i686' 'x86_64' 'armv6h')
@@ -14,8 +14,8 @@ source=("$pkgname-$pkgver.tar.gz::https://github.com/jellyfin/jellyfin/archive/v
         'jellyfin.sysusers'
         'jellyfin.tmpfiles')
 backup=('etc/conf.d/jellyfin')
-sha512sums=('bd88e66cf670ebcc84c2bb5a9caa69b7c2de98df3873fc48246e03492dabefca6392b1be4dfa3f830473dde92c06f8d7d4ae107fca64654a4c23f40e9182b2aa'
-            '9404186a93753ec414ed079a1f0c174318dd4abc643766bbfdbdb147dd6e5c9ab41244bc31dbd7b859691cff9cc19ba93a4a62244d5ca1d9fc324388e9a0fe4e'
+sha512sums=('dd43885b59a11842d143e3eee533ecd670fda6dd5d3d1b97717f6bfc488a00b053d010a677d73556be533ce545b277ec2ab4530083ddec2a24a7f3c29b32dfd5'
+            'fa37ad87b2f1a681683e10361e7a47331cd363fb9dd020dcf544da976b87430f1dae63667d683a6e34169b8db3e5dd0c35c74db28a1395ca8af44302f91c7db4'
             'ffecc6cdb01c928bf0763d1c62369c95ca41bb05e887ee320c7059b8ff20654f01e67e7cd42a42a906b1e9db861e58c952f6b17bcbe82e6e2fe2f4d6afb3d23c'
             '0f20ac3fd56855fd4bad0bbba2dd5d8d33894c7bfa21f1bb574d8b6e194faba69f0936c93444e3338cbde4da2b9bb0c59fa07dcab64b73ae722d5655d876570a'
             '6fc2638e6ec4b1ee0240e17815c91107b694e5fde72c1bc7956c83067bbeacb632de899b86837e47a0ec04288131b15c20746373b45e0669c8976069a55d627a'

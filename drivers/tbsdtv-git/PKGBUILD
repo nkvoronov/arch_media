@@ -1,7 +1,7 @@
 pkgname="tbsdtv-git"
 _gitname='source-git'
 _gitname2='source-git2'
-pkgver=r1285.50375e4_5.6.11_arch1_1
+pkgver=r1304.e8dea8e_5.6.13_arch1_1
 pkgrel=1
 pkgdesc="TBS linux open source drivers"
 arch=('x86_64')
@@ -36,6 +36,7 @@ pkgver() {
 
 build() {
   cd "${srcdir}/${_gitname}"
+  
   make dir DIR=../${_gitname2}
   make distclean
   make

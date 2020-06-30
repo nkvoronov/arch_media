@@ -1,7 +1,7 @@
 pkgname="tbsdtv-git"
 _gitname='source-git'
 _gitname2='source-git2'
-pkgver=r1304.e8dea8e_5.7.4_arch1_1
+pkgver=r1304.e8dea8e_5.7.6_arch1_1
 pkgrel=1
 pkgdesc="TBS linux open source drivers"
 arch=('x86_64')

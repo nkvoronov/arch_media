@@ -1,0 +1,22 @@
+diff -Naur a/v4l/compat.h b/v4l/compat.h
+--- a/v4l/compat.h	2020-08-16 19:38:13.766325804 +0300
++++ b/v4l/compat.h	2020-08-16 19:41:09.099395840 +0300
+@@ -1585,6 +1585,9 @@
+ }
+ #endif
+ 
++#undef NEED_PRANDOM_U32_MAX
++#undef NEED_PRANDOM_U32
++
+ #ifdef NEED_PRANDOM_U32_MAX
+ #include <linux/random.h>
+ #ifdef NEED_PRANDOM_U32
+@@ -2434,6 +2437,8 @@
+ #define __pfn_to_phys(pfn)  PFN_PHYS(pfn)
+ #endif
+ 
++#undef NEED_NEXT_PSEUDO_RANDOM32
++
+ #ifdef NEED_NEXT_PSEUDO_RANDOM32
+ static inline u32 next_pseudo_random32(u32 seed)
+ {

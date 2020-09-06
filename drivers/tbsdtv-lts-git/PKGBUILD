@@ -1,7 +1,7 @@
 pkgname="tbsdtv-lts-git"
 _gitname='source-git'
 _gitname2='source-git2'
-pkgver=r1330.e88c9da_5.4.61_1_lts
+pkgver=r1330.e88c9da_5.4.62_1_lts
 pkgrel=1
 pkgdesc="TBS linux open source drivers"
 arch=('x86_64')

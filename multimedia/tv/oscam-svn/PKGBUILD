@@ -1,12 +1,12 @@
 pkgname=oscam-svn
-pkgver=11657
+pkgver=11667
 pkgrel=1
 _svnname='source-svn'
 pkgdesc="The Open Source Conditional Access Module daemon"
 url="http://oscam.to/"
 arch=('i686' 'x86_64')
 license=('GPL3')
-depends=('bash' 'openssl' 'libusbx' 'pcsclite')
+depends=('bash' 'openssl' 'libusb' 'pcsclite')
 makedepends=('subversion')
 provides=('oscam')
 conflicts=('oscam')

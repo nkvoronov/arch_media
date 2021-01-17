@@ -1,7 +1,7 @@
 pkgname=kodi-addon-inputstream-rtmp-git
 _gitname='source-git'
 _verpkg='3.4.0'
-pkgver=3.4.0_g5311e2f
+pkgver=3.4.0_g8505b6a
 pkgrel=1
 pkgdesc="librtmp support for Kodi 18+"
 arch=('x86_64' 'i686' 'armv7h')
@@ -11,7 +11,7 @@ depends=('kodi-devel' 'rtmpdump' 'p8-platform')
 makedepends=('kodi-devel-dev' 'cmake' 'git')
 provides=("${pkgname%-git}")
 conflicts=("${pkgname%-git}")
-source=("${_gitname}::git+https://github.com/xbmc/inputstream.rtmp.git#branch=Leia")
+source=("${_gitname}::git+https://github.com/xbmc/inputstream.rtmp.git#branch=Matrix")
 md5sums=('SKIP')
 
 pkgver() {

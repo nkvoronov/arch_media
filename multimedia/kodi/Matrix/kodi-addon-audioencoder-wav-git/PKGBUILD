@@ -1,7 +1,7 @@
 pkgname=kodi-addon-audioencoder-wav-git
 _gitname='source-git'
 _verpkg='3.0.0'
-pkgver=3.0.0_g04ccd6f
+pkgver=3.0.0_g39b6909
 pkgrel=1
 pkgdesc="Wav Audio Encoder add-on for Kodi"
 arch=('x86_64')
@@ -11,8 +11,8 @@ groups=('kodi-addons' 'kodi-addons-audioencoder')
 provides=('kodi-addon-audioencoder-wav-git')
 replaces=('kodi-addon-audioencoder-wav-git')
 conflicts=('kodi-addon-audioencoder-wav')
-depends=('kodi-devel')
-makedepends=('cmake' 'kodi-devel-dev')
+depends=('kodi')
+makedepends=('cmake' 'kodi-dev')
 source=("${_gitname}::git+https://github.com/xbmc/audioencoder.wav.git#branch=Matrix")
 md5sums=('SKIP')
 

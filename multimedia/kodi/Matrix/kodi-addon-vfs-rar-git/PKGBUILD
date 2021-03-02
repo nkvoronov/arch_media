@@ -8,8 +8,8 @@ arch=('i686' 'x86_64' 'armv6h' 'armv7h' 'aarch64')
 url="https://github.com/xbmc/vfs.rar"
 license=('GPL')
 groups=('kodi-addons')
-makedepends=('cmake' 'kodi-platform' 'git' 'kodi-devel-dev')
-depends=('kodi-devel' 'p8-platform')
+makedepends=('cmake' 'kodi-platform' 'git' 'kodi-dev')
+depends=('kodi' 'p8-platform')
 source=("${_gitname}::git+https://github.com/xbmc/vfs.rar.git#branch=Matrix")
 md5sums=('SKIP')
 

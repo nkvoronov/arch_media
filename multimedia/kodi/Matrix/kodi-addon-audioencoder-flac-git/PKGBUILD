@@ -1,7 +1,7 @@
 pkgname=kodi-addon-audioencoder-flac-git
 _gitname='source-git'
 _verpkg='3.0.0'
-pkgver=3.0.0_g57a44e3
+pkgver=3.0.0_g40fdcb3
 pkgrel=1
 pkgdesc="FLAC Audio Encoder add-on for Kodi"
 arch=('x86_64')
@@ -12,7 +12,7 @@ provides=('kodi-audioencoder-flac-git')
 replaces=('kodi-audioencoder-flac-git')
 conflicts=('kodi-audioencoder-flac')
 depends=('kodi')
-makedepends=('cmake' 'kodi-devel-dev')
+makedepends=('cmake' 'kodi-dev')
 source=("${_gitname}::git+https://github.com/xbmc/audioencoder.flac.git#branch=Matrix")
 
 md5sums=('SKIP')

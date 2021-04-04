@@ -9,7 +9,7 @@ url='https://github.com/notspiff/visualization.projectm'
 license=('GPL')
 groups=('kodi')
 makedepends=('cmake')
-depends=('kodi' 'kodi-platform' 'projectm')
+depends=('kodi' 'kodi-platform' 'projectm' 'kodi-dev')
 source=("${_gitname}::git+https://github.com/xbmc/visualization.projectm.git#branch=Matrix")
 md5sums=('SKIP')
 

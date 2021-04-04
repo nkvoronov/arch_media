@@ -1,33 +1,32 @@
-pkgname=jellyfin
-pkgver=10.6.4
+pkgbase=jellyfin
+pkgname=(jellyfin jellyfin-web jellyfin-server)
+pkgver=10.7.1
 pkgrel=1
 pkgdesc='The Free Software Media System'
 arch=('i686' 'x86_64' 'armv6h')
 url='https://github.com/jellyfin/jellyfin'
 license=('GPL2')
-depends=('dotnet-runtime>=3' 'aspnet-runtime>=3' 'ffmpeg' 'sqlite')
-makedepends=('dotnet-sdk>=3' 'yarn')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/jellyfin/jellyfin/archive/v$pkgver.tar.gz"
+makedepends=('dotnet-sdk>=5' 'yarn' 'git')
+source=("jellyfin-$pkgver.tar.gz::https://github.com/jellyfin/jellyfin/archive/v$pkgver.tar.gz"
         "jellyfin-web-$pkgver.tar.gz::https://github.com/jellyfin/jellyfin-web/archive/v$pkgver.tar.gz"
         'jellyfin.conf'
         'jellyfin.service'
         'jellyfin.sysusers'
         'jellyfin.tmpfiles')
-backup=('etc/conf.d/jellyfin')
-sha512sums=('54fd370bedc5e809c8f6e0491c94696ef61430dd7e69691b4cfd70a90863d6921dbf4bccc056b9b21547b5b9411b0235c2fc30d61947c128633c762a38e5ac6e'
-            'ae71befc3d959efd10c769e9f542849d6b9461299231e008d88e7fcff5d2369f5b88789eacddabdf98c5f7d54f526e3f2b6a3ac3bb3b73ca6ea29c54d0c83954'
+sha512sums=('1459f4b4f516fdd501a4d2250e41a51f0ef9d55afdc1f3d633ec3c0fdbd62f0d801a6e391f2e8ba5c27c1f8ec546a758bf3cd03ef6c4653e94a49a4f63513d34'
+            '7df67d2ec3a3deb0bdc6d7c407e8bb4c5c104b151b61141cd8a1bab1584183a2db5a0f86f44fdc1e564edd79d89a7e20aa981916241d7bfc1e188de83b803b01'
             'ffecc6cdb01c928bf0763d1c62369c95ca41bb05e887ee320c7059b8ff20654f01e67e7cd42a42a906b1e9db861e58c952f6b17bcbe82e6e2fe2f4d6afb3d23c'
             '0f20ac3fd56855fd4bad0bbba2dd5d8d33894c7bfa21f1bb574d8b6e194faba69f0936c93444e3338cbde4da2b9bb0c59fa07dcab64b73ae722d5655d876570a'
             '6fc2638e6ec4b1ee0240e17815c91107b694e5fde72c1bc7956c83067bbeacb632de899b86837e47a0ec04288131b15c20746373b45e0669c8976069a55d627a'
             '45a62b62d97b9a83289d4dfde684163b1bcf340c1921fb958e5a701812c61b392901841940c67e5fa5148783277d5b4dc65ba01d3a22e8f855ea62154ad9be33')
 
 build(){
+  # Build jellyfin-web
   cd jellyfin-web-$pkgver
 
   yarn install
 
-  cp -r dist/. "$srcdir"/jellyfin-$pkgver/MediaBrowser.WebDashboard/jellyfin-web
-
+  # Build jellyfin-server
   cd ../jellyfin-$pkgver
 
   # Disable dotnet telemetry
@@ -45,12 +44,27 @@ build(){
   rm -rfv publish/runtimes/{alpine-*,osx*,tizen-*,win*}
 }
 
-package() {
+package_jellyfin() {
+  depends=("jellyfin-web=$pkgver" "jellyfin-server=$pkgver")
+}
+
+package_jellyfin-server() {
+  pkgdesc="Jellyfin server component"
+  depends=('dotnet-runtime>=5' 'aspnet-runtime>=5' 'ffmpeg' 'sqlite')
+  backup=('etc/conf.d/jellyfin')
+
   mkdir -p "$pkgdir"/usr/lib
-  cp -dr --no-preserve='ownership' $pkgname-$pkgver/publish "$pkgdir"/usr/lib/jellyfin
+  cp -dr --no-preserve='ownership' jellyfin-$pkgver/publish "$pkgdir"/usr/lib/jellyfin
 
   install -Dm 644 jellyfin.service -t "$pkgdir"/usr/lib/systemd/system/
   install -Dm 644 jellyfin.sysusers "$pkgdir"/usr/lib/sysusers.d/jellyfin.conf
   install -Dm 644 jellyfin.tmpfiles "$pkgdir"/usr/lib/tmpfiles.d/jellyfin.conf
   install -Dm 644 jellyfin.conf "$pkgdir"/etc/conf.d/jellyfin
+}
+
+package_jellyfin-web() {
+  pkgdesc="Jellyfin web client"
+
+  mkdir -p "$pkgdir"/usr/lib/jellyfin
+  cp -r jellyfin-web-$pkgver/dist "$pkgdir"/usr/lib/jellyfin/jellyfin-web
 }

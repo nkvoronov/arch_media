@@ -6,10 +6,8 @@ arch=('x86_64')
 url="http://lcdproc.omnipotent.net/"
 license=('GPL')
 depends=('libftdi-compat')
-makedepends=('g15daemon')
 optdepends=(
     'perl: needed for some lcdproc tools'
-    'g15daemon: needed if you want g15 support'
 )
 backup=(
     'etc/LCDd.conf'

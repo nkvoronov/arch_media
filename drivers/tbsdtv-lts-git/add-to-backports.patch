@@ -1,11 +1,11 @@
 diff -Naur a/backports/backports.txt b/backports/backports.txt
---- a/backports/backports.txt	2021-01-16 17:34:30.113168082 +0200
-+++ b/backports/backports.txt	2021-01-16 17:45:42.672519000 +0200
-@@ -26,6 +26,7 @@
- add debug.patch
+--- a/backports/backports.txt	2021-05-29 21:22:39.000000000 +0300
++++ b/backports/backports.txt	2021-06-13 20:28:20.368687699 +0300
+@@ -27,6 +27,7 @@
  add drx39xxj.patch
  add ccs.patch
+ add rc-cec.patch
 +add imon-fix.patch
  
- [5.10.255]
- add v5.10_vb2_dma_buf_map.patch
+ [5.12.1023]
+ add v5.12_uvc.patch

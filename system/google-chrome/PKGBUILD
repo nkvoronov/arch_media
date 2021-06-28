@@ -1,5 +1,5 @@
 pkgname=google-chrome
-pkgver=91.0.4472.114
+pkgver=91.0.4472.124
 pkgrel=1
 pkgdesc="The popular and trusted web browser by Google (Stable Channel)"
 arch=('x86_64')

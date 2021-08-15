@@ -1,7 +1,7 @@
 pkgname="tbsdtv-lts-git"
 _gitname='source-git'
 _gitname2='source-git2'
-pkgver=r1445.792e22b_5.10.48_1_lts
+pkgver=r1445.792e22b_5.10.56_1_lts
 pkgrel=1
 pkgdesc="TBS linux open source drivers"
 arch=('x86_64')

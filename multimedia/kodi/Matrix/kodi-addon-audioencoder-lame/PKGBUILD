@@ -1,0 +1,38 @@
+pkgname=kodi-addon-audioencoder-lame
+_gitname='source-git'
+_verpkg='19.1.0'
+pkgver=19.1.0_ge3b916d
+pkgrel=1
+pkgdesc="Lame Audio Encoder add-on for Kodi"
+arch=('x86_64')
+url='https://github.com/xbmc/audioencoder.lame.git'
+license=('GPL')
+groups=('kodi-addons' 'kodi-addons-audioencoder')
+provides=('kodi-addon-audioencoder-lame')
+replaces=('kodi-addon-audioencoder-lame')
+conflicts=('kodi-addon-audioencoder-lame')
+depends=('kodi')
+makedepends=('cmake' 'kodi-dev')
+source=("${_gitname}::git+https://github.com/xbmc/audioencoder.lame.git#tag=${_verpkg}-Matrix")
+md5sums=('SKIP')
+
+pkgver() {
+  cd "${srcdir}/${_gitname}"
+  _git=`git rev-parse --short HEAD`
+  printf "%s_%s" "$_verpkg" "g$_git"
+}
+
+build() {
+  cd "${srcdir}/${_gitname}"
+  cmake \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DBUILD_SHARED_LIBS=1 \
+  -DUSE_LTO=1
+  make
+}
+
+package() {
+  cd "${srcdir}/${_gitname}"
+  make DESTDIR="$pkgdir/" install
+}

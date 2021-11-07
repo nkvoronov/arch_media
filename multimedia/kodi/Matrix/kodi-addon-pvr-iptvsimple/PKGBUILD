@@ -1,0 +1,38 @@
+pkgname=kodi-addon-pvr-iptvsimple
+_gitname='source-git'
+_verpkg='19.0.2'
+pkgver=19.0.2_g85aa63c
+pkgrel=1
+pkgdesc="Kodi's IPTV Simple client addon."
+arch=('armv7h' 'i686' 'x86_64')
+url="https://github.com/kodi-pvr/pvr.iptvsimple"
+license=('GPL3')
+groups=('kodi')
+depends=('kodi' 'p8-platform')
+makedepends=('git' 'cmake' 'kodi-platform' 'kodi-dev' 'rapidxml')
+conflicts=('kodi-addon-pvr-iptvsimple' 'kodi-pvr-addons')
+provides=('kodi-addon-pvr-iptvsimple')
+
+source=("${_gitname}::git+https://github.com/kodi-pvr/pvr.iptvsimple.git#tag=${_verpkg}-Matrix")
+md5sums=('SKIP')
+
+pkgver() {
+  cd "${srcdir}/${_gitname}"
+  _git=`git rev-parse --short HEAD`
+  printf "%s_%s" "$_verpkg" "g$_git"
+}
+
+build() {
+  cd "${srcdir}/${_gitname}"
+  cmake \
+    -DADDONS_TO_BUILD=pvr.iptvsimple \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=/usr/lib/kodi \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_MODULE_PATH=/usr/lib/kodi
+}
+
+package() {
+  cd "${srcdir}/${_gitname}"
+  make prefix=/usr DESTDIR="$pkgdir" install
+}

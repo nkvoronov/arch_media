@@ -1,8 +1,8 @@
 pkgname=kodi-addon-audioencoder-lame
 _gitname='source-git'
-_verpkg='19.1.0'
-pkgver=19.1.0_ge3b916d
-pkgrel=1
+_verpkg='19.1.1'
+pkgver=19.1.1
+pkgrel=10
 pkgdesc="Lame Audio Encoder add-on for Kodi"
 arch=('x86_64')
 url='https://github.com/xbmc/audioencoder.lame.git'
@@ -19,7 +19,7 @@ md5sums=('SKIP')
 pkgver() {
   cd "${srcdir}/${_gitname}"
   _git=`git rev-parse --short HEAD`
-  printf "%s_%s" "$_verpkg" "g$_git"
+  printf "%s" "$_verpkg"
 }
 
 build() {

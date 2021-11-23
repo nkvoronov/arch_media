@@ -1,8 +1,8 @@
 pkgname=kodi-visualization-projectm
 _gitname='source-git'
-_verpkg='19.0.0'
-pkgver=19.0.0_g4ad1990
-pkgrel=1
+_verpkg='19.0.1'
+pkgver=19.0.1
+pkgrel=10
 pkgdesc='ProjectM visualization addon for Kodi'
 arch=('i686' 'x86_64')
 url='https://github.com/notspiff/visualization.projectm'
@@ -16,7 +16,7 @@ md5sums=('SKIP')
 pkgver() {
   cd "${srcdir}/${_gitname}"
   _git=`git rev-parse --short HEAD`
-  printf "%s_%s" "$_verpkg" "g$_git"
+  printf "%s" "$_verpkg"
 }
 
 build() {

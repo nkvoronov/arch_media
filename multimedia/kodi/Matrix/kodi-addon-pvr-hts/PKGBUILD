@@ -1,8 +1,8 @@
 pkgname=kodi-addon-pvr-hts
 _gitname='source-git'
-_verpkg='19.0.2'
-pkgver=19.0.2_g7349e3c
-pkgrel=1
+_verpkg='19.0.3'
+pkgver=19.0.3
+pkgrel=10
 pkgdesc='Tvheadend HTSP PVR client addon for Kodi'
 arch=('armv7h' 'i686' 'x86_64')
 url="https://github.com/kodi-pvr/pvr.hts"
@@ -32,7 +32,7 @@ esac
 pkgver() {
   cd "${srcdir}/${_gitname}"
   _git=`git rev-parse --short HEAD`
-  printf "%s_%s" "$_verpkg" "g$_git"
+  printf "%s" "$_verpkg"
 }
 
 build() {

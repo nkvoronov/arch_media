@@ -32,7 +32,6 @@ makedepends=(
 optdepends=(
   'xmltv: For an alternative source of programme listings'
 )
-options=('!strip' 'emptydirs')
 provides=('tvheadend')
 conflicts=('tvheadend')
 install=tvheadend.install
@@ -76,7 +75,6 @@ build() {
 
   ./configure \
   --prefix=/usr \
-  --datadir=/var/lib \
   --mandir=/usr/share/man/man1 \
   --nowerror \
   --python=python3 \

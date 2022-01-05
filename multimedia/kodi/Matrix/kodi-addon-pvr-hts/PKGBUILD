@@ -1,8 +1,8 @@
 pkgname=kodi-addon-pvr-hts
 _gitname='source-git'
-_verpkg='19.0.3'
-pkgver=19.0.3
-pkgrel=10
+_verpkg='19.0.4'
+pkgver=19.0.4
+pkgrel=12
 pkgdesc='Tvheadend HTSP PVR client addon for Kodi'
 arch=('armv7h' 'i686' 'x86_64')
 url="https://github.com/kodi-pvr/pvr.hts"
@@ -12,7 +12,7 @@ makedepends=('cmake' 'kodi-platform' 'git')
 depends=('kodi' 'p8-platform')
 provides=('kodi-addon-pvr-hts')
 conflicts=('kodi-addon-pvr-hts' 'kodi-pvr-addons')
-source=("${_gitname}::git+https://github.com/kodi-pvr/pvr.hts.git#tag=${_verpkg}-Matrix")
+source=("${_gitname}::git+https://github.com/kodi-pvr/pvr.hts.git#branch=Matrix")
 md5sums=('SKIP')
 API=99
 

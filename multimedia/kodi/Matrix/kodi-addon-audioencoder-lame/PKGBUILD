@@ -1,8 +1,8 @@
 pkgname=kodi-addon-audioencoder-lame
 _gitname='source-git'
-_verpkg='19.1.1'
-pkgver=19.1.1
-pkgrel=10
+_verpkg='19.1.2'
+pkgver=19.1.2
+pkgrel=12
 pkgdesc="Lame Audio Encoder add-on for Kodi"
 arch=('x86_64')
 url='https://github.com/xbmc/audioencoder.lame.git'
@@ -13,7 +13,7 @@ replaces=('kodi-addon-audioencoder-lame')
 conflicts=('kodi-addon-audioencoder-lame')
 depends=('kodi')
 makedepends=('cmake' 'kodi-dev')
-source=("${_gitname}::git+https://github.com/xbmc/audioencoder.lame.git#tag=${_verpkg}-Matrix")
+source=("${_gitname}::git+https://github.com/xbmc/audioencoder.lame.git#branch=Matrix")
 md5sums=('SKIP')
 
 pkgver() {

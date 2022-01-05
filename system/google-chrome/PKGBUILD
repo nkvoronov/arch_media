@@ -1,5 +1,5 @@
 pkgname=google-chrome
-pkgver=95.0.4638.69
+pkgver=97.0.4692.71
 pkgrel=1
 pkgdesc="The popular and trusted web browser by Google (Stable Channel)"
 arch=('x86_64')
@@ -19,7 +19,7 @@ _channel=stable
 source=("google-chrome-${_channel}_${pkgver}_amd64.deb::https://dl.google.com/linux/direct/google-chrome-${_channel}_current_amd64.deb"
         'eula_text.html'
         "google-chrome-$_channel.sh")
-md5sums=('7296c76ae02b895a55a52881019bc364'
+md5sums=('6671b2ad1c3e0ef4c863d37c2ee71c7b'
          'd50d8f0a6940791eabc41c4f64e6a3cf'
          '99fa93d5e7fb5d622cef0f9621f3ffa3')
 

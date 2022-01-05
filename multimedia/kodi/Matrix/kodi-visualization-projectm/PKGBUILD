@@ -1,8 +1,8 @@
 pkgname=kodi-visualization-projectm
 _gitname='source-git'
-_verpkg='19.0.1'
-pkgver=19.0.1
-pkgrel=10
+_verpkg='19.0.2'
+pkgver=19.0.2
+pkgrel=12
 pkgdesc='ProjectM visualization addon for Kodi'
 arch=('i686' 'x86_64')
 url='https://github.com/notspiff/visualization.projectm'
@@ -10,7 +10,7 @@ license=('GPL')
 groups=('kodi')
 makedepends=('cmake')
 depends=('kodi' 'kodi-platform' 'projectm' 'kodi-dev')
-source=("${_gitname}::git+https://github.com/xbmc/visualization.projectm.git#tag=${_verpkg}-Matrix")
+source=("${_gitname}::git+https://github.com/xbmc/visualization.projectm.git#branch=Matrix")
 md5sums=('SKIP')
 
 pkgver() {

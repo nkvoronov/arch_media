@@ -1,17 +1,17 @@
 pkgname=kodi-addon-inputstream-adaptive
 _gitname='source-git'
-_verpkg='19.0.0'
-pkgver=19.0.0
-pkgrel=10
+_verpkg='19.0.1'
+pkgver=19.0.1
+pkgrel=12
 pkgdesc="InputStream client for adaptive streams for Kodi 18+"
 arch=('x86_64' 'i686' 'armv7h')
-url="https://github.com/peak3d/inputstream.adaptive"
+url="https://github.com/xbmc/inputstream.adaptive"
 license=('GPL2')
 depends=('kodi' 'expat')
 makedepends=('kodi-dev' 'cmake' 'git' 'gtest' 'expat')
 provides=("${pkgname%}")
 conflicts=("${pkgname%}")
-source=("${_gitname}::git+https://github.com/peak3d/inputstream.adaptive.git#tag=${_verpkg}-Matrix")
+source=("${_gitname}::git+https://github.com/xbmc/inputstream.adaptive.git#branch=Matrix")
 md5sums=('SKIP')
 
 pkgver() {

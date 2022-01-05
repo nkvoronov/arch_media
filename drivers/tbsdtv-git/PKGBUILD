@@ -1,7 +1,7 @@
 pkgname="tbsdtv-git"
 _gitname='source-git'
 _gitname2='source-git2'
-pkgver=r1484.e9f00f9_5.10.84_1_MANJARO
+pkgver=r1484.e9f00f9_5.10.89_1_MANJARO
 pkgrel=1
 pkgdesc="TBS linux open source drivers"
 arch=('x86_64')
@@ -15,16 +15,22 @@ conflicts=('tbs-linux_media-git')
 source=("${_gitname}::git+https://github.com/tbsdtv/media_build.git#branch=extra"
         "${_gitname2}::git+https://github.com/tbsdtv/linux_media.git#branch=latest"
         'add-to-backports.patch'
+        'si2157.c'
         'tbsdtv-git.install')
 md5sums=('SKIP'
          'SKIP'
          '75c97605c594acfbb89bc153b6a6801c'
+         '9fe6e6db24f5198c4439388d0a7a9c46'
          'c9c28c82101eb4a3363e34f95bda6d21')
 
 prepare() {
   cd "${srcdir}/${_gitname}"
   cp -PR ../../backports/* backports/
   for f in "$srcdir"/*.patch; do patch -p1 < "$f"; done
+
+  cd "${srcdir}/${_gitname2}"
+  echo '** SI2157 **'
+  cp -P ../../si2157.c drivers/media/tuners/
 }
 
 pkgver() {
@@ -45,7 +51,7 @@ build() {
 
 package() {
   cd "${srcdir}/${_gitname}"
-  _emkernel=$(uname -r | sed -r 's/.84-1//g')
+  _emkernel=$(uname -r | sed -r 's/.89-1//g')
   mkdir -p "$pkgdir"/usr/lib/modules/extramodules-"${_emkernel}"/tbs
   find "$srcdir/$_gitname" -name '*.ko' -exec cp "{}" "$pkgdir"/usr/lib/modules/extramodules-"${_emkernel}"/tbs \;
   msg "Compressing modules, this will take awhile..."

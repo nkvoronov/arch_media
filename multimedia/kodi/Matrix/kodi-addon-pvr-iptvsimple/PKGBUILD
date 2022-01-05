@@ -1,8 +1,8 @@
 pkgname=kodi-addon-pvr-iptvsimple
 _gitname='source-git'
-_verpkg='19.0.2'
-pkgver=19.0.2
-pkgrel=10
+_verpkg='19.0.3'
+pkgver=19.0.3
+pkgrel=12
 pkgdesc="Kodi's IPTV Simple client addon."
 arch=('armv7h' 'i686' 'x86_64')
 url="https://github.com/kodi-pvr/pvr.iptvsimple"
@@ -13,7 +13,7 @@ makedepends=('git' 'cmake' 'kodi-platform' 'kodi-dev' 'rapidxml')
 conflicts=('kodi-addon-pvr-iptvsimple' 'kodi-pvr-addons')
 provides=('kodi-addon-pvr-iptvsimple')
 
-source=("${_gitname}::git+https://github.com/kodi-pvr/pvr.iptvsimple.git#tag=${_verpkg}-Matrix")
+source=("${_gitname}::git+https://github.com/kodi-pvr/pvr.iptvsimple.git#branch=Matrix")
 md5sums=('SKIP')
 
 pkgver() {

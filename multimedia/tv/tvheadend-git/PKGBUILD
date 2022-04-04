@@ -1,6 +1,6 @@
 pkgname=tvheadend-git
 _gitname='source-git'
-pkgver=4.3.r2009.g1295dd2be
+pkgver=4.3.r2011.g2bf162928
 pkgrel=1
 pkgdesc="TV streaming server for Linux"
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h' 'aarch64')
@@ -8,7 +8,7 @@ url="https://tvheadend.org/"
 license=('GPL3')
 depends=(
   'avahi'
-  'ffmpeg'
+  'ffmpeg4.4'
   'libavresample'
   'libdvbcsa'
   'libfdk-aac'
@@ -32,6 +32,7 @@ makedepends=(
 optdepends=(
   'xmltv: For an alternative source of programme listings'
 )
+options=('!strip' 'emptydirs')
 provides=('tvheadend')
 conflicts=('tvheadend')
 install=tvheadend.install
@@ -41,14 +42,17 @@ source=("${_gitname}::git+https://github.com/tvheadend/tvheadend.git#branch=mast
   'tv_grab_file'
   'tvheadend.bin'
   'tvheadend.conf'
-  'tvheadend.service')
+  'tvheadend.service'
+  '0001-use-ffmpeg4.4.patch')
+
 md5sums=('SKIP'
          'SKIP'
          '5c58449a9e8ab121d48e7139e55405ad'
          '25da1c0dd8bcaa3babf1bcd9a68153bd'
          '7c5ba5607c3850a96005c7a99722186f'
          'd54ba590fd00e60454fd547db6b4c270'
-         'ba6a2825cee0c331751b18aa07e2cc41')
+         'ba6a2825cee0c331751b18aa07e2cc41'
+         '6f750efebb81054adb02dca76254cbcd')
 
 pkgver() {
   cd "${srcdir}/${_gitname}"
@@ -63,8 +67,8 @@ prepare() {
   rm -rf "${_dvbscan}/.git"
   touch "${_dvbscan}/.stamp"
 
-  #cd "${srcdir}/${_gitname}"
-  #for f in "$srcdir"/*.patch; do patch -p1 < "$f"; done
+  cd "${srcdir}/${_gitname}"
+  patch -Np1 -i ../0001-use-ffmpeg4.4.patch
 }
 
 build() {
@@ -74,45 +78,24 @@ build() {
   export CFLAGS="${CFLAGS} -fcommon"
 
   ./configure \
-  --prefix=/usr \
-  --mandir=/usr/share/man/man1 \
-  --nowerror \
-  --python=python3 \
-  --enable-avahi \
-  --enable-bundle \
-  --enable-pnquant \
-  --enable-zlib \
-  --disable-ffmpeg_static \
-  --enable-libav \
-  --disable-libx264_static \
-  --enable-libx264 \
-  --disable-libx265_static \
-  --enable-libx265 \
-  --disable-libvpx_static \
-  --enable-libvpx \
-  --disable-libtheora_static \
-  --enable-libtheora \
-  --disable-libvorbis_static \
-  --enable-libvorbis \
-  --disable-libfdkaac_static \
-  --enable-libfdkaac \
-  --disable-libopus_static \
-  --enable-libopus \
-  --disable-nvenc \
-  --enable-vaapi \
-  --enable-inotify \
-  --enable-epoll \
-  --disable-pcre \
-  --enable-pcre2 \
-  --disable-uriparser \
-  --enable-dvben50221 \
-  --disable-dvbscan \
-  --enable-dbus_1 \
-  --disable-hdhomerun_static \
-  --enable-hdhomerun_client \
-  --enable-tvhcs \
-  --enable-dvbcsa \
-  --enable-trace \
+    --prefix=/usr \
+    --datadir=/var/lib \
+    --mandir=/usr/share/man/man1 \
+    --python=python3 \
+    --enable-avahi \
+    --enable-zlib \
+    --enable-pngquant \
+    --enable-libav \
+    --disable-ffmpeg_static --enable-ffmpeg \
+    --disable-libx264_static --enable-libx264 \
+    --disable-libx265_static --enable-libx265 \
+    --disable-libvpx_static --enable-libvpx \
+    --disable-libogg_static --enable-libogg \
+    --disable-libtheora_static --enable-libtheora \
+    --disable-libvorbis_static --enable-libvorbis \
+    --disable-libfdkaac_static --enable-libfdkaac \
+    --disable-libopus_static --enable-libopus \
+    --disable-hdhomerun_static --enable-hdhomerun_client
 
   make
 }

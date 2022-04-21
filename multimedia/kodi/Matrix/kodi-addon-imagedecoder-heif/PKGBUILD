@@ -1,16 +1,16 @@
-pkgname=kodi-addon-vfs-sftp
+pkgname=kodi-addon-imagedecoder-heif
 _gitname='source-git'
-_verpkg='19.0.1'
-pkgver=19.0.1
+_verpkg='19.0.0'
+pkgver=19.0.0
 pkgrel=12
-pkgdesc='SFTP Addon for Kodi.'
+pkgdesc='This is a Kodi image decoder addon for HEIF images.'
 arch=('i686' 'x86_64' 'armv6h' 'armv7h' 'aarch64')
-url="https://github.com/xbmc/vfs.sftp.git"
+url="https://github.com/xbmc/imagedecoder.heif.git"
 license=('GPL')
 groups=('kodi')
-makedepends=('cmake' 'git' 'kodi-dev')
+makedepends=('cmake' 'git' 'kodi-dev' 'libde265' 'libheif')
 depends=('kodi')
-source=("${_gitname}::git+https://github.com/xbmc/vfs.sftp.git#branch=Matrix")
+source=("${_gitname}::git+https://github.com/xbmc/imagedecoder.heif.git#branch=Matrix")
 md5sums=('SKIP')
 
 pkgver() {

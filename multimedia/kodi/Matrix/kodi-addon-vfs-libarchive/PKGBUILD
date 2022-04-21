@@ -1,16 +1,16 @@
-pkgname=kodi-addon-vfs-sftp
+pkgname=kodi-addon-vfs-libarchive
 _gitname='source-git'
 _verpkg='19.0.1'
 pkgver=19.0.1
 pkgrel=12
-pkgdesc='SFTP Addon for Kodi.'
+pkgdesc='This is a Kodi VFS addon to support archives.'
 arch=('i686' 'x86_64' 'armv6h' 'armv7h' 'aarch64')
-url="https://github.com/xbmc/vfs.sftp.git"
+url="https://github.com/xbmc/vfs.libarchive.git"
 license=('GPL')
 groups=('kodi')
 makedepends=('cmake' 'git' 'kodi-dev')
 depends=('kodi')
-source=("${_gitname}::git+https://github.com/xbmc/vfs.sftp.git#branch=Matrix")
+source=("${_gitname}::git+https://github.com/xbmc/vfs.libarchive.git#branch=Matrix")
 md5sums=('SKIP')
 
 pkgver() {

@@ -5,11 +5,11 @@ pkgver=19.1.0
 pkgrel=12
 pkgdesc="Kodi's IPTV Simple client addon."
 arch=('armv7h' 'i686' 'x86_64')
-url="https://github.com/kodi-pvr/pvr.iptvsimple"
+url="https://github.com/kodi-pvr/pvr.iptvsimple.git"
 license=('GPL3')
 groups=('kodi')
-depends=('kodi' 'p8-platform')
-makedepends=('git' 'cmake' 'kodi-platform' 'kodi-dev' 'rapidxml')
+depends=('kodi')
+makedepends=('git' 'cmake' 'kodi-dev' 'rapidxml')
 conflicts=('kodi-addon-pvr-iptvsimple' 'kodi-pvr-addons')
 provides=('kodi-addon-pvr-iptvsimple')
 

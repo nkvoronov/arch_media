@@ -3,13 +3,13 @@ _gitname='source-git'
 _verpkg='19.0.0'
 pkgver=19.0.0
 pkgrel=12
-pkgdesc='SACD Addon for Kodi'
+pkgdesc='SACD Addon for Kodi.'
 arch=('i686' 'x86_64' 'armv6h' 'armv7h' 'aarch64')
-url="https://github.com/xbmc/vfs.sacd"
+url="https://github.com/xbmc/vfs.sacd.git"
 license=('GPL')
-groups=('kodi-addons')
-makedepends=('cmake' 'kodi-platform' 'git' 'kodi-dev')
-depends=('kodi' 'p8-platform')
+groups=('kodi')
+makedepends=('cmake' 'git' 'kodi-dev')
+depends=('kodi')
 source=("${_gitname}::git+https://github.com/xbmc/vfs.sacd.git#branch=Matrix")
 md5sums=('SKIP')
 

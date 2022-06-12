@@ -1,12 +1,13 @@
 pkgname=tvheadend-git
 _gitname='source-git'
-pkgver=4.3.r2023.g26713c1e4
+pkgver=4.3.r2024.g420786927
 pkgrel=1
 pkgdesc="TV streaming server for Linux"
 arch=('i686' 'x86_64' 'arm' 'armv6h' 'armv7h' 'aarch64')
 url="https://tvheadend.org/"
 license=('GPL3')
 depends=(
+  'gcc11'
   'avahi'
   'ffmpeg4.4'
   'libavresample'
@@ -79,6 +80,7 @@ build() {
 
   ./configure \
     --prefix=/usr \
+    --cc=gcc-11 \
     --datadir=/var/lib \
     --mandir=/usr/share/man/man1 \
     --python=python3 \

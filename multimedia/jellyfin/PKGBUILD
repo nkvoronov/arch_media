@@ -1,20 +1,20 @@
 pkgbase=jellyfin
 pkgname=(jellyfin jellyfin-web jellyfin-server)
-pkgver=10.7.7
+pkgver=10.8.0
 pkgrel=1
 pkgdesc='The Free Software Media System'
 arch=('i686' 'x86_64' 'armv6h')
 url='https://github.com/jellyfin/jellyfin'
 license=('GPL2')
-makedepends=('dotnet-sdk>=5' 'yarn' 'git')
+makedepends=('dotnet-sdk>=6' 'dotnet-sdk<7' 'nodejs' 'npm' 'git')
 source=("jellyfin-$pkgver.tar.gz::https://github.com/jellyfin/jellyfin/archive/v$pkgver.tar.gz"
         "jellyfin-web-$pkgver.tar.gz::https://github.com/jellyfin/jellyfin-web/archive/v$pkgver.tar.gz"
         'jellyfin.conf'
         'jellyfin.service'
         'jellyfin.sysusers'
         'jellyfin.tmpfiles')
-sha512sums=('46da01564c917f65316507c298ab9c30abfd48b351ff6d8ab33429c1ba4800b986267d89431c4c8e3c0274dcd24c6864576b1d7a81a53b61c041da4ba2342d30'
-            '0ea3bdce5d99eef9562174410a1b4dde0f083ed92948366ccf3aa259ecfe1ebb559019cbe4d9bbd64e4a35232075d2f9348b63fb3f15ebd6dc2f4e9532903b66'
+sha512sums=('26498242c3d3b9897d79c7257d57970ad23bcf04fcef8e5ba4b2e93aab6125bcaaf1ae4796a2ddcd23471d86821f80da232840e18c27410cd97a92dac49cdeeb'
+            'c08615d571cccc903c27cc4eebebf6f634c6a27362ec061a474c234f4e7b469d57339923d3de2cbfa621fce530ce58a8118d7d56054e17487fc230b270aebca3'
             'ffecc6cdb01c928bf0763d1c62369c95ca41bb05e887ee320c7059b8ff20654f01e67e7cd42a42a906b1e9db861e58c952f6b17bcbe82e6e2fe2f4d6afb3d23c'
             '0f20ac3fd56855fd4bad0bbba2dd5d8d33894c7bfa21f1bb574d8b6e194faba69f0936c93444e3338cbde4da2b9bb0c59fa07dcab64b73ae722d5655d876570a'
             '6fc2638e6ec4b1ee0240e17815c91107b694e5fde72c1bc7956c83067bbeacb632de899b86837e47a0ec04288131b15c20746373b45e0669c8976069a55d627a'
@@ -24,7 +24,7 @@ build(){
   # Build jellyfin-web
   cd jellyfin-web-$pkgver
 
-  yarn install
+  npm ci --no-audit
 
   # Build jellyfin-server
   cd ../jellyfin-$pkgver
@@ -50,7 +50,7 @@ package_jellyfin() {
 
 package_jellyfin-server() {
   pkgdesc="Jellyfin server component"
-  depends=('dotnet-runtime>=5' 'aspnet-runtime>=5' 'ffmpeg' 'sqlite')
+  depends=('dotnet-runtime>=6' 'dotnet-runtime<7' 'aspnet-runtime>=6' 'aspnet-runtime<7' 'ffmpeg' 'sqlite')
   backup=('etc/conf.d/jellyfin')
 
   mkdir -p "$pkgdir"/usr/lib

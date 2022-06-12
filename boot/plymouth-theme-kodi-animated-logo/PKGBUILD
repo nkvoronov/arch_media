@@ -5,7 +5,7 @@ url="https://github.com/xbmc/XBMCbuntu/blob/master/buildDEBs/kodibuntu-artwork/l
 pkgdesc="Kodi-logo is a remake of kodibuntu-logo plymouth"
 arch=('any')
 license=('GPL')
-depends=('plymouth')
+depends=('plymouth-git')
 source=("kodi-animated-logo.tar.gz")
 sha256sums=('71403fa23a2fc43d4b4bed0eebe5fcd00ca51dfc55010f1dbc9d2e80bbc3541d')
 

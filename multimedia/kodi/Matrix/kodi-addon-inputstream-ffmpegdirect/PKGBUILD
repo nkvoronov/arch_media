@@ -1,5 +1,5 @@
 pkgname=kodi-addon-inputstream-ffmpegdirect
-pkgver=19.0.1
+pkgver=19.0.2
 pkgrel=12
 pkgdesc="Inputstream ffmpegdirect kodi plugin."
 _koditarget=Matrix
@@ -16,7 +16,7 @@ source=("https://github.com/xbmc/${_gitname}/archive/${pkgver}-${_koditarget}.ta
         "https://github.com/xbmc/xbmc/archive/${_kodiver}-${_koditarget}.tar.gz"
 )
 
-sha256sums=('b676f5264df50f3cf990b270bbeb4a18bb082e99ff189d7b9a25fd67313a0382'
+sha256sums=('b35582304eb5dcfb394de9cf323ec1edb825b5525200292223bf423a84558e1d'
             'cc026f59fd6e37ae90f3449df50810f1cefa37da9444e1188302d910518710da')
 
 prepare() {

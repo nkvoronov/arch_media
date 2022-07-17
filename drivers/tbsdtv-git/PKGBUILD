@@ -1,7 +1,7 @@
 pkgname="tbsdtv-git"
 _gitname='source-git'
 _gitname2='source-git2'
-pkgver=r1508.87e83e0_5.15.49_1_MANJARO
+pkgver=r1508.87e83e0_5.15.53_1_MANJARO
 pkgrel=1
 pkgdesc="TBS linux open source drivers"
 arch=('x86_64')
@@ -45,7 +45,7 @@ build() {
 
 package() {
   cd "${srcdir}/${_gitname}"
-  _emkernel=$(uname -r | sed -r 's/.49-1//g')
+  _emkernel=$(uname -r | sed -r 's/.53-1//g')
   mkdir -p "$pkgdir"/usr/lib/modules/extramodules-"${_emkernel}"/tbs
   find "$srcdir/$_gitname" -name '*.ko' -exec cp "{}" "$pkgdir"/usr/lib/modules/extramodules-"${_emkernel}"/tbs \;
   msg "Compressing modules, this will take awhile..."

@@ -1,7 +1,7 @@
 pkgname=kodi-addon-pvr-iptvsimple
 _gitname='source-git'
-_verpkg='19.1.1'
-pkgver=19.1.1
+_verpkg='19.2.2'
+pkgver=19.2.2
 pkgrel=12
 pkgdesc="Kodi's IPTV Simple client addon."
 arch=('armv7h' 'i686' 'x86_64')

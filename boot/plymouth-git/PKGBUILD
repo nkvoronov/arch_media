@@ -5,7 +5,7 @@
 
 pkgname=plymouth-git
 _gitname='source-git'
-pkgver=22.02.122.r45.ge960111
+pkgver=22.02.122.r74.g6f5dc637
 pkgrel=1
 pkgdesc="A graphical boot splash screen with kernel mode-setting support (Development version)"
 url="https://www.freedesktop.org/wiki/Software/Plymouth/"
